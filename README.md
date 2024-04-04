@@ -209,7 +209,7 @@ especially in slices of 8 pixels.
 
 # (Un)important things
 
-## Privacy
+## Privacy (including GDPR)
 
 None of the code in this project processes any personal data
 in any way. It does not collect, record, organize, structure,
@@ -232,3 +232,32 @@ interests, reliability, behavior, location, and movements.
 _Let's be honest, if using a demo on such an old computer
 causes significant privacy concerns or in fact any privacy
 concerns, the world is coming to an end._
+
+## Security (including CRA)
+
+None of the code in this project involves any direct or indirect
+logical or physical data connection to a device or network.
+
+Also, all of the code in this project is provided under a free
+and open source license, in a non-commercial manner. It is
+developed, maintained, and distributed openly. As of April
+2024, no price has been charged for any of the code in this
+project, nor have any donations been accepted in connection
+with this project. The author has no intention of charging a
+price for this code. They also do not intend to accept donations,
+but acknowledge that, in extreme situations, donations of
+hardware or of access to hardware might facilitate development,
+without any intent to make a profit.
+
+_Don't even think of using any code from this project for
+anything remotely security-sensitive. That would be awfully
+stupid.
+The targeted processors might have no security features
+(most 8-bit processors), or might be inadequate by modern
+security standards (e.g. 68000).
+Worse, to the extent that primitive security features might
+exist at all, the code will likely disable them as much as
+possible, e.g. running Atari ST code in supervisor mode in
+order to gain direct access to hardware registers.
+Finally, the code is developed in assembly language, which
+lacks the modern language features that help security._
