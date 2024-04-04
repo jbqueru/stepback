@@ -206,3 +206,29 @@ makes it unfriendly toward horizontal scrolling.
 
 This all suggests vertical scrolling as a first exploration,
 especially in slices of 8 pixels.
+
+# (Un)important things
+
+## Privacy
+
+None of the code in this project processes any personal data
+in any way. It does not collect, record, organize, structure,
+store, adapt, alter, retrieve, consult, use, disclose, transmit,
+disseminate, align, combine, restrict, erase, or destroy any
+personal data.
+
+None of the code in this project identifies natural persons
+in any way, directly or indirectly. It does not reference
+any name, identification number, location data, online
+identifier, or any factors related to the physical, psychological,
+genetic, mental, economic, cultural or social identity of
+any person.
+
+None of the code in this project evaluates any aspect of
+any natural person. It neither analyzes nor predicts performance
+at work, economic situation, health, personal preferences,
+interests, reliability, behavior, location, and movements.
+
+_Let's be honest, if using a demo on such an old computer
+causes significant privacy concerns or in fact any privacy
+concerns, the world is coming to an end._
