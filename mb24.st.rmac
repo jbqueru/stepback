@@ -44,6 +44,7 @@
 ;		where the instruction would be, i.e. not on the first column.
 ;		There should be an explanation in a comment.
 
+	.68000
 	.text
 
 	PEA.L	SupEntr
@@ -55,12 +56,54 @@
 	TRAP	#1
 
 SupEntr:
-	MOVEQ.L	#7,D1
-LoopO:
-	MOVEQ.L	#$FFFFFFFF,D0
-LoopI:
+	MOVE.W	#$2700,SR
+
+	MOVE.B	#0,$fffffa07.w
+	MOVE.B	#0,$fffffa09.w
+
+	MOVE.L	#VBL_Handler,$70.w
+
+	MOVE.L	#fb_raw,D0
+	ADD.L	#$ff,D0
+	AND.L	#$ffffff00,D0
+
+	MOVE.L	D0,fb_front
+	ADD.L	#32000,D0
+	MOVE.L	D0,fb_back
+
+	STOP	#$2300
+
+MainLoop:
+	STOP	#$2300
+
+	MOVE.L	fb_front,D0
+	MOVE.L	fb_back,fb_front
+	MOVE.L	D0,fb_back
+	LSR.L	#8,D0
+	MOVE.B	D0,$ffff8203.w
+	LSR.L	#8,D0
+	MOVE.B	D0,$ffff8201.w
+
+	MOVE.W	#$800,D0
+BlastPalette:
 	MOVE.W	#$0,$ffff8240.W
 	MOVE.W	#$777,$ffff8240.W
-	DBF	D0,LoopI
-	DBF	D1,LoopO
-	RTS
+	DBF	D0,BlastPalette
+
+	BRA	MainLoop
+
+VBL_Handler:
+	RTE
+
+	.bss
+
+	.even
+fb_front:
+	.ds.l	1
+fb_back:
+	.ds.l	1
+
+fb_raw:
+	.ds.b	64255
+
+	.end
