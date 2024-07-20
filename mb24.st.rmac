@@ -28,18 +28,21 @@
 ;	- 120 columns overall
 ;	- Standalone block comments in the first 80 columns
 ;	- Code-related block comments allowed in the last 80 columns
-;	- Mnemomics and registers are UPPERCASE
+;	- Note: rulers at 40, 80 and 120 columns help with source width
+;
 ;	- Assembler directives are .lowercase
+;	- Mnemomics and registers are UPPERCASE
 ;	- Global symbols for code are CamelCase
 ;	- Symbols for variables are snake_case
 ;	- Symbols for hardware registers are ALL_CAPS
 ;	- Related symbols start with the same prefix (so they sort together)
+;	- hexadecimal constants are lowercase. deadbeef.
+;
 ;	- Include but comment out instructions that help readability but
 ;		don't do anything (e.g. redundant CLC when the carry is
 ;		guaranteed already to be clear). The comment symbol should be
 ;		where the instruction would be, i.e. not on the first column.
 ;		There should be an explanation in a comment.
-;	- Note: rulers at 40, 80 and 120 columns help source width
 
 	.text
 	pea	supentr
