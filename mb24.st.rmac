@@ -36,7 +36,7 @@
 ;	- Symbols for variables are snake_case
 ;	- Symbols for hardware registers are ALL_CAPS
 ;	- Related symbols start with the same prefix (so they sort together)
-;	- hexadecimal constants are lowercase. deadbeef.
+;	- hexadecimal constants are lowercase ($eaf00d).
 ;
 ;	- Include but comment out instructions that help readability but
 ;		don't do anything (e.g. redundant CLC when the carry is
