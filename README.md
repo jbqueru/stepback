@@ -21,8 +21,8 @@ cartridge, and I remember typing some of the listings from the manual,
 but I couldn't grok it enough to write my own code.
 
 I guess 1984 was a turning point in computing.
-The world of games was still reeling from the
-[video game crash of 1983](https://en.wikipedia.org/wiki/Video_game_crash_of_1983),
+The world of games was still reeling from the [video game crash
+of 1983](https://en.wikipedia.org/wiki/Video_game_crash_of_1983),
 and no new consoles were released in 1984; the closest ended up being
 the [Atari 7800](https://en.wikipedia.org/wiki/Atari_7800), which
 got announced in 1984, but the collapse of Atari delayed its launch
@@ -211,7 +211,7 @@ especially in slices of 8 pixels.
 
 ## Licensing
 
-This game is licensed under the terms of the
+Each demo in this repository is licensed under the terms of the
 [AGPL, version 3](https://www.gnu.org/licenses/agpl-3.0.en.html)
 or later, with the following additional restriction: if you make
 the program available for third parties to use on hardware you own
@@ -220,15 +220,15 @@ gaming cabinets (whether or not in a gaming arcade, whether or not
 coin-operated or otherwise for a fee,) the conditions of section 13
 will apply even if no network is involved.
 
-As a special exception, the source assets for the game (images, text,
-music, movie files) as well as output from the game (screenshots,
+As a special exception, the source assets for the demos (images, text,
+music, movie files) as well as output from the demos (screenshots,
 audio or video recordings) are also optionally licensed under the
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 License. That exception explicitly does not apply to source code or
 object/executable code, only to assets/media files.
 
-Licensees of the whole game can apply the same exception to their
-modified version.
+Licensees of the a whole demo or of the whole repository can apply
+the same exception to their modified version.
 
 On the other hand, When in doubt, limit yourself to AGPL and
 remove the exception from your modified version.
