@@ -39,7 +39,7 @@
 ;	- hexadecimal constants are lowercase ($eaf00d).
 ;
 ;	- Include but comment out instructions that help readability but
-;		don't do anything (e.g. redundant CLC when the carry is
+;		don't do anything (e.g. redundant CLC on 6502 when the carry is
 ;		guaranteed already to be clear). The comment symbol should be
 ;		where the instruction would be, i.e. not on the first column.
 ;		There should be an explanation in a comment.
