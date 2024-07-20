@@ -45,22 +45,22 @@
 ;		There should be an explanation in a comment.
 
 	.text
-	pea	supentr
-	move.w	#38,-(sp)
-	trap	#14
-	addq.l	#6,sp
 
-	move.w	#0,-(sp)
-	trap	#1
+	PEA.L	SupEntr
+	MOVE.W	#38,-(SP)
+	TRAP	#14
+	ADDQ.L	#6,SP
 
-supentr:
-	moveq.l	#7,d1
-loopo:
-	moveq.l	#-1,d0
-loopi:
-	move.w	#$0,$ffff8240.w
-	move.w	#$777,$ffff8240.w
-	dbra	d0,loopi
-	dbra	d1,loopo
-	rts
-	
+	MOVE.W	#0,-(SP)
+	TRAP	#1
+
+SupEntr:
+	MOVEQ.L	#7,D1
+LoopO:
+	MOVEQ.L	#$FFFFFFFF,D0
+LoopI:
+	MOVE.W	#$0,$ffff8240.W
+	MOVE.W	#$777,$ffff8240.W
+	DBF	D0,LoopI
+	DBF	D1,LoopO
+	RTS
