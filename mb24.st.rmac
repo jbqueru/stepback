@@ -73,6 +73,9 @@ SupEntr:
 
 	STOP	#$2300
 
+	MOVE.B	#2,$ffff820a.w
+	MOVE.B	#0,$ffff8260.w
+
 MainLoop:
 	STOP	#$2300
 
