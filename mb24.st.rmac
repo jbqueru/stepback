@@ -71,10 +71,14 @@ SupEntr:
 	ADD.L	#32000,D0
 	MOVE.L	D0,fb_back
 
+	MOVE.L	#$FC0000,vert_read
+
 	STOP	#$2300
 
 	MOVE.B	#2,$ffff820a.w
 	MOVE.B	#0,$ffff8260.w
+
+	MOVE.W	#$700,$ffff8242.w
 
 MainLoop:
 	STOP	#$2300
@@ -87,11 +91,14 @@ MainLoop:
 	LSR.L	#8,D0
 	MOVE.B	D0,$ffff8201.w
 
-	MOVE.W	#$800,D0
-BlastPalette:
-	MOVE.W	#$0,$ffff8240.W
-	MOVE.W	#$777,$ffff8240.W
-	DBF	D0,BlastPalette
+	MOVEA.L	fb_back,A0
+	MOVEA.L	vert_read,A1
+	ADDQ.W	#4,A1
+	MOVE.L	A1,vert_read
+	.rept	200
+	MOVE.W	(A1)+,(A0)
+	ADDA.W	#160,A0
+	.endr
 
 	BRA	MainLoop
 
@@ -105,6 +112,9 @@ fb_front:
 	.ds.l	1
 fb_back:
 	.ds.l	1
+
+vert_read:
+	ds.l	1
 
 fb_raw:
 	.ds.b	64255
