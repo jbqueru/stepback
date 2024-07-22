@@ -71,7 +71,15 @@ SupEntr:
 	ADD.L	#32000,D0
 	MOVE.L	D0,fb_back
 
-	MOVE.L	#$FC0000,vert_read
+	MOVEA.L	#$FC0000,A0
+	MOVEA.L	#vert_buffer,A1
+	.rept 200
+	MOVE.W	(A0)+,D0
+	MOVE.W	D0,400(A1)
+	MOVE.W	D0,(A1)+
+	.endr
+
+	MOVE.L	#vert_buffer,vert_read
 
 	STOP	#$2300
 
@@ -91,10 +99,19 @@ MainLoop:
 	LSR.L	#8,D0
 	MOVE.B	D0,$ffff8201.w
 
+	MOVEA.L	vert_read,A0
+	MOVE.W	vert_read+2,D0
+	MOVE.W	D0,(A0)
+	MOVE.W	D0,400(A0)
+	ADDQ.W	#2,A0
+	CMPA.L	#vert_buffer + 400,A0
+	BNE.S	BufferOk
+	MOVEA.L	#vert_buffer,A0
+BufferOk:
+	MOVE.L	A0,vert_read
+
 	MOVEA.L	fb_back,A0
 	MOVEA.L	vert_read,A1
-	ADDQ.W	#2,A1
-	MOVE.L	A1,vert_read
 	.rept	200
 	MOVE.W	(A1)+,D0
 	MOVE.W	D0,8(A0)
@@ -121,6 +138,9 @@ fb_back:
 
 vert_read:
 	ds.l	1
+
+vert_buffer:
+	ds.w	400
 
 fb_raw:
 	.ds.b	64255
