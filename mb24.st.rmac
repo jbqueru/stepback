@@ -93,7 +93,7 @@ MainLoop:
 
 	MOVEA.L	fb_back,A0
 	MOVEA.L	vert_read,A1
-	ADDQ.W	#4,A1
+	ADDQ.W	#2,A1
 	MOVE.L	A1,vert_read
 	.rept	200
 	MOVE.W	(A1)+,D0
