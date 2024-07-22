@@ -96,7 +96,13 @@ MainLoop:
 	ADDQ.W	#4,A1
 	MOVE.L	A1,vert_read
 	.rept	200
-	MOVE.W	(A1)+,(A0)
+	MOVE.W	(A1)+,D0
+	MOVE.W	D0,8(A0)
+	MOVE.W	D0,24(A0)
+	MOVE.W	D0,40(A0)
+	MOVE.W	D0,112(A0)
+	MOVE.W	D0,128(A0)
+	MOVE.W	D0,144(A0)
 	ADDA.W	#160,A0
 	.endr
 
