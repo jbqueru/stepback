@@ -76,11 +76,12 @@ SupEntr:
 
 	move.l	#$fc0000, a0
 	move.l	#vert_buffer, a1
-	.rept 200
+	move.w	#199,d1
+InitVert:
 	move.w	(a0)+, d0
 	move.w	d0, 400(a1)
 	move.w	d0, (a1)+
-	.endr
+	dbra	d1, InitVert
 
 	move.l	#vert_buffer, vert_read
 
@@ -115,7 +116,9 @@ BufferOk:
 
 	move.l	fb_back, a0
 	move.l	vert_read, a1
-	.rept	200
+	moveq.l	#19,d1
+DrawVert:
+	.rept	10
 	move.w	(a1)+, d0
 	move.w	d0, 8(a0)
 	move.w	d0, 24(a0)
@@ -125,6 +128,7 @@ BufferOk:
 	move.w	d0, 144(a0)
 	add.w	#160, a0
 	.endr
+	dbra	d1, DrawVert
 
 	bra	MainLoop
 
