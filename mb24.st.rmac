@@ -48,79 +48,79 @@
 	.text
 
 	pea.l	SupEntr
-	move.w	#38,-(sp)
+	move.w	#38, -(sp)
 	trap	#14
-	addq.w	#6,sp
+	addq.w	#6, sp
 
-	move.w	#0,-(sp)
+	move.w	#0, -(sp)
 	trap	#1
 
 SupEntr:
-	move.w	#$2700,sr
+	move.w	#$2700, sr
 
-	move.b	#0,$fffffa07.w
-	move.b	#0,$fffffa09.w
+	move.b	#0, $fffffa07.w
+	move.b	#0, $fffffa09.w
 
-	move.l	#VBL_Handler,$70.w
+	move.l	#VBL_Handler, $70.w
 
-	move.l	#fb_raw,d0
-	add.l	#$ff,d0
-	and.l	#$ffffff00,d0
+	move.l	#fb_raw, d0
+	add.l	#$ff, d0
+	and.l	#$ffffff00, d0
 
-	move.l	d0,fb_front
-	add.l	#32000,d0
-	move.l	d0,fb_back
+	move.l	d0, fb_front
+	add.l	#32000, d0
+	move.l	d0, fb_back
 
-	move.l	#$fc0000,a0
-	move.l	#vert_buffer,a1
+	move.l	#$fc0000, a0
+	move.l	#vert_buffer, a1
 	.rept 200
-	move.w	(a0)+,d0
-	move.w	d0,400(a1)
-	move.w	d0,(a1)+
+	move.w	(a0)+, d0
+	move.w	d0, 400(a1)
+	move.w	d0, (a1)+
 	.endr
 
-	move.l	#vert_buffer,vert_read
+	move.l	#vert_buffer, vert_read
 
 	stop	#$2300
 
-	move.b	#2,$ffff820a.w
-	move.b	#0,$ffff8260.w
+	move.b	#2, $ffff820a.w
+	move.b	#0, $ffff8260.w
 
-	move.w	#$700,$ffff8242.w
+	move.w	#$700, $ffff8242.w
 
 MainLoop:
 	stop	#$2300
 
-	move.l	fb_front,d0
-	move.l	fb_back,fb_front
-	move.l	d0,fb_back
-	lsr.l	#8,d0
-	move.b	d0,$ffff8203.w
-	lsr.l	#8,d0
-	move.b	d0,$ffff8201.w
+	move.l	fb_front, d0
+	move.l	fb_back, fb_front
+	move.l	d0, fb_back
+	lsr.l	#8, d0
+	move.b	d0, $ffff8203.w
+	lsr.l	#8, d0
+	move.b	d0, $ffff8201.w
 
-	move.l	vert_read,a0
-	move.w	vert_read+2,d0
-	move.w	d0,(a0)
-	move.w	d0,400(a0)
-	addq.w	#2,a0
-	cmp.l	#vert_buffer + 400,a0
+	move.l	vert_read, a0
+	move.w	vert_read+2, d0
+	move.w	d0, (a0)
+	move.w	d0, 400(a0)
+	addq.w	#2, a0
+	cmp.l	#vert_buffer + 400, a0
 	bne.s	BufferOk
-	move.l	#vert_buffer,a0
+	move.l	#vert_buffer, a0
 BufferOk:
-	move.l	a0,vert_read
+	move.l	a0, vert_read
 
-	move.l	fb_back,a0
-	move.l	vert_read,a1
+	move.l	fb_back, a0
+	move.l	vert_read, a1
 	.rept	200
-	move.w	(a1)+,d0
-	move.w	d0,8(a0)
-	move.w	d0,24(a0)
-	move.w	d0,40(a0)
-	move.w	d0,112(a0)
-	move.w	d0,128(a0)
-	move.w	d0,144(a0)
-	add.w	#160,a0
+	move.w	(a1)+, d0
+	move.w	d0, 8(a0)
+	move.w	d0, 24(a0)
+	move.w	d0, 40(a0)
+	move.w	d0, 112(a0)
+	move.w	d0, 128(a0)
+	move.w	d0, 144(a0)
+	add.w	#160, a0
 	.endr
 
 	bra	MainLoop
