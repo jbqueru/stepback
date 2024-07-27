@@ -31,7 +31,7 @@
 ;	- Note: rulers at 40, 80 and 120 columns help with source width
 ;
 ;	- Assembler directives are .lowercase
-;	- Mnemomics and registers are UPPERCASE
+;	- Mnemomics and registers are lowercase unless otherwise required
 ;	- Global symbols for code are CamelCase
 ;	- Symbols for variables are snake_case
 ;	- Symbols for hardware registers are ALL_CAPS
@@ -47,86 +47,86 @@
 	.68000
 	.text
 
-	PEA.L	SupEntr
-	MOVE.W	#38,-(SP)
-	TRAP	#14
-	ADDQ.L	#6,SP
+	pea.l	SupEntr
+	move.w	#38,-(sp)
+	trap	#14
+	addq.w	#6,sp
 
-	MOVE.W	#0,-(SP)
-	TRAP	#1
+	move.w	#0,-(sp)
+	trap	#1
 
 SupEntr:
-	MOVE.W	#$2700,SR
+	move.w	#$2700,sr
 
-	MOVE.B	#0,$fffffa07.w
-	MOVE.B	#0,$fffffa09.w
+	move.b	#0,$fffffa07.w
+	move.b	#0,$fffffa09.w
 
-	MOVE.L	#VBL_Handler,$70.w
+	move.l	#VBL_Handler,$70.w
 
-	MOVE.L	#fb_raw,D0
-	ADD.L	#$ff,D0
-	AND.L	#$ffffff00,D0
+	move.l	#fb_raw,d0
+	add.l	#$ff,d0
+	and.l	#$ffffff00,d0
 
-	MOVE.L	D0,fb_front
-	ADD.L	#32000,D0
-	MOVE.L	D0,fb_back
+	move.l	d0,fb_front
+	add.l	#32000,d0
+	move.l	d0,fb_back
 
-	MOVEA.L	#$FC0000,A0
-	MOVEA.L	#vert_buffer,A1
+	move.l	#$fc0000,a0
+	move.l	#vert_buffer,a1
 	.rept 200
-	MOVE.W	(A0)+,D0
-	MOVE.W	D0,400(A1)
-	MOVE.W	D0,(A1)+
+	move.w	(a0)+,d0
+	move.w	d0,400(a1)
+	move.w	d0,(a1)+
 	.endr
 
-	MOVE.L	#vert_buffer,vert_read
+	move.l	#vert_buffer,vert_read
 
-	STOP	#$2300
+	stop	#$2300
 
-	MOVE.B	#2,$ffff820a.w
-	MOVE.B	#0,$ffff8260.w
+	move.b	#2,$ffff820a.w
+	move.b	#0,$ffff8260.w
 
-	MOVE.W	#$700,$ffff8242.w
+	move.w	#$700,$ffff8242.w
 
 MainLoop:
-	STOP	#$2300
+	stop	#$2300
 
-	MOVE.L	fb_front,D0
-	MOVE.L	fb_back,fb_front
-	MOVE.L	D0,fb_back
-	LSR.L	#8,D0
-	MOVE.B	D0,$ffff8203.w
-	LSR.L	#8,D0
-	MOVE.B	D0,$ffff8201.w
+	move.l	fb_front,d0
+	move.l	fb_back,fb_front
+	move.l	d0,fb_back
+	lsr.l	#8,d0
+	move.b	d0,$ffff8203.w
+	lsr.l	#8,d0
+	move.b	d0,$ffff8201.w
 
-	MOVEA.L	vert_read,A0
-	MOVE.W	vert_read+2,D0
-	MOVE.W	D0,(A0)
-	MOVE.W	D0,400(A0)
-	ADDQ.W	#2,A0
-	CMPA.L	#vert_buffer + 400,A0
-	BNE.S	BufferOk
-	MOVEA.L	#vert_buffer,A0
+	move.l	vert_read,a0
+	move.w	vert_read+2,d0
+	move.w	d0,(a0)
+	move.w	d0,400(a0)
+	addq.w	#2,a0
+	cmp.l	#vert_buffer + 400,a0
+	bne.s	BufferOk
+	move.l	#vert_buffer,a0
 BufferOk:
-	MOVE.L	A0,vert_read
+	move.l	a0,vert_read
 
-	MOVEA.L	fb_back,A0
-	MOVEA.L	vert_read,A1
+	move.l	fb_back,a0
+	move.l	vert_read,a1
 	.rept	200
-	MOVE.W	(A1)+,D0
-	MOVE.W	D0,8(A0)
-	MOVE.W	D0,24(A0)
-	MOVE.W	D0,40(A0)
-	MOVE.W	D0,112(A0)
-	MOVE.W	D0,128(A0)
-	MOVE.W	D0,144(A0)
-	ADDA.W	#160,A0
+	move.w	(a1)+,d0
+	move.w	d0,8(a0)
+	move.w	d0,24(a0)
+	move.w	d0,40(a0)
+	move.w	d0,112(a0)
+	move.w	d0,128(a0)
+	move.w	d0,144(a0)
+	add.w	#160,a0
 	.endr
 
-	BRA	MainLoop
+	bra	MainLoop
 
 VBL_Handler:
-	RTE
+	rte
 
 	.bss
 
