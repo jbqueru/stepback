@@ -82,6 +82,8 @@ SupEntr:
 	move.b	#0, $ffff8260.w
 
 	move.w	#$700, $ffff8242.w
+	move.w	#$007, $ffff8244.w
+	move.w	#$007, $ffff8246.w
 
 MainLoop:
 	stop	#$2300
@@ -120,6 +122,28 @@ DrawVert:
 	add.w	#160, a0
 	.endr
 	dbra	d1, DrawVert
+
+	move.l	fb_back, a0
+	add.w	#20482, a0
+	move.w	#7, d0
+Text0:
+	move.w	#19, d1
+Text1:
+	move.w	d1, d2
+	lsl.w	#3, d2
+	or.w	d0, d2
+	move.w	d2, (a0)
+	move.w	d2, 160(a0)
+	move.w	d2, 320(a0)
+	move.w	d2, 480(a0)
+	move.w	d2, 640(a0)
+	move.w	d2, 800(a0)
+	move.w	d2, 960(a0)
+	move.w	d2, 1120(a0)
+	addq.w	#8, a0
+	dbra	d1, Text1
+	add.w	#1120, a0
+	dbra	d0, Text0
 
 	bra	MainLoop
 
