@@ -74,13 +74,6 @@ SupEntr:
 	add.l	#32000, d0
 	move.l	d0, fb_back
 
-	move.l	#vert_buffer, a0
-	move.w	#199,d0
-InitVert:
-	move.w	#0, 400(a0)
-	move.w	#0, (a0)+
-	dbra	d0, InitVert
-
 	move.l	#vert_buffer, vert_read
 
 	stop	#$2300
