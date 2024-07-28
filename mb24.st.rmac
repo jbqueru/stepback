@@ -75,6 +75,10 @@ SupEntr:
 	move.l	d0, fb_back
 
 	move.l	#vert_buffer, vert_read
+	move.l	#Font, vert_font_read
+	move.l	#Font + 2, vert_char_end
+
+	move.l	#VertText, vert_text_read
 
 	stop	#$2300
 
@@ -134,7 +138,28 @@ MainLoop:
 ; *********************
 
 	move.l	vert_read, a0
-	move.w	vert_read+2, d0
+	move.l	vert_font_read, a1
+	move.w	(a1)+, d0
+	cmp.l	vert_char_end, a1
+	bne.s	InChar
+
+	move.l	vert_text_read, a2
+	moveq.l	#0, d1
+	move.b	(a2)+, d1
+	sub.b	#32, d1
+	cmp.l	#EndVertText, a2
+	bne.s	InText
+	move.l	#VertText, a2
+InText:
+	move.l	a2, vert_text_read
+
+	move.l	#Font, a1
+	lsl.w	#5, d1
+	add.w	d1, a1
+	lea.l	32(a1), a2
+	move.l	a2, vert_char_end
+InChar:
+	move.l	a1, vert_font_read
 	move.w	d0, (a0)
 	move.w	d0, 400(a0)
 	addq.w	#2, a0
@@ -201,6 +226,47 @@ Text1:
 VBL_Handler:
 	rte
 
+	.data
+
+Font:
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000001111000000
+	dc.w	%0000000000000000
+	dc.w	%0000000000000000
+
+VertText:
+	dc.b	'! ! !   !!! !!! !!!   ! ! !      '
+EndVertText:
+
 	.bss
 
 	.even
@@ -214,6 +280,14 @@ vert_read:
 
 vert_buffer:
 	ds.w	400
+
+vert_font_read:
+	ds.l	1
+vert_char_end:
+	ds.l	1
+
+vert_text_read:
+	ds.l	1
 
 fb_raw:
 	.ds.b	64255
