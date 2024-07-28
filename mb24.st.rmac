@@ -74,14 +74,12 @@ SupEntr:
 	add.l	#32000, d0
 	move.l	d0, fb_back
 
-	move.l	#$fc0000, a0
-	move.l	#vert_buffer, a1
-	move.w	#199,d1
+	move.l	#vert_buffer, a0
+	move.w	#199,d0
 InitVert:
-	move.w	(a0)+, d0
-	move.w	d0, 400(a1)
-	move.w	d0, (a1)+
-	dbra	d1, InitVert
+	move.w	#0, 400(a0)
+	move.w	#0, (a0)+
+	dbra	d0, InitVert
 
 	move.l	#vert_buffer, vert_read
 
