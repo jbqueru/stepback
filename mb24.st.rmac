@@ -91,7 +91,7 @@ SupEntr:
 	move.l	#HorizText, horiz_text_read
 	move.l	#horiz_buffer, horiz_read
 	move.l	#HorizFont, horiz_font_read
-	move.l	#HorizFont + 1, horiz_char_end
+	move.l	#HorizFont + 2, horiz_char_end
 
 	move.l	#BigLogo, a0
 	move.l	#logo_shifted, a1
@@ -195,6 +195,14 @@ EraseLogo:
 	add	#160, a0
 	dbra d0, EraseLogo
 
+	move.w	#$744, $ffff8240.w
+	divu	#1, d0
+	divu	#1, d0
+	divu	#1, d0
+	divu	#1, d0
+	move.w	#$000, $ffff8240.w
+
+
 ; ############################
 ; ############################
 ; ###                      ###
@@ -263,6 +271,14 @@ DrawVert:
 	.endr
 	dbra	d1, DrawVert
 
+	move.w	#$474, $ffff8240.w
+	divu	#1, d0
+	divu	#1, d0
+	divu	#1, d0
+	divu	#1, d0
+	move.w	#$000, $ffff8240.w
+
+
 ; #############################
 ; #############################
 ; ###                       ###
@@ -279,7 +295,7 @@ DrawVert:
 
 	move.l	horiz_read, a0
 	move.l	horiz_font_read, a1
-	move.b	(a1)+, d0
+	move.w	(a1)+, d0
 	cmp.l	horiz_char_end, a1
 	bne.s	HInChar
 
@@ -292,47 +308,51 @@ DrawVert:
 HInText:
 	move.l	a2, horiz_text_read
 
-	move.l	#HorizFont, a1
+	move.l	#HorizChars, a2
 	sub.b	#32, d1
-	lsl.w	#3, d1
-	add.w	d1, a1
-	lea.l	8(a1), a2
-	move.l	a2, horiz_char_end
+	lsl.w	#2, d1
+	add.w	d1, a2
+	move.l	(a2)+, a1
+	move.l	(a2)+, horiz_char_end
 HInChar:
 	move.l	a1, horiz_font_read
 
-	lsr.b	d0
+	lsr.w	d0
 	scs	d1
 	move.b	d1, (a0)
 	move.b	d1, 40(a0)
-	lsr.b	d0
+	lsr.w	d0
 	scs	d1
 	move.b	d1, 80(a0)
 	move.b	d1, 120(a0)
-	lsr.b	d0
+	lsr.w	d0
 	scs	d1
 	move.b	d1, 160(a0)
 	move.b	d1, 200(a0)
-	lsr.b	d0
+	lsr.w	d0
 	scs	d1
 	move.b	d1, 240(a0)
 	move.b	d1, 280(a0)
-	lsr.b	d0
+	lsr.w	d0
 	scs	d1
 	move.b	d1, 320(a0)
 	move.b	d1, 360(a0)
-	lsr.b	d0
+	lsr.w	d0
 	scs	d1
 	move.b	d1, 400(a0)
 	move.b	d1, 440(a0)
-	lsr.b	d0
+	lsr.w	d0
 	scs	d1
 	move.b	d1, 480(a0)
 	move.b	d1, 520(a0)
-	lsr.b	d0
+	lsr.w	d0
 	scs	d1
 	move.b	d1, 560(a0)
 	move.b	d1, 600(a0)
+	lsr.w	d0
+	scs	d1
+	move.b	d1, 640(a0)
+	move.b	d1, 680(a0)
 
 	addq.l	#1, a0
 	cmp.l	#horiz_buffer + 40, a0
@@ -348,9 +368,9 @@ HInBuffer:
 ; *************************
 
 	move.l	fb_back, a0
-	add.w	#20482, a0
+	add.w	#120 * 160 + 2, a0
 	move.l	horiz_read, a1
-	move.w	#7, d0
+	move.w	#8, d0
 Text0:
 	move.w	#19, d1
 Text1:
@@ -377,6 +397,13 @@ Text1:
 	add.w	#1120, a0
 	add.w	#40, a1
 	dbra	d0, Text0
+
+	move.w	#$447, $ffff8240.w
+	divu	#1, d0
+	divu	#1, d0
+	divu	#1, d0
+	divu	#1, d0
+	move.w	#$000, $ffff8240.w
 
 
 
@@ -482,8 +509,8 @@ HorizText:
 	dc.b	"FROM THE MEGABUSTERS. REMEMBER US? YOU'D BETTER! "
 	dc.b	"MEGABUSTERS: TOP DEMO CREW IN CHAUFFAYER!!!  "
 	dc.b	"JBQUERU@GMAIL.COM HTTPS://GITHUB.COM/JBQUERU    "
-	dc.b	"0123456789   "
 	dc.b	"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG       "
+	dc.b	" !\"'(),-./0123456789:?@ABCDEFGHIJKLMNOPQRSTUVWXYZ "
 EndHorizText:
 
 	.even
@@ -525,7 +552,7 @@ vert_text_read:
 	ds.l	1
 
 horiz_buffer:
-	ds.b	640
+	ds.b	40 * 2 * 9
 
 horiz_read:
 	ds.l	1
