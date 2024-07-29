@@ -77,8 +77,12 @@ SupEntr:
 	move.l	#vert_buffer, vert_read
 	move.l	#VertFont, vert_font_read
 	move.l	#VertFont + 2, vert_char_end
-
 	move.l	#VertText, vert_text_read
+
+	move.l	#HorizText, horiz_text_read
+	move.l	#horiz_buffer, horiz_read
+	move.l	#HorizFont, horiz_font_read
+	move.l	#HorizFont + 1, horiz_char_end
 
 	stop	#$2300
 
@@ -199,26 +203,111 @@ DrawVert:
 ; #############################
 ; #############################
 
+; *********************
+; **                 **
+; ** Insert new data **
+; **                 **
+; *********************
+
+	move.l	horiz_read, a0
+	move.l	horiz_font_read, a1
+	move.b	(a1)+, d0
+	cmp.l	horiz_char_end, a1
+	bne.s	HInChar
+
+	move.l	horiz_text_read, a2
+	moveq.l	#0,d1
+	move.b	(a2)+, d1
+	cmp.l	#EndHorizText, a2
+	bne.s	HInText
+	move.l	#HorizText, a2
+HInText:
+	move.l	a2, horiz_text_read
+
+	move.l	#HorizFont, a1
+	sub.b	#32, d1
+	lsl.w	#3, d1
+	add.w	d1, a1
+	lea.l	8(a1), a2
+	move.l	a2, horiz_char_end
+HInChar:
+	move.l	a1, horiz_font_read
+
+	lsr.b	d0
+	scs	d1
+	move.b	d1, (a0)
+	move.b	d1, 40(a0)
+	lsr.b	d0
+	scs	d1
+	move.b	d1, 80(a0)
+	move.b	d1, 120(a0)
+	lsr.b	d0
+	scs	d1
+	move.b	d1, 160(a0)
+	move.b	d1, 200(a0)
+	lsr.b	d0
+	scs	d1
+	move.b	d1, 240(a0)
+	move.b	d1, 280(a0)
+	lsr.b	d0
+	scs	d1
+	move.b	d1, 320(a0)
+	move.b	d1, 360(a0)
+	lsr.b	d0
+	scs	d1
+	move.b	d1, 400(a0)
+	move.b	d1, 440(a0)
+	lsr.b	d0
+	scs	d1
+	move.b	d1, 480(a0)
+	move.b	d1, 520(a0)
+	lsr.b	d0
+	scs	d1
+	move.b	d1, 560(a0)
+	move.b	d1, 600(a0)
+
+	addq.l	#1, a0
+	cmp.l	#horiz_buffer + 40, a0
+	bne.s	HInBuffer
+	move.l	#horiz_buffer, a0
+HInBuffer:
+	move.l	a0, horiz_read
+
+; *************************
+; **                     **
+; ** Draw to framebuffer **
+; **                     **
+; *************************
+
 	move.l	fb_back, a0
 	add.w	#20482, a0
+	move.l	horiz_read, a1
 	move.w	#7, d0
 Text0:
 	move.w	#19, d1
 Text1:
-	move.w	d1, d2
-	lsl.w	#3, d2
-	or.w	d0, d2
-	move.w	d2, (a0)
-	move.w	d2, 160(a0)
-	move.w	d2, 320(a0)
-	move.w	d2, 480(a0)
-	move.w	d2, 640(a0)
-	move.w	d2, 800(a0)
-	move.w	d2, 960(a0)
-	move.w	d2, 1120(a0)
+	move.b	(a1)+, d2
+	move.b	d2, (a0)
+	move.b	d2, 160(a0)
+	move.b	d2, 320(a0)
+	move.b	d2, 480(a0)
+	move.b	d2, 640(a0)
+	move.b	d2, 800(a0)
+	move.b	d2, 960(a0)
+	move.b	d2, 1120(a0)
+	move.b	(a1)+, d2
+	move.b	d2, 1(a0)
+	move.b	d2, 161(a0)
+	move.b	d2, 321(a0)
+	move.b	d2, 481(a0)
+	move.b	d2, 641(a0)
+	move.b	d2, 801(a0)
+	move.b	d2, 961(a0)
+	move.b	d2, 1121(a0)
 	addq.w	#8, a0
 	dbra	d1, Text1
 	add.w	#1120, a0
+	add.w	#40, a1
 	dbra	d0, Text0
 
 	bra	MainLoop
@@ -267,6 +356,29 @@ VertText:
 	dc.b	'! ! !   !!! !!! !!!   ! ! !      '
 EndVertText:
 
+HorizFont:
+	dc.b	%00000000
+	dc.b	%00000000
+	dc.b	%00000000
+	dc.b	%00000000
+	dc.b	%00000000
+	dc.b	%00000000
+	dc.b	%00000000
+	dc.b	%00000000
+
+	dc.b	%00000000
+	dc.b	%00000000
+	dc.b	%00000000
+	dc.b	%11011111
+	dc.b	%11011111
+	dc.b	%00000000
+	dc.b	%00000000
+	dc.b	%00000000
+
+HorizText:
+	dc.b	'! !! !!! !!!! !!!!!   '
+EndHorizText:
+
 	.bss
 
 	.even
@@ -287,6 +399,20 @@ vert_char_end:
 	ds.l	1
 
 vert_text_read:
+	ds.l	1
+
+horiz_buffer:
+	ds.b	640
+
+horiz_read:
+	ds.l	1
+
+horiz_font_read:
+	ds.l	1
+horiz_char_end:
+	ds.l	1
+
+horiz_text_read:
 	ds.l	1
 
 fb_raw:
