@@ -75,8 +75,8 @@ SupEntr:
 	move.l	d0, fb_back
 
 	move.l	#vert_buffer, vert_read
-	move.l	#Font, vert_font_read
-	move.l	#Font + 2, vert_char_end
+	move.l	#VertFont, vert_font_read
+	move.l	#VertFont + 2, vert_char_end
 
 	move.l	#VertText, vert_text_read
 
@@ -153,7 +153,7 @@ MainLoop:
 InText:
 	move.l	a2, vert_text_read
 
-	move.l	#Font, a1
+	move.l	#VertFont, a1
 	lsl.w	#5, d1
 	add.w	d1, a1
 	lea.l	32(a1), a2
@@ -228,7 +228,7 @@ VBL_Handler:
 
 	.data
 
-Font:
+VertFont:
 	dc.w	%0000000000000000
 	dc.w	%0000000000000000
 	dc.w	%0000000000000000
