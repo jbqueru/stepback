@@ -140,6 +140,9 @@ Shift16pix:
 	dbra	d1, ShiftLine
 	dbra	d0, LogoPixel
 
+	move.l	fb_front, logo_address_front
+	move.l	fb_back, logo_address_back
+
 ; #############################################################################
 ; #############################################################################
 ; ###                                                                       ###
@@ -173,6 +176,24 @@ MainLoop:
 	move.b	d0, $ffff8203.w
 	lsr.l	#8, d0
 	move.b	d0, $ffff8201.w
+
+	move.l	logo_address_front, a0
+
+	moveq.l	#0, d4
+	move.l	d4, d5
+	move.l	d4, d6
+	move.l	d4, d7
+	move.l	d4, a3
+	move.l	d4, a4
+	move.l	d4, a5
+	move.l	d4, a6
+
+	moveq.l	#79, d0
+EraseLogo:
+	movem.l	d4-d7/a3-a6, (a0)
+	movem.l	d4-d7/a3-a6, 32(a0)
+	add	#160, a0
+	dbra d0, EraseLogo
 
 ; ############################
 ; ############################
@@ -358,6 +379,7 @@ Text1:
 	dbra	d0, Text0
 
 
+
 	move.l	fb_back, a0
 	move.l	#logo_shifted, a1
 
@@ -386,7 +408,8 @@ LogoXOk:
 	mulu.w	#96 * 80, d1
 	add.l	d1, a1
 
-
+	move.l	logo_address_back, logo_address_front
+	move.l	a0, logo_address_back
 
 	moveq.l	#79, d0
 Lp0:
@@ -1117,6 +1140,10 @@ logo_x:
 	ds.w	1
 logo_y:
 	ds.w	1
+logo_address_front:
+	ds.l	1
+logo_address_back:
+	ds.l	1
 
 fb_raw:
 	.ds.b	64255
