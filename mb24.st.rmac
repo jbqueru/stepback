@@ -398,11 +398,16 @@ ShiftPixel:
 ; ****************************
 
 	move.l	horiz_read, a0
-	addq.l	#1, a0
+	move.l	a0, horiz_previous_read
+
+	add.w	#40 * 2 * 9, a0
+	cmp.l	#horiz_buffer + 40 * 2 * 9 * 4, a0
+	blt.s	HorizBufferOk
+	sub.w	#40 * 2 * 9 * 4 - 2, a0
 	cmp.l	#horiz_buffer + 40, a0
-	bne.s	HInBuffer
-	move.l	#horiz_buffer, a0
-HInBuffer:
+	bne.s	HorizBufferOk
+	sub.w	#40, a0
+HorizBufferOk:
 	move.l	a0, horiz_read
 
 	move.w	#$447, $ffff8240.w
@@ -564,7 +569,7 @@ vert_text_read:
 	ds.l	1
 
 horiz_buffer:
-	ds.w	40 * 9 * 2
+	ds.w	20 * 2 * 9 * 4
 
 horiz_read:
 	ds.l	1
