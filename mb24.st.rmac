@@ -234,16 +234,20 @@ EraseSprite:
 
 	move.l	fb_back, a0
 	move.l	vert_read, a1
+	lea	100(a1), a2
+	lea	200(a1), a3
 	moveq.l	#19,d1
 DrawVert:
 	.rept	10
 	move.w	(a1)+, d0
 	move.w	d0, 8(a0)
+	move.w	d0, 144(a0)
+	move.w	(a2)+, d0
 	move.w	d0, 24(a0)
+	move.w	d0, 128(a0)
+	move.w	(a3)+, d0
 	move.w	d0, 40(a0)
 	move.w	d0, 112(a0)
-	move.w	d0, 128(a0)
-	move.w	d0, 144(a0)
 	add.w	#160, a0
 	.endr
 	dbra	d1, DrawVert
@@ -278,7 +282,7 @@ InText:
 InChar:
 	move.l	a1, vert_font_read
 	move.w	d0, (a0)
-	move.w	d0, 400(a0)
+	move.w	d0, 600(a0)
 
 ; ***************************
 ; **                       **
@@ -288,7 +292,7 @@ InChar:
 
 	move.l	vert_read, a0
 	addq.w	#2, a0
-	cmp.l	#vert_buffer + 400, a0
+	cmp.l	#vert_buffer + 600, a0
 	bne.s	BufferOk
 	move.l	#vert_buffer, a0
 BufferOk:
@@ -680,7 +684,7 @@ vert_read:
 	ds.l	1
 
 vert_buffer:
-	ds.w	2 * 200
+	ds.w	2 * 300
 
 vert_font_read:
 	ds.l	1
