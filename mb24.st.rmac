@@ -357,14 +357,14 @@ HInChar:
 	move.l	horiz_previous_read, a1
 	moveq.l	#8, d2
 ShiftPixel:
-	move.b	1(a1), d1
-	move.b	d1, (a0)
-	move.b	d1, 40(a0)
+	move.w	(a1), d3
+	lsl.w	#8, d3
 
 	lsr.w	d0
 	scs	d1
-	move.b	d1, 1(a0)
-	move.b	d1, 41(a0)
+	or.b	d1, d3
+	move.w	d3, (a0)
+	move.w	d3, 40(a0)
 	add.w	#80, a1
 	add.w	#80, a0
 	dbra	d2, ShiftPixel
