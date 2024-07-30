@@ -264,6 +264,14 @@ InChar:
 	move.l	a1, vert_font_read
 	move.w	d0, (a0)
 	move.w	d0, 400(a0)
+
+; ****************************
+; **                        **
+; ** Point to neww location **
+; **                        **
+; ****************************
+
+	move.l	vert_read, a0
 	addq.w	#2, a0
 	cmp.l	#vert_buffer + 400, a0
 	bne.s	BufferOk
@@ -411,6 +419,13 @@ HInChar:
 	move.b	d1, 640(a0)
 	move.b	d1, 680(a0)
 
+; ****************************
+; **                        **
+; ** Point to neww location **
+; **                        **
+; ****************************
+
+	move.l	horiz_read, a0
 	addq.l	#1, a0
 	cmp.l	#horiz_buffer + 40, a0
 	bne.s	HInBuffer
