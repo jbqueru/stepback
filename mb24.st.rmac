@@ -90,6 +90,7 @@ SupEntr:
 
 	move.l	#HorizText, horiz_text_read
 	move.l	#horiz_buffer, horiz_read
+	move.l	#horiz_buffer, horiz_previous_read
 	move.l	#HorizFont, horiz_font_read
 	move.l	#HorizFont + 2, horiz_char_end
 
@@ -369,11 +370,17 @@ HInBuffer:
 
 	move.l	fb_back, a0
 	add.w	#120 * 160 + 2, a0
-	move.l	horiz_read, a1
+	move.l	horiz_read, d0
+	.if 0
+	and.w	#$fffe, d0
+	.endif
+	move.l	d0, a1
 	move.w	#8, d0
 Text0:
 	move.w	#19, d1
 Text1:
+	.if 1
+
 	move.b	(a1)+, d2
 	move.b	d2, (a0)
 	move.b	d2, 160(a0)
@@ -392,6 +399,21 @@ Text1:
 	move.b	d2, 801(a0)
 	move.b	d2, 961(a0)
 	move.b	d2, 1121(a0)
+
+	.else
+
+	move.w	(a1)+, d2
+	move.w	d2, (a0)
+	move.w	d2, 160(a0)
+	move.w	d2, 320(a0)
+	move.w	d2, 480(a0)
+	move.w	d2, 640(a0)
+	move.w	d2, 800(a0)
+	move.w	d2, 960(a0)
+	move.w	d2, 1120(a0)
+
+	.endif
+
 	addq.w	#8, a0
 	dbra	d1, Text1
 	add.w	#1120, a0
@@ -399,10 +421,9 @@ Text1:
 	dbra	d0, Text0
 
 	move.w	#$447, $ffff8240.w
-	divu	#1, d0
-	divu	#1, d0
-	divu	#1, d0
-	divu	#1, d0
+	.rept 124
+	nop
+	.endr
 	move.w	#$000, $ffff8240.w
 
 
@@ -541,7 +562,7 @@ vert_read:
 	ds.l	1
 
 vert_buffer:
-	ds.w	400
+	ds.w	2 * 200
 
 vert_font_read:
 	ds.l	1
@@ -552,9 +573,11 @@ vert_text_read:
 	ds.l	1
 
 horiz_buffer:
-	ds.b	40 * 2 * 9
+	ds.w	40 * 9 * 2
 
 horiz_read:
+	ds.l	1
+horiz_previous_read:
 	ds.l	1
 
 horiz_font_read:
