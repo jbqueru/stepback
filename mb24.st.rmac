@@ -71,9 +71,9 @@ SupEntr:
 	move.b	#2, $ffff820a.w
 	move.b	#0, $ffff8260.w
 
-	move.w	#$700, $ffff8242.w
-	move.w	#$007, $ffff8244.w
-	move.w	#$007, $ffff8246.w
+	move.w	#$732, $ffff8242.w
+	move.w	#$574, $ffff8244.w
+	move.w	#$574, $ffff8246.w
 
 	move.l	#fb_raw, d0
 	add.l	#$ff, d0
