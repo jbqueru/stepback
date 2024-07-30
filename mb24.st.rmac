@@ -65,7 +65,9 @@ SupEntr:
 	move.b	#0, $fffffa09.w
 
 	move.l	#VBL_Handler, $70.w
+	move.l	#HBL_Handler, $120.w
 
+	stop	#$2300
 	stop	#$2300
 
 	move.b	#2, $ffff820a.w
@@ -522,6 +524,19 @@ DrawSprite:
 	bra	MainLoop
 
 VBL_Handler:
+	and.b	#%11110111, $fffffa17.w
+	move.b	#0, $fffffa0b.w
+	move.b	#0, $fffffa0f.w
+	move.b	#%00000001, $fffffa07.w
+	move.b	#%00000001, $fffffa13.w
+	move.b	#0, $fffffa1b.w
+	move.b	#200, $fffffa21.w
+	move.b	#%1000, $fffffa1b.w
+
+	rte
+
+HBL_Handler:
+	eor.w	#$444, $ffff8240.w
 	rte
 
 	.data
