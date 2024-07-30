@@ -91,6 +91,10 @@ SupEntr:
 	move.w	#$574, $ffff8244.w
 	move.w	#$574, $ffff8246.w
 
+	move.w	#$322, $ffff8248.w
+	move.w	#$533, $ffff8250.w
+	move.w	#$744, $ffff8258.w
+
 	move.l	#fb_raw, d0
 	add.l	#$ff, d0
 	and.l	#$ffffff00, d0
