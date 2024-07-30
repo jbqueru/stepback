@@ -354,12 +354,18 @@ HInText:
 HInChar:
 	move.l	a1, horiz_font_read
 
+	move.l	horiz_previous_read, a1
 	moveq.l	#8, d2
 ShiftPixel:
-	lsr.w	d0
-	scs	d1
+	move.b	1(a1), d1
 	move.b	d1, (a0)
 	move.b	d1, 40(a0)
+
+	lsr.w	d0
+	scs	d1
+	move.b	d1, 1(a0)
+	move.b	d1, 41(a0)
+	add.w	#80, a1
 	add.w	#80, a0
 	dbra	d2, ShiftPixel
 
