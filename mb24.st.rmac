@@ -303,37 +303,11 @@ BufferOk:
 	move.l	fb_back, a0
 	add.w	#120 * 160 + 2, a0
 	move.l	horiz_read, d0
-	.if 0
-	and.w	#$fffe, d0
-	.endif
 	move.l	d0, a1
 	move.w	#8, d0
 Text0:
 	move.w	#19, d1
 Text1:
-	.if 1
-
-	move.b	(a1)+, d2
-	move.b	d2, (a0)
-	move.b	d2, 160(a0)
-	move.b	d2, 320(a0)
-	move.b	d2, 480(a0)
-	move.b	d2, 640(a0)
-	move.b	d2, 800(a0)
-	move.b	d2, 960(a0)
-	move.b	d2, 1120(a0)
-	move.b	(a1)+, d2
-	move.b	d2, 1(a0)
-	move.b	d2, 161(a0)
-	move.b	d2, 321(a0)
-	move.b	d2, 481(a0)
-	move.b	d2, 641(a0)
-	move.b	d2, 801(a0)
-	move.b	d2, 961(a0)
-	move.b	d2, 1121(a0)
-
-	.else
-
 	move.w	(a1)+, d2
 	move.w	d2, (a0)
 	move.w	d2, 160(a0)
@@ -343,8 +317,6 @@ Text1:
 	move.w	d2, 800(a0)
 	move.w	d2, 960(a0)
 	move.w	d2, 1120(a0)
-
-	.endif
 
 	addq.w	#8, a0
 	dbra	d1, Text1
