@@ -197,10 +197,9 @@ EraseLogo:
 	dbra d0, EraseLogo
 
 	move.w	#$744, $ffff8240.w
-	divu	#1, d0
-	divu	#1, d0
-	divu	#1, d0
-	divu	#1, d0
+	.rept 12
+	mulu.w	d0,d0
+	.endr
 	move.w	#$000, $ffff8240.w
 
 
@@ -273,10 +272,9 @@ BufferOk:
 	move.l	a0, vert_read
 
 	move.w	#$474, $ffff8240.w
-	divu	#1, d0
-	divu	#1, d0
-	divu	#1, d0
-	divu	#1, d0
+	.rept 12
+	mulu.w	d0,d0
+	.endr
 	move.w	#$000, $ffff8240.w
 
 
@@ -421,8 +419,8 @@ Text1:
 	dbra	d0, Text0
 
 	move.w	#$447, $ffff8240.w
-	.rept 124
-	nop
+	.rept 12
+	mulu.w	d0,d0
 	.endr
 	move.w	#$000, $ffff8240.w
 
@@ -471,10 +469,9 @@ Lp0:
 	dbra	d0, Lp0
 
 	move.w	#$777, $ffff8240.w
-	divu	#1, d0
-	divu	#1, d0
-	divu	#1, d0
-	divu	#1, d0
+	.rept 12
+	mulu.w	d0,d0
+	.endr
 	move.w	#$000, $ffff8240.w
 
 	bra	MainLoop
