@@ -332,7 +332,10 @@ Text1:
 
 	move.l	horiz_read, a0
 	move.l	horiz_font_read, a1
-	move.w	(a1)+, d0
+	move.w	(a1), d0
+	eor	#1, horiz_half_advance
+	bne.s	HInChar
+	addq.w	#2, a1
 	cmp.l	horiz_char_end, a1
 	bne.s	HInChar
 
@@ -358,10 +361,11 @@ HInChar:
 	moveq.l	#8, d2
 ShiftPixel:
 	move.w	(a1), d3
-	lsl.w	#8, d3
+	lsl.w	#4, d3
 
 	lsr.w	d0
 	scs	d1
+	and.b	#$f, d1
 	or.b	d1, d3
 	move.w	d3, (a0)
 	move.w	d3, 40(a0)
@@ -379,9 +383,9 @@ ShiftPixel:
 	move.l	a0, horiz_previous_read
 
 	add.w	#40 * 2 * 9, a0
-	cmp.l	#horiz_buffer + 40 * 2 * 9 * 2, a0
+	cmp.l	#horiz_buffer + 40 * 2 * 9 * 4, a0
 	blt.s	HorizBufferOk
-	sub.w	#40 * 2 * 9 * 2 - 2, a0
+	sub.w	#40 * 2 * 9 * 4 - 2, a0
 	cmp.l	#horiz_buffer + 40, a0
 	bne.s	HorizBufferOk
 	sub.w	#40, a0
@@ -558,6 +562,9 @@ horiz_font_read:
 	ds.l	1
 horiz_char_end:
 	ds.l	1
+
+horiz_half_advance:
+	ds.w	1
 
 horiz_text_read:
 	ds.l	1
