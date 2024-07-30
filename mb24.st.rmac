@@ -382,42 +382,14 @@ HInText:
 HInChar:
 	move.l	a1, horiz_font_read
 
+	moveq.l	#8, d2
+ShiftPixel:
 	lsr.w	d0
 	scs	d1
 	move.b	d1, (a0)
 	move.b	d1, 40(a0)
-	lsr.w	d0
-	scs	d1
-	move.b	d1, 80(a0)
-	move.b	d1, 120(a0)
-	lsr.w	d0
-	scs	d1
-	move.b	d1, 160(a0)
-	move.b	d1, 200(a0)
-	lsr.w	d0
-	scs	d1
-	move.b	d1, 240(a0)
-	move.b	d1, 280(a0)
-	lsr.w	d0
-	scs	d1
-	move.b	d1, 320(a0)
-	move.b	d1, 360(a0)
-	lsr.w	d0
-	scs	d1
-	move.b	d1, 400(a0)
-	move.b	d1, 440(a0)
-	lsr.w	d0
-	scs	d1
-	move.b	d1, 480(a0)
-	move.b	d1, 520(a0)
-	lsr.w	d0
-	scs	d1
-	move.b	d1, 560(a0)
-	move.b	d1, 600(a0)
-	lsr.w	d0
-	scs	d1
-	move.b	d1, 640(a0)
-	move.b	d1, 680(a0)
+	add.w	#80, a0
+	dbra	d2, ShiftPixel
 
 ; ****************************
 ; **                        **
