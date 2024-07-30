@@ -449,6 +449,41 @@ Lp0:
 	add.w	#96, a0
 	dbra	d0, Lp0
 
+	move.w	#$774, $ffff8240.w
+	.rept 12
+	mulu.w	d0,d0
+	.endr
+	move.w	#$000, $ffff8240.w
+
+; #######################
+; #######################
+; ###                 ###
+; ###  Small Sprites  ###
+; ###                 ###
+; #######################
+; #######################
+
+	move.l	fb_back, a0
+	add.w	#24080, a0
+	move.l	#$ff00ff00, d0
+	move.l	#$00ff00ff, d1
+	move.l	#$000f0033, d2
+	move.l	#$cc00f000, d3
+
+	.rept	16
+	and.l	d0, (a0)+
+	and.l	d0, (a0)
+	or.l	d2, (a0)+
+	move.l	#0, (a0)+
+	move.l	#$12345678, (a0)+
+	move.l	#0, (a0)+
+	move.l	#$12345678, (a0)+
+	and.l	d1, (a0)+
+	and.l	d1, (a0)
+	or.l	d3, (a0)+
+	add.w	#128, a0
+	.endr
+
 	move.w	#$777, $ffff8240.w
 	.rept 12
 	mulu.w	d0,d0
