@@ -121,6 +121,9 @@ SupEntr:
 	move.l	#BigLogoY1, logo_read_y1
 	move.l	#BigLogoY2, logo_read_y2
 
+	move.l	#SpriteX1, sprite_read_x1
+	move.l	#SpriteY1, sprite_read_y1
+
 	move.l	#BigLogo, a0
 	move.l	#logo_shifted, a1
 
@@ -574,12 +577,27 @@ Lp0:
 	move.l	fb_back, a0
 	move.l	#sprite_shifted, a1
 
-	moveq.l	#100, d6
+	move.l	sprite_read_y1, a2
+	move.w	(a2)+, d6
+	cmp.l	#SpriteY1End, a2
+	bne.s	SpriteY1Ok
+	move.l	#SpriteY1, a2
+SpriteY1Ok:
+	move.l	a2, sprite_read_y1
+	lsr.w	#2, d6
 	mulu.w	#160, d6
 	add.w	d6, a0
 
-	moveq.l	#95, d4
-	move.l	d4, d5
+	move.l	sprite_read_x1, a2
+	move.w	(a2)+, d4
+	cmp.l	#SpriteX1End, a2
+	bne.s	SpriteX1Ok
+	move.l	#SpriteX1, a2
+SpriteX1Ok:
+	move.l	a2, sprite_read_x1
+
+	lsr.w	#2, d4
+	move.w	d4, d5
 	and.w	#$f, d5
 	sub.w	d5, d4
 	lsr.w	d4
@@ -856,6 +874,15 @@ logo_read_x:
 logo_read_y1:
 	ds.l	1
 logo_read_y2:
+	ds.l	1
+
+sprite_read_x1:
+	ds.l	1
+sprite_read_x2:
+	ds.l	1
+sprite_read_y1:
+	ds.l	1
+sprite_read_y2:
 	ds.l	1
 
 fb_raw:
