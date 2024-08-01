@@ -171,6 +171,57 @@ Shift16pix:
 	move.l	fb_front, logo_address_front
 	move.l	fb_back, logo_address_back
 
+
+	move.l	#SmallSprite, a0
+	move.l	#sprite_shifted, a1
+	moveq.l	#19, d0
+CopySprite:
+	move.l	(a0)+, (a1)
+	move.l	(a0)+, 8(a1)
+	move.l	(a0)+, 12(a1)
+	move.l	(a0)+, 16(a1)
+	move.l	(a0)+, 20(a1)
+	move.l	(a0)+, 4(a1)
+	add.w	#24, a1
+	dbra	d0, CopySprite
+
+	move.l	#sprite_shifted, a0
+	move.l	#sprite_shifted + 24 * 20, a1
+	moveq.l	#14, d0
+SpritePixel:
+	moveq.l	#19, d1
+SpriteLine:
+	moveq.l	#1, d2
+SpritePlane:
+	move.w	(a0), d3
+	lsr.w	d3
+	move.w	d3, (a1)
+	move.w	8(a0), d3
+	roxr.w	d3
+	move.w	d3, 8(a1)
+	move.w	12(a0), d3
+	roxr.w	d3
+	move.w	d3, 12(a1)
+	move.w	16(a0), d3
+	roxr.w	d3
+	move.w	d3, 16(a1)
+	move.w	20(a0), d3
+	roxr.w	d3
+	move.w	d3, 20(a1)
+	move.w	4(a0), d3
+	roxr.w	d3
+	move.w	d3, 4(a1)
+	addq.l	#2, a0
+	addq.l	#2, a1
+	dbra	d2, SpritePlane
+	add.w	#20, a0
+	add.w	#20, a1
+	dbra	d1, SpriteLine
+	dbra	d0, SpritePixel
+
+
+
+
 ; #############################################################################
 ; #############################################################################
 ; ###                                                                       ###
@@ -529,7 +580,7 @@ Lp0:
 	moveq.l	#0,d7
 	move.l	d7, a2
 
-	move.l	#SmallSprite, a1
+	move.l	#sprite_shifted, a1
 	moveq.l	#59, d7
 
 DrawSprite:
@@ -712,16 +763,6 @@ BigLogo:
 	.endr
 
 SmallSprite:
-	dc.l	$ffffffff, $80008000, $ffffffff, $ffffffff, $ffffffff, $ffffffff
-	dc.l	$8000ffff, $80008000, $0000ffff, $0000ffff, $0000ffff, $0000ffff
-	dc.l	$bfffc000, $80008000, $ffff0000, $ffff0000, $ffff0000, $fffe0001
-	.rept 14
-	dc.l	$a000c000, $80008000, $00000000, $00000000, $00000000, $00020001
-	.endr
-	dc.l	$bfffc000, $80008000, $ffff0000, $ffff0000, $ffff0000, $fffe0001
-	dc.l	$8000ffff, $80008000, $0000ffff, $0000ffff, $0000ffff, $0000ffff
-	dc.l	$ffffffff, $80008000, $ffffffff, $ffffffff, $ffffffff, $ffffffff
-
 	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
 	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
 	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
