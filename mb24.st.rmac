@@ -117,6 +117,10 @@ SupEntr:
 	move.l	#HorizFont, horiz_font_read
 	move.l	#HorizFont + 2, horiz_char_end
 
+	move.l	#BigLogoX, logo_read_x
+	move.l	#BigLogoY1, logo_read_y1
+	move.l	#BigLogoY2, logo_read_y2
+
 	move.l	#BigLogo, a0
 	move.l	#logo_shifted, a1
 
@@ -452,23 +456,34 @@ HorizBufferOk:
 	move.l	fb_back, a0
 	move.l	#logo_shifted, a1
 
-	move.w	logo_y, d0
-	addq.w	#1, d0
-	cmp.w	#120, d0
-	bne.s	LogoYOk
-	moveq.l	#0, d0
-LogoYOk:
-	move.w	d0, logo_y
+	move.l	logo_read_y1, a2
+	move.w	(a2)+, d0
+	cmp.l	#BigLogoY1End, a2
+	bne.s	LogoY1Ok
+	move.l	#BigLogoY1, a2
+LogoY1Ok:
+	move.l	a2, logo_read_y1
+
+	move.l	logo_read_y2, a2
+	add.w	(a2)+, d0
+	cmp.l	#BigLogoY2End, a2
+	bne.s	LogoY2Ok
+	move.l	#BigLogoY2, a2
+LogoY2Ok:
+	move.l	a2, logo_read_y2
+
+	lsr.w	#2, d0
 	mulu.w	#160, d0
 	add.w	d0, a0
 
-	move.w	logo_x, d1
-	addq.w	#1, d1
-	cmp.w	#207, d1
-	bne.s	LogoXOk
+	move.l	logo_read_x, a2
 	moveq.l	#0, d1
+	move.b	(a2)+, d1
+	cmp.l	#BigLogoXEnd, a2
+	bne.s	LogoXOk
+	move.l	#BigLogoX, a2
 LogoXOk:
-	move.w	d1, logo_x
+	move.l	a2, logo_read_x
 	move.w	d1, d0
 	and.w	#$f0, d0
 	lsr.w	d0
@@ -717,6 +732,8 @@ SmallSprite:
 	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
 	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
 
+	.include "tmp/mb24.sines.rmac"
+
 	.bss
 
 	.even
@@ -764,13 +781,18 @@ logo_shifted:
 sprite_shifted:
 	ds.l	6 * 20 * 16
 
-logo_x:
-	ds.w	1
 logo_y:
 	ds.w	1
 logo_address_front:
 	ds.l	1
 logo_address_back:
+	ds.l	1
+
+logo_read_x:
+	ds.l	1
+logo_read_y1:
+	ds.l	1
+logo_read_y2:
 	ds.l	1
 
 fb_raw:
