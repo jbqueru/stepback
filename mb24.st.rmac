@@ -88,8 +88,8 @@ SupEntr:
 	move.b	#0, $ffff8260.w
 
 	move.w	#$732, $ffff8242.w
-	move.w	#$574, $ffff8244.w
-	move.w	#$574, $ffff8246.w
+	move.w	#$463, $ffff8244.w
+	move.w	#$463, $ffff8246.w
 
 	move.w	#$322, $ffff8248.w
 	move.w	#$533, $ffff8250.w
