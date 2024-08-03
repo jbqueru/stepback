@@ -26,7 +26,8 @@
 
 	.even
 
-SmallSprite:
+SpritesBitmap:
+	.rept 3
 	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
 	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
 	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
@@ -36,3 +37,4 @@ SmallSprite:
 	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
 	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
 	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
+	.endr

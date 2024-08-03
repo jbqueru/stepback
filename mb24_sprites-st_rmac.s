@@ -71,10 +71,10 @@ SpritesInit:
 ; **                           **
 ; *******************************
 
-	lea.l	SmallSprite, a0
-	lea.l	sprite_shifted, a1
+	lea.l	SpritesBitmap, a0
+	lea.l	sprites_shifted, a1
 
-	moveq.l	#19, d7
+	moveq.l	#59, d7
 .Copy:
 	move.l	(a0)+, (a1)
 	move.l	(a0)+, 8(a1)
@@ -91,12 +91,12 @@ SpritesInit:
 ; **                                                **
 ; ****************************************************
 
-	lea.l	sprite_shifted, a0
-	lea.l	sprite_shifted + 24 * 20, a1
+	lea.l	sprites_shifted, a0
+	lea.l	sprites_shifted + 24 * 20 * 3, a1
 
 	moveq.l	#14, d7
 .Pixel:
-	moveq.l	#19, d6
+	moveq.l	#59, d6
 .Line:
 	moveq.l	#1, d5
 .Plane:
@@ -139,7 +139,7 @@ SpritesInit:
 ; ###############
 
 SpritesErase:
-	move.l	sprite_erase_front, a0
+	movea.l	sprite_erase_front, a0
 	lea.l	4(a0), a0
 	moveq.l	#0, d0
 
@@ -169,25 +169,25 @@ SpritesErase:
 
 SpritesDraw:
 
-	move.l	#sprite_shifted, a0
-	move.l	fb_back, a1
+	lea.l	sprites_shifted, a0
+	movea.l	fb_back, a1
 
-	move.l	sprite_read_y1, a2
+	movea.l	sprite_read_y1, a2
 	move.w	(a2)+, d6
-	cmp.l	#SpriteY1End, a2
+	cmpa.l	#SpriteY1End, a2
 	bne.s	SpriteY1Ok
-	move.l	#SpriteY1, a2
+	lea.l	SpriteY1, a2
 SpriteY1Ok:
 	move.l	a2, sprite_read_y1
 	lsr.w	#2, d6
 	mulu.w	#160, d6
-	add.w	d6, a1
+	adda.w	d6, a1
 
-	move.l	sprite_read_x1, a2
+	movea.l	sprite_read_x1, a2
 	move.w	(a2)+, d4
-	cmp.l	#SpriteX1End, a2
+	cmpa.l	#SpriteX1End, a2
 	bne.s	SpriteX1Ok
-	move.l	#SpriteX1, a2
+	lea.l	SpriteX1, a2
 SpriteX1Ok:
 	move.l	a2, sprite_read_x1
 
@@ -196,7 +196,7 @@ SpriteX1Ok:
 	and.w	#$f, d5
 	sub.w	d5, d4
 	lsr.w	d4
-	add	d4, a1
+	adda.w	d4, a1
 
 	moveq.l	#-1, d2
 	move.w	#$7fff, d3
@@ -211,7 +211,7 @@ SpriteX1Ok:
 	swap	d1
 	move.w	d3, d1
 
-	mulu.w	#24 * 20, d5
+	mulu.w	#24 * 20 * 3, d5
 	adda.w	d5, a0
 
 	move.l	a1, sprite_erase_back
@@ -253,8 +253,8 @@ SpriteX1Ok:
 	.bss
 
 	.even
-sprite_shifted:
-	ds.l	6 * 20 * 16
+sprites_shifted:
+	ds.l	6 * 20 * 16 * 3
 
 sprite_read_x1:
 	ds.l	1
