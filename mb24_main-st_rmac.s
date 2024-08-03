@@ -63,13 +63,13 @@ SupEntr:
 
 	move.b	#0, $fffffa07.w
 	move.b	#0, $fffffa09.w
-	move.b	#0, $fffffa0b.w
-	move.b	#0, $fffffa0d.w
-	move.b	#0, $fffffa0f.w
-	move.b	#0, $fffffa11.w
+;	move.b	#0, $fffffa0b.w
+;	move.b	#0, $fffffa0d.w
+;	move.b	#0, $fffffa0f.w
+;	move.b	#0, $fffffa11.w
 
 	move.l	#VBL_Handler, $70.w
-	move.l	#HBL_Handler, $120.w
+;	move.l	#HBL_Handler, $120.w
 
 	stop	#$2300
 	stop	#$2300
@@ -192,9 +192,8 @@ MainLoop:
 VBL_Handler:
 	rte
 
-HBL_Handler:
-	eor.w	#$444, $ffff8240.w
-	rte
+;HBL_Handler:
+;	rte
 
 	.bss
 
