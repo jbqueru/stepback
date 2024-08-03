@@ -31,4 +31,4 @@ cc mb24_lcurves.c -o tmp/mb24_lcurves -lm
 tmp/mb24_lcurves > tmp/mb24_lcurves-st_rmac.s
 
 mkdir -p out
-~/code/rmac/rmac -s -v -p -4 mb24.st.rmac -o out/MB24.PRG
+~/code/rmac/rmac -s -v -p -4 mb24_main-st_rmac.s -o out/MB24.PRG
