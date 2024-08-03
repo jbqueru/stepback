@@ -22,7 +22,27 @@
 ;
 ; SPDX-License-Identifier: AGPL-3.0-or-later
 
+; #############################################################################
+; #############################################################################
+; ###                                                                       ###
+; ###                                                                       ###
+; ###                         Sprites for MB24 demo                         ###
+; ###                                                                       ###
+; ###                                                                       ###
+; #############################################################################
+; #############################################################################
+
+; See mb24_main-st_rmac.s file for full explanation
+
 	.text
+
+; ##############
+; ##############
+; ###        ###
+; ###  Init  ###
+; ###        ###
+; ##############
+; ##############
 
 SpritesInit:
 	move.l	#SpriteX1, sprite_read_x1
@@ -34,7 +54,7 @@ SpritesInit:
 	move.l	#SmallSprite, a0
 	move.l	#sprite_shifted, a1
 	moveq.l	#19, d0
-CopySprite:
+.Copy:
 	move.l	(a0)+, (a1)
 	move.l	(a0)+, 8(a1)
 	move.l	(a0)+, 12(a1)
@@ -42,16 +62,16 @@ CopySprite:
 	move.l	(a0)+, 20(a1)
 	move.l	(a0)+, 4(a1)
 	add.w	#24, a1
-	dbra	d0, CopySprite
+	dbra	d0, .Copy
 
 	move.l	#sprite_shifted, a0
 	move.l	#sprite_shifted + 24 * 20, a1
 	moveq.l	#14, d0
-SpritePixel:
+.Pixel:
 	moveq.l	#19, d1
-SpriteLine:
+.Line:
 	moveq.l	#1, d2
-SpritePlane:
+.Plane:
 	move.w	(a0), d3
 	lsr.w	d3
 	move.w	d3, (a1)
@@ -72,20 +92,28 @@ SpritePlane:
 	move.w	d3, 4(a1)
 	addq.l	#2, a0
 	addq.l	#2, a1
-	dbra	d2, SpritePlane
+	dbra	d2, .Plane
 	add.w	#20, a0
 	add.w	#20, a1
-	dbra	d1, SpriteLine
-	dbra	d0, SpritePixel
+	dbra	d1, .Line
+	dbra	d0, .Pixel
 
 	rts
+
+; ###############
+; ###############
+; ###         ###
+; ###  Erase  ###
+; ###         ###
+; ###############
+; ###############
 
 SpritesErase:
 	move.l	sprite_erase_front, a0
 	move.l	sprite_erase_back, sprite_erase_front
 
 	moveq.l	#19, d0
-EraseSprite:
+.Loop:
 	move.l	d4, 4(a0)
 	move.l	d4, 12(a0)
 	move.l	d4, 20(a0)
@@ -93,17 +121,18 @@ EraseSprite:
 	move.l	d4, 36(a0)
 	move.l	d4, 44(a0)
 	add.w	#160, a0
-	dbra	d0, EraseSprite
+	dbra	d0, .Loop
 
 	rts
 
-; #######################
-; #######################
-; ###                 ###
-; ###  Small Sprites  ###
-; ###                 ###
-; #######################
-; #######################
+; ##############
+; ##############
+; ###        ###
+; ###  Draw  ###
+; ###        ###
+; ##############
+; ##############
+
 SpritesDraw:
 
 	move.l	fb_back, a0
@@ -157,7 +186,7 @@ SpriteX1Ok:
 
 	moveq.l	#19, d7
 
-DrawSprite:
+.Loop:
 	movem.l	(a1)+, d2-d3/a3-a6
 	and.l	d0, (a0)+
 	and.l	d0, (a0)
@@ -174,9 +203,17 @@ DrawSprite:
 	and.l	d1, (a0)
 	or.l	d3, (a0)+
 	add.w	#112, a0
-	dbra	d7, DrawSprite
+	dbra	d7, .Loop
 
 	rts
+
+; ###################
+; ###################
+; ###             ###
+; ###  Variables  ###
+; ###             ###
+; ###################
+; ###################
 
 	.bss
 
@@ -196,6 +233,14 @@ sprite_erase_front:
 	ds.l	1
 sprite_erase_back:
 	ds.l	1
+
+; #########################
+; #########################
+; ###                   ###
+; ###  Additional data  ###
+; ###                   ###
+; #########################
+; #########################
 
 	.include	"tmp/mb24_scurves-st_rmac.s"
 	.include	"mb24_sbitmaps-st_rmac.s"
