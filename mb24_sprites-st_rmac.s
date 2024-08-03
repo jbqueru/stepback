@@ -32,7 +32,15 @@
 ; #############################################################################
 ; #############################################################################
 
-; See mb24_main-st_rmac.s file for full explanation
+; See mb24_main-st_rmac.s file for overall explanation
+
+; Note that the shifted sprite is sorted out of order.
+; This comes from a combination of 2 factors:
+;   -The shifted data is read with a movem instruction, for which the
+;      register order is fixed.
+;   -The left and right columns need to be displayed with an or instruction,
+;      which requires a data register, while the other columns are displayed
+;      with a move instruction, for which address registerd are acceptable.
 
 	.text
 
@@ -45,15 +53,28 @@
 ; ##############
 
 SpritesInit:
+
+; ******************
+; **              **
+; ** Set pointers **
+; **              **
+; ******************
+
 	move.l	#SpriteX1, sprite_read_x1
 	move.l	#SpriteY1, sprite_read_y1
 	move.l	fb_back, sprite_erase_back
 	move.l	fb_front, sprite_erase_front
 
+; *******************************
+; **                           **
+; ** Prepare unshifted version **
+; **                           **
+; *******************************
 
-	move.l	#SmallSprite, a0
-	move.l	#sprite_shifted, a1
-	moveq.l	#19, d0
+	lea.l	SmallSprite, a0
+	lea.l	sprite_shifted, a1
+
+	moveq.l	#19, d7
 .Copy:
 	move.l	(a0)+, (a1)
 	move.l	(a0)+, 8(a1)
@@ -61,42 +82,51 @@ SpritesInit:
 	move.l	(a0)+, 16(a1)
 	move.l	(a0)+, 20(a1)
 	move.l	(a0)+, 4(a1)
-	add.w	#24, a1
-	dbra	d0, .Copy
+	adda.w	#24, a1
+	dbra	d7, .Copy
 
-	move.l	#sprite_shifted, a0
-	move.l	#sprite_shifted + 24 * 20, a1
-	moveq.l	#14, d0
+; ****************************************************
+; **                                                **
+; ** Shift into other versions, one pixel at a time **
+; **                                                **
+; ****************************************************
+
+	lea.l	sprite_shifted, a0
+	lea.l	sprite_shifted + 24 * 20, a1
+
+	moveq.l	#14, d7
 .Pixel:
-	moveq.l	#19, d1
+	moveq.l	#19, d6
 .Line:
-	moveq.l	#1, d2
+	moveq.l	#1, d5
 .Plane:
-	move.w	(a0), d3
-	lsr.w	d3
-	move.w	d3, (a1)
-	move.w	8(a0), d3
-	roxr.w	d3
-	move.w	d3, 8(a1)
-	move.w	12(a0), d3
-	roxr.w	d3
-	move.w	d3, 12(a1)
-	move.w	16(a0), d3
-	roxr.w	d3
-	move.w	d3, 16(a1)
-	move.w	20(a0), d3
-	roxr.w	d3
-	move.w	d3, 20(a1)
-	move.w	4(a0), d3
-	roxr.w	d3
-	move.w	d3, 4(a1)
+	move.w	(a0), d0
+	lsr.w	d0
+	move.w	d0, (a1)
+	move.w	8(a0), d0
+	roxr.w	d0
+	move.w	d0, 8(a1)
+	move.w	12(a0), d0
+	roxr.w	d0
+	move.w	d0, 12(a1)
+	move.w	16(a0), d0
+	roxr.w	d0
+	move.w	d0, 16(a1)
+	move.w	20(a0), d0
+	roxr.w	d0
+	move.w	d0, 20(a1)
+	move.w	4(a0), d0
+	roxr.w	d0
+	move.w	d0, 4(a1)
 	addq.l	#2, a0
 	addq.l	#2, a1
-	dbra	d2, .Plane
-	add.w	#20, a0
-	add.w	#20, a1
-	dbra	d1, .Line
-	dbra	d0, .Pixel
+
+	dbra	d5, .Plane
+
+	lea.l	20(a0), a0
+	lea.l	20(a1), a1
+	dbra	d6, .Line
+	dbra	d7, .Pixel
 
 	rts
 
@@ -110,18 +140,22 @@ SpritesInit:
 
 SpritesErase:
 	move.l	sprite_erase_front, a0
-	move.l	sprite_erase_back, sprite_erase_front
+	lea.l	4(a0), a0
+	moveq.l	#0, d0
 
-	moveq.l	#19, d0
+	moveq.l	#19, d7
 .Loop:
-	move.l	d4, 4(a0)
-	move.l	d4, 12(a0)
-	move.l	d4, 20(a0)
-	move.l	d4, 28(a0)
-	move.l	d4, 36(a0)
-	move.l	d4, 44(a0)
-	add.w	#160, a0
-	dbra	d0, .Loop
+	move.l	d0, (a0)
+	move.l	d0, 8(a0)
+	move.l	d0, 16(a0)
+	move.l	d0, 24(a0)
+	move.l	d0, 32(a0)
+	move.l	d0, 40(a0)
+
+	lea.l	160(a0), a0
+	dbra	d7, .Loop
+
+	move.l	sprite_erase_back, sprite_erase_front
 
 	rts
 
@@ -135,8 +169,8 @@ SpritesErase:
 
 SpritesDraw:
 
-	move.l	fb_back, a0
-	move.l	#sprite_shifted, a1
+	move.l	#sprite_shifted, a0
+	move.l	fb_back, a1
 
 	move.l	sprite_read_y1, a2
 	move.w	(a2)+, d6
@@ -147,7 +181,7 @@ SpriteY1Ok:
 	move.l	a2, sprite_read_y1
 	lsr.w	#2, d6
 	mulu.w	#160, d6
-	add.w	d6, a0
+	add.w	d6, a1
 
 	move.l	sprite_read_x1, a2
 	move.w	(a2)+, d4
@@ -162,7 +196,7 @@ SpriteX1Ok:
 	and.w	#$f, d5
 	sub.w	d5, d4
 	lsr.w	d4
-	add	d4, a0
+	add	d4, a1
 
 	moveq.l	#-1, d2
 	move.w	#$7fff, d3
@@ -178,31 +212,32 @@ SpriteX1Ok:
 	move.w	d3, d1
 
 	mulu.w	#24 * 20, d5
-	add.w	d5, a1
+	adda.w	d5, a0
 
-	move.l	a0, sprite_erase_back
+	move.l	a1, sprite_erase_back
 
-	lea.l	0.w, a2
+	moveq.l	#0, d4
 
 	moveq.l	#19, d7
 
 .Loop:
-	movem.l	(a1)+, d2-d3/a3-a6
-	and.l	d0, (a0)+
-	and.l	d0, (a0)
-	or.l	d2, (a0)+
-	move.l	a2, (a0)+
-	move.l	a3, (a0)+
-	move.l	a2, (a0)+
-	move.l	a4, (a0)+
-	move.l	a2, (a0)+
-	move.l	a5, (a0)+
-	move.l	a2, (a0)+
-	move.l	a6, (a0)+
-	and.l	d1, (a0)+
-	and.l	d1, (a0)
-	or.l	d3, (a0)+
-	add.w	#112, a0
+	movem.l	(a0)+, d2-d3/a3-a6
+	and.l	d0, (a1)+
+	and.l	d0, (a1)
+	or.l	d2, (a1)+
+	move.l	d4, (a1)+
+	move.l	a3, (a1)+
+	move.l	d4, (a1)+
+	move.l	a4, (a1)+
+	move.l	d4, (a1)+
+	move.l	a5, (a1)+
+	move.l	d4, (a1)+
+	move.l	a6, (a1)+
+	and.l	d1, (a1)+
+	and.l	d1, (a1)
+	or.l	d3, (a1)+
+
+	lea.l	112(a1), a1
 	dbra	d7, .Loop
 
 	rts
