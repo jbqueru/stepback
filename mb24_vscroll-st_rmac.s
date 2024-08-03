@@ -37,8 +37,8 @@
 	.text
 
 VertInit:
-	move.l	#vert_buffer, vert_read
-	move.l	#VertFont, vert_font_read
+	move.l	#vert_buffer, vert_buffer_read
+	move.l	#VertFont, vert_char_read
 	move.l	#VertFont + 2, vert_char_end
 	move.l	#VertText, vert_text_read
 
@@ -60,11 +60,11 @@ VertInit:
 VertDraw:
 
 	move.l	fb_back, a0
-	move.l	vert_read, a1
+	move.l	vert_buffer_read, a1
 	lea	100(a1), a2
 	lea	200(a1), a3
 	moveq.l	#19,d1
-DrawVert:
+.Draw10Lines:
 	.rept	10
 	move.w	(a1)+, d0
 	move.w	d0, 8(a0)
@@ -77,7 +77,7 @@ DrawVert:
 	move.w	d0, 112(a0)
 	add.w	#160, a0
 	.endr
-	dbra	d1, DrawVert
+	dbra	d1, .Draw10Lines
 
 ; *********************
 ; **                 **
@@ -85,20 +85,20 @@ DrawVert:
 ; **                 **
 ; *********************
 
-	move.l	vert_read, a0
-	move.l	vert_font_read, a1
+	move.l	vert_buffer_read, a0
+	move.l	vert_char_read, a1
 	move.w	(a1)+, d0
 	cmp.l	vert_char_end, a1
-	bne.s	InChar
+	bne.s	.InChar
 
 	move.l	vert_text_read, a2
 	moveq.l	#0, d1
 	move.b	(a2)+, d1
 	sub.b	#32, d1
-	cmp.l	#EndVertText, a2
-	bne.s	InText
+	cmp.l	#VertTextEnd, a2
+	bne.s	.InText
 	move.l	#VertText, a2
-InText:
+.InText:
 	move.l	a2, vert_text_read
 
 	move.l	#VertFont, a1
@@ -106,8 +106,8 @@ InText:
 	add.w	d1, a1
 	lea.l	36(a1), a2
 	move.l	a2, vert_char_end
-InChar:
-	move.l	a1, vert_font_read
+.InChar:
+	move.l	a1, vert_char_read
 	move.w	d0, (a0)
 	move.w	d0, 600(a0)
 
@@ -117,13 +117,13 @@ InChar:
 ; **                       **
 ; ***************************
 
-	move.l	vert_read, a0
+	move.l	vert_buffer_read, a0
 	addq.w	#2, a0
 	cmp.l	#vert_buffer + 600, a0
-	bne.s	BufferOk
+	bne.s	.BufferOk
 	move.l	#vert_buffer, a0
-BufferOk:
-	move.l	a0, vert_read
+.BufferOk:
+	move.l	a0, vert_buffer_read
 
 	rts
 
@@ -131,23 +131,23 @@ BufferOk:
 
 VertText:
 	dc.b	'!"#$ ! !   !!! !!! !!!   ! ! !      '
-EndVertText:
+VertTextEnd:
 
 	.bss
 	.even
 
-vert_read:
+vert_buffer_read:
 	ds.l	1
 
-vert_buffer:
-	ds.w	2 * 300
-
-vert_font_read:
+vert_char_read:
 	ds.l	1
 vert_char_end:
 	ds.l	1
 
 vert_text_read:
 	ds.l	1
+
+vert_buffer:
+	ds.w	2 * 300
 
 	.include "mb24_vfont-st_rmac.s"
