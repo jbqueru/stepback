@@ -168,25 +168,6 @@ Lp0:
 
 	.data
 
-	.even
-
-BigLogo:
-	.rept 2
-	dc.l	$ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $80000000, $80000000
-	.endr
-	.rept 2
-	dc.l	$c0003fff, $ffff0000, $0000ffff, $ffff0000, $0000ffff, $ffff0000, $0000ffff, $ffff0000, $0000ffff, $ffff0000, $0000ffff, $ffff0000, $0001fffe, $ffff0000, $80000000, $80000000
-	.endr
-	.rept 72
-	dc.l	$c0003000, $f0000000, $00000000, $00000000, $00000000, $00000000, $00000000, $00000000, $00000000, $00000000, $00000000, $00000000, $00010002, $00030000, $80000000, $80000000
-	.endr
-	.rept 2
-	dc.l	$c0003fff, $ffff0000, $0000ffff, $ffff0000, $0000ffff, $ffff0000, $0000ffff, $ffff0000, $0000ffff, $ffff0000, $0000ffff, $ffff0000, $0001fffe, $ffff0000, $80000000, $80000000
-	.endr
-	.rept 2
-	dc.l	$ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $ffff0000, $80000000, $80000000
-	.endr
-
 	.include "tmp/mb24.sines.rmac"
 
 	.bss
@@ -209,3 +190,5 @@ logo_read_y2:
 
 logo_shifted:
 	ds.l	3 * 8 * 80 * 16
+
+	.include "mb24_lbitmap-st_rmac.s"
