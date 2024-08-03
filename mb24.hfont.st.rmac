@@ -47,6 +47,7 @@
 ;		cause confusion. E.g. use movea instead of move on 680x0 when
 ;		the code relies on the flags not getting modified.
 
+	.data
 	.even
 HorizChars:
 	dc.l	Horiz32, Horiz33, Horiz34, Horiz39, Horiz39, Horiz39, Horiz39, Horiz39

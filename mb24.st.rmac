@@ -107,12 +107,7 @@ SupEntr:
 	move.l	d0, fb_back
 
 	bsr	VertInit
-
-	move.l	#HorizText, horiz_text_read
-	move.l	#horiz_buffer, horiz_read
-	move.l	#horiz_buffer, horiz_previous_read
-	move.l	#HorizFont, horiz_font_read
-	move.l	#HorizFont + 2, horiz_char_end
+	bsr	HorizInit
 
 	move.l	#BigLogoX, logo_read_x
 	move.l	#BigLogoY1, logo_read_y1
@@ -305,112 +300,7 @@ EraseSprite:
 	.endr
 	move.w	#$000, $ffff8240.w
 
-
-; #############################
-; #############################
-; ###                       ###
-; ###  Horizontal scroller  ###
-; ###                       ###
-; #############################
-; #############################
-
-; *************************
-; **                     **
-; ** Draw to framebuffer **
-; **                     **
-; *************************
-
-	move.l	fb_back, a0
-	add.w	#120 * 160 + 2, a0
-	move.l	horiz_read, d0
-	move.l	d0, a1
-	move.w	#8, d0
-Text0:
-	move.w	#19, d1
-Text1:
-	move.w	(a1)+, d2
-	move.w	d2, (a0)
-	move.w	d2, 160(a0)
-	move.w	d2, 320(a0)
-	move.w	d2, 480(a0)
-	move.w	d2, 640(a0)
-	move.w	d2, 800(a0)
-	move.w	d2, 960(a0)
-	move.w	d2, 1120(a0)
-
-	addq.w	#8, a0
-	dbra	d1, Text1
-	add.w	#1120, a0
-	add.w	#40, a1
-	dbra	d0, Text0
-
-; *********************
-; **                 **
-; ** Insert new data **
-; **                 **
-; *********************
-
-	move.l	horiz_read, a0
-	move.l	horiz_font_read, a1
-	move.w	(a1), d0
-	eor	#1, horiz_half_advance
-	bne.s	HInChar
-	addq.w	#2, a1
-	cmp.l	horiz_char_end, a1
-	bne.s	HInChar
-
-	move.l	horiz_text_read, a2
-	moveq.l	#0,d1
-	move.b	(a2)+, d1
-	cmp.l	#EndHorizText, a2
-	bne.s	HInText
-	move.l	#HorizText, a2
-HInText:
-	move.l	a2, horiz_text_read
-
-	move.l	#HorizChars, a2
-	sub.b	#32, d1
-	lsl.w	#2, d1
-	add.w	d1, a2
-	move.l	(a2)+, a1
-	move.l	(a2)+, horiz_char_end
-HInChar:
-	move.l	a1, horiz_font_read
-
-	move.l	horiz_previous_read, a1
-	moveq.l	#8, d2
-ShiftPixel:
-	move.w	(a1), d3
-	lsl.w	#4, d3
-
-	lsr.w	d0
-	scs	d1
-	and.b	#$f, d1
-	or.b	d1, d3
-	move.w	d3, (a0)
-	move.w	d3, 40(a0)
-	add.w	#80, a1
-	add.w	#80, a0
-	dbra	d2, ShiftPixel
-
-; ****************************
-; **                        **
-; ** Point to new locations **
-; **                        **
-; ****************************
-
-	move.l	horiz_read, a0
-	move.l	a0, horiz_previous_read
-
-	add.w	#40 * 2 * 9, a0
-	cmp.l	#horiz_buffer + 40 * 2 * 9 * 4, a0
-	blt.s	HorizBufferOk
-	sub.w	#40 * 2 * 9 * 4 - 2, a0
-	cmp.l	#horiz_buffer + 40, a0
-	bne.s	HorizBufferOk
-	sub.w	#40, a0
-HorizBufferOk:
-	move.l	a0, horiz_read
+	bsr	HorizDraw
 
 	move.w	#$447, $ffff8240.w
 	.rept 12
@@ -579,20 +469,8 @@ HBL_Handler:
 	eor.w	#$444, $ffff8240.w
 	rte
 
-	.include "mb24_vscroll-st_rmac.s"
 
 	.data
-
-	.include "mb24.hfont.st.rmac"
-
-HorizText:
-	dc.b	"I'M JBQ (JEAN-BAPTISTE) \"DJAYBEE\", "
-	dc.b	"FROM THE MEGABUSTERS. REMEMBER US? YOU'D BETTER! "
-	dc.b	"MEGABUSTERS: TOP DEMO CREW IN CHAUFFAYER!!!  "
-	dc.b	"JBQUERU@GMAIL.COM HTTPS://GITHUB.COM/JBQUERU    "
-	dc.b	"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG       "
-	dc.b	" !\"'(),-./0123456789:?@ABCDEFGHIJKLMNOPQRSTUVWXYZ "
-EndHorizText:
 
 	.even
 
@@ -634,25 +512,6 @@ fb_front:
 fb_back:
 	.ds.l	1
 
-horiz_buffer:
-	ds.w	20 * 2 * 9 * 4
-
-horiz_read:
-	ds.l	1
-horiz_previous_read:
-	ds.l	1
-
-horiz_font_read:
-	ds.l	1
-horiz_char_end:
-	ds.l	1
-
-horiz_half_advance:
-	ds.w	1
-
-horiz_text_read:
-	ds.l	1
-
 logo_shifted:
 	ds.l	3 * 8 * 80 * 16
 
@@ -688,5 +547,8 @@ sprite_erase_back:
 
 fb_raw:
 	.ds.b	64255
+
+	.include	"mb24_vscroll-st_rmac.s"
+	.include	"mb24_hscroll.st_rmac.s"
 
 	.end
