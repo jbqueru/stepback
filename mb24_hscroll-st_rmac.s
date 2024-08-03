@@ -187,5 +187,5 @@ horiz_text_read:
 horiz_buffer:
 	ds.w	20 * 2 * 9 * 4
 
-	.include "mb24.hfont.st.rmac"
+	.include "mb24_hfont-st_rmac.s"
 
