@@ -47,64 +47,89 @@
 ;		cause confusion. E.g. use movea instead of move on 680x0 when
 ;		the code relies on the flags not getting modified.
 
+; #############################################################################
+; #############################################################################
+; ###                                                                       ###
+; ###                                                                       ###
+; ###                               Init Code                               ###
+; ###                                                                       ###
+; ###                                                                       ###
+; #############################################################################
+; #############################################################################
+
 	.68000
 	.text
+
+; ###############################
+; ###############################
+; ###                         ###
+; ###  User mode entry point  ###
+; ###                         ###
+; ###############################
+; ###############################
 
 	pea.l	SupEntr
 	move.w	#38, -(sp)
 	trap	#14
-	addq.w	#6, sp
 
-	move.w	#0, -(sp)
-	trap	#1
+; #####################################
+; #####################################
+; ###                               ###
+; ###  Supervisor mode entry point  ###
+; ###                               ###
+; #####################################
+; #####################################
 
 SupEntr:
-	move.w	#$2700, sr
 
-	move.b	#0, $fffffa07.w
-	move.b	#0, $fffffa09.w
-;	move.b	#0, $fffffa0b.w
-;	move.b	#0, $fffffa0d.w
-;	move.b	#0, $fffffa0f.w
-;	move.b	#0, $fffffa11.w
+; *********************
+; **                 **
+; ** Init interrupts **
+; **                 **
+; *********************
 
-	move.l	#VBL_Handler, $70.w
-;	move.l	#HBL_Handler, $120.w
+	move.w	#$2700, sr		; turn all interrupts off in the CPU
 
-	stop	#$2300
-	stop	#$2300
+	move.b	#0, $fffffa07.w		; disable MFP interrupts A
+	move.b	#0, $fffffa09.w		; disable MFP interrupts B
 
-;	and.b	#%11110111, $fffffa17.w
-;	move.b	#0, $fffffa0b.w
-;	move.b	#0, $fffffa0f.w
-;	move.b	#0, $fffffa1b.w
-;	move.b	#%0000, $fffffa1b.w
-;	move.b	#200, $fffffa21.w
-;	move.b	#%1000, $fffffa1b.w
-;	move.b	#%00000001, $fffffa07.w
-;	move.b	#%00000001, $fffffa13.w
+	move.l	#VBL_Handler, $70.w	; install our own VBL handler
 
-	move.b	#2, $ffff820a.w
-	move.b	#0, $ffff8260.w
+; TODO: clear BSS
 
-	move.w	#$732, $ffff8242.w
-	move.w	#$463, $ffff8244.w
-	move.w	#$463, $ffff8246.w
+; *******************
+; **               **
+; ** Init graphics **
+; **               **
+; *******************
 
-	move.w	#$322, $ffff8248.w
-	move.w	#$533, $ffff8250.w
-	move.w	#$744, $ffff8258.w
+	stop	#$2300			; wait for a VBL
 
-	move.w	#$667, $ffff824a.w
-	move.w	#$556, $ffff824c.w
+; TODO: switch to empty framebuffer
 
-	move.l	#fb_raw, d0
-	add.l	#$ff, d0
-	and.l	#$ffffff00, d0
+	move.b	#2, $ffff820a.w		; switch to 50 Hz
+	move.b	#0, $ffff8260.w		; switch to mode 0
+
+	moveq.l	#15, d0
+	lea.l	PaletteData, a0
+	lea.l	$ffff8240.w, a1
+PaletteCopy:
+	move.w	(a0)+, (a1)+		; copy palette entry
+	dbra	d0, PaletteCopy
+
+	move.l	#fb_raw, d0		; \
+	add.l	#$ff, d0		; | align framebuffer on 256 bytes
+	and.l	#$ffffff00, d0		; /
 
 	move.l	d0, fb_front
 	add.l	#32000, d0
 	move.l	d0, fb_back
+
+; *********************
+; **                 **
+; ** Init demo parts **
+; **                 **
+; *********************
 
 	bsr	VertInit
 	bsr	HorizInit
@@ -192,12 +217,18 @@ MainLoop:
 VBL_Handler:
 	rte
 
-;HBL_Handler:
-;	rte
+	.data
+	.even
+
+PaletteData:
+	dc.w	$000, $732, $463, $463
+	dc.w	$322, $667, $556, 0
+	dc.w	$533, 0, 0, 0
+	dc.w	$744, 0, 0, 0
 
 	.bss
-
 	.even
+
 fb_front:
 	.ds.l	1
 fb_back:
