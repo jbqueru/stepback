@@ -34,21 +34,34 @@ void main() {
 	printf("; DO NOT EDIT, DO NO SUBMIT.\n");
 	printf("\n");
 
-	printf("SpriteX1:\n");
-	for (int t = 0; t < 199; t++) {
-		int x = 239 * 4 * (1 - cos (t * 2 * M_PI / 199)) / 2 + 0.5;
+	printf("\t.data\n");
+	printf("\n");
+
+	printf("BigLogoX:\n");
+	for (int t = 0; t < 251; t++) {
+		int x = 207 * (1 - cos (t * 2 * M_PI / 251)) / 2 + 0.5;
+		printf("\tdc.b\t%d\n", x);
+	}
+	printf("BigLogoXEnd:\n");
+
+	printf("\n");
+	printf("\t.even\n");
+	printf("\n");
+
+	printf("BigLogoY1:\n");
+	for (int t = 0; t < 127; t++) {
+		int x = 48 * 4 * (1 - cos (t * 2 * M_PI / 127)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
-	printf("SpriteX1End:\n");
+	printf("BigLogoY1End:\n");
 
 	printf("\n");
 
-	printf("SpriteY1:\n");
-	for (int t = 0; t < 199; t++) {
-		int x = 180 * 4 * (1 - sin (t * 2 * M_PI / 199)) / 2 + 0.5;
+	printf("BigLogoY2:\n");
+	for (int t = 0; t < 601; t++) {
+		int x = 72 * 4 * (1 - cos (t * 2 * M_PI / 601)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
-	printf("SpriteY1End:\n");
+	printf("BigLogoY2End:\n");
 
-	printf("\n");
 }

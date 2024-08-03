@@ -166,9 +166,6 @@ Lp0:
 
 	rts
 
-	.data
-
-	.include "tmp/mb24.sines.rmac"
 
 	.bss
 
@@ -191,4 +188,5 @@ logo_read_y2:
 logo_shifted:
 	ds.l	3 * 8 * 80 * 16
 
+	.include "tmp/mb24_lcurves-st_rmac.s"
 	.include "mb24_lbitmap-st_rmac.s"

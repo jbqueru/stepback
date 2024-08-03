@@ -27,5 +27,8 @@ mkdir -p tmp
 cc mb24.sines.c -o tmp/mb24.sines -lm
 tmp/mb24.sines > tmp/mb24.sines.rmac
 
+cc mb24_lcurves.c -o tmp/mb24_lcurves -lm
+tmp/mb24_lcurves > tmp/mb24_lcurves-st_rmac.s
+
 mkdir -p out
 ~/code/rmac/rmac -s -v -p -4 mb24.st.rmac -o out/MB24.PRG
