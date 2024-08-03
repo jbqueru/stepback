@@ -26,106 +26,15 @@
 ; #############################################################################
 ; ###                                                                       ###
 ; ###                                                                       ###
-; ###                   Vertical scrolltext for MB24 demo                   ###
+; ###                      Vertical font for MB24 demo                      ###
 ; ###                                                                       ###
 ; ###                                                                       ###
 ; #############################################################################
 ; #############################################################################
 
-; SEE mb24_main file for full explanation
+; SEE mb24_vscroll file for full explanation
 
-	.text
-
-VertInit:
-	move.l	#vert_buffer, vert_read
-	move.l	#VertFont, vert_font_read
-	move.l	#VertFont + 2, vert_char_end
-	move.l	#VertText, vert_text_read
-
-	rts
-
-; ############################
-; ############################
-; ###                      ###
-; ###  Vertical scrollers  ###
-; ###                      ###
-; ############################
-; ############################
-
-; *************************
-; **                     **
-; ** Draw to framebuffer **
-; **                     **
-; *************************
-VertDraw:
-
-	move.l	fb_back, a0
-	move.l	vert_read, a1
-	lea	100(a1), a2
-	lea	200(a1), a3
-	moveq.l	#19,d1
-DrawVert:
-	.rept	10
-	move.w	(a1)+, d0
-	move.w	d0, 8(a0)
-	move.w	d0, 144(a0)
-	move.w	(a2)+, d0
-	move.w	d0, 24(a0)
-	move.w	d0, 128(a0)
-	move.w	(a3)+, d0
-	move.w	d0, 40(a0)
-	move.w	d0, 112(a0)
-	add.w	#160, a0
-	.endr
-	dbra	d1, DrawVert
-
-; *********************
-; **                 **
-; ** Insert new data **
-; **                 **
-; *********************
-
-	move.l	vert_read, a0
-	move.l	vert_font_read, a1
-	move.w	(a1)+, d0
-	cmp.l	vert_char_end, a1
-	bne.s	InChar
-
-	move.l	vert_text_read, a2
-	moveq.l	#0, d1
-	move.b	(a2)+, d1
-	sub.b	#32, d1
-	cmp.l	#EndVertText, a2
-	bne.s	InText
-	move.l	#VertText, a2
-InText:
-	move.l	a2, vert_text_read
-
-	move.l	#VertFont, a1
-	mulu.w	#36, d1
-	add.w	d1, a1
-	lea.l	36(a1), a2
-	move.l	a2, vert_char_end
-InChar:
-	move.l	a1, vert_font_read
-	move.w	d0, (a0)
-	move.w	d0, 600(a0)
-
-; ***************************
-; **                       **
-; ** Point to new location **
-; **                       **
-; ***************************
-
-	move.l	vert_read, a0
-	addq.w	#2, a0
-	cmp.l	#vert_buffer + 600, a0
-	bne.s	BufferOk
-	move.l	#vert_buffer, a0
-BufferOk:
-	move.l	a0, vert_read
-
-	rts
+; This is an actual source file, this is not a generated file.
 
 	.data
 	.even
@@ -238,24 +147,3 @@ VertFont:
 	dc.w	%0000000000000000
 
 	dcb.w	3,0
-
-VertText:
-	dc.b	'!"#$ ! !   !!! !!! !!!   ! ! !      '
-EndVertText:
-
-	.bss
-	.even
-
-vert_read:
-	ds.l	1
-
-vert_buffer:
-	ds.w	2 * 300
-
-vert_font_read:
-	ds.l	1
-vert_char_end:
-	ds.l	1
-
-vert_text_read:
-	ds.l	1
