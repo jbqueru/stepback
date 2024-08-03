@@ -193,7 +193,7 @@ SmallSprite:
 	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
 	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
 
-	.include	"tmp/mb24.sines.rmac"
+	.include	"tmp/mb24_scurves-st_rmac.s"
 
 	.bss
 
