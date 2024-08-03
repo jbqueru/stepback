@@ -174,48 +174,43 @@ MainLoop:
 	bsr	LogoErase
 	bsr	SpritesErase
 
-	move.w	#$744, $ffff8240.w
-	.rept 12
-	mulu.w	d0,d0
-	.endr
-	move.w	#$000, $ffff8240.w
+	move.w	#$744, d0
+	bsr.s	TimeShow
 
-	bsr VertDraw
+	bsr.s	VertDraw
 
-	move.w	#$474, $ffff8240.w
-	.rept 12
-	mulu.w	d0,d0
-	.endr
-	move.w	#$000, $ffff8240.w
+	move.w	#$474, d0
+	bsr.s	TimeShow
 
 	bsr	HorizDraw
 
-	move.w	#$447, $ffff8240.w
-	.rept 12
-	mulu.w	d0,d0
-	.endr
-	move.w	#$000, $ffff8240.w
+	move.w	#$447, d0
+	bsr.s	TimeShow
 
 	bsr	LogoDraw
 
-	move.w	#$774, $ffff8240.w
-	.rept 12
-	mulu.w	d0,d0
-	.endr
-	move.w	#$000, $ffff8240.w
+	move.w	#$774, d0
+	bsr.s	TimeShow
 
 	bsr	SpritesDraw
 
-	move.w	#$777, $ffff8240.w
-	.rept 12
-	mulu.w	d0,d0
-	.endr
-	move.w	#$000, $ffff8240.w
+	move.w	#$777, d0
+	bsr.s	TimeShow
 
 	bra	MainLoop
 
 VBL_Handler:
 	rte
+
+TimeShow:
+	move.w	d0, $ffff8240.w
+	moveq.l	#39, d0			; 1 nop
+.Loop:
+	dbra	d0, .Loop		; 40 * 3 + 1 = 121 nop
+	nop				; 1 nop
+	nop				; 1 nop
+	move.w	#0, $ffff8240.w		; 4 nop
+	rts
 
 	.data
 	.even
