@@ -549,6 +549,6 @@ fb_raw:
 	.ds.b	64255
 
 	.include	"mb24_vscroll-st_rmac.s"
-	.include	"mb24_hscroll.st_rmac.s"
+	.include	"mb24_hscroll-st_rmac.s"
 
 	.end
