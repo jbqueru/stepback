@@ -282,7 +282,7 @@ EraseLogo:
 	move.l	sprite_erase_front, a0
 	move.l	sprite_erase_back, sprite_erase_front
 
-	moveq.l	#59, d0
+	moveq.l	#19, d0
 EraseSprite:
 	move.l	d4, 4(a0)
 	move.l	d4, 12(a0)
