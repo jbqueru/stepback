@@ -123,6 +123,8 @@ SupEntr:
 
 	move.l	#SpriteX1, sprite_read_x1
 	move.l	#SpriteY1, sprite_read_y1
+	move.l	fb_back, sprite_erase_back
+	move.l	fb_front, sprite_erase_front
 
 	move.l	#BigLogo, a0
 	move.l	#logo_shifted, a1
@@ -277,8 +279,8 @@ EraseLogo:
 	add	#160, a0
 	dbra d0, EraseLogo
 
-	move.l	fb_back, a0
-	add.w	#16080, a0
+	move.l	sprite_erase_front, a0
+	move.l	sprite_erase_back, sprite_erase_front
 
 	moveq.l	#59, d0
 EraseSprite:
@@ -619,6 +621,8 @@ SpriteX1Ok:
 	mulu.w	#24 * 20, d5
 	add.w	d5, a1
 
+	move.l	a0, sprite_erase_back
+
 	lea.l	0.w, a2
 
 	moveq.l	#19, d7
@@ -883,6 +887,10 @@ sprite_read_x2:
 sprite_read_y1:
 	ds.l	1
 sprite_read_y2:
+	ds.l	1
+sprite_erase_front:
+	ds.l	1
+sprite_erase_back:
 	ds.l	1
 
 fb_raw:
