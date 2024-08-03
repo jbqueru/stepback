@@ -34,6 +34,9 @@ void main() {
 	printf("; DO NOT EDIT, DO NO SUBMIT.\n");
 	printf("\n");
 
+	printf(".data\n");
+	printf(".even\n");
+
 	printf("SpriteX1:\n");
 	for (int t = 0; t < 199; t++) {
 		int x = 239 * 4 * (1 - cos (t * 2 * M_PI / 199)) / 2 + 0.5;

@@ -178,12 +178,6 @@ DrawSprite:
 
 	rts
 
-	.data
-
-	.even
-
-	.include	"tmp/mb24_scurves-st_rmac.s"
-
 	.bss
 
 	.even
@@ -203,4 +197,5 @@ sprite_erase_front:
 sprite_erase_back:
 	ds.l	1
 
+	.include	"tmp/mb24_scurves-st_rmac.s"
 	.include	"mb24_sbitmaps-st_rmac.s"
