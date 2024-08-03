@@ -182,17 +182,6 @@ DrawSprite:
 
 	.even
 
-SmallSprite:
-	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
-	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
-	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
-	.rept 14
-	dc.l	$a000c000, $00000000, $00000000, $00000000, $00020001, $80008000
-	.endr
-	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
-	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
-	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
-
 	.include	"tmp/mb24_scurves-st_rmac.s"
 
 	.bss
@@ -213,3 +202,5 @@ sprite_erase_front:
 	ds.l	1
 sprite_erase_back:
 	ds.l	1
+
+	.include	"mb24_sbitmaps-st_rmac.s"
