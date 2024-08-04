@@ -174,19 +174,20 @@ SpritesDraw:
 ; d3 | temp / sprite data
 ; d4 | temp / sprite data
 ; d5 | temp
-; d6 | unused
-; d7 | line loop counter
+; d6 | line loop counter
+; d7 | sprite loop counter
 ; a0 | bitmap source
 ; a1 | bitmap destination
 ; a2 | temp / sprite data
 ; a3 | sprite data
 ; a4 | sprite data
 ; a5 | sprite data
-; a6 | unused
+; a6 | sprite variables
 ; a7 | stack
 
-
-
+	moveq.l	#0, d7
+	lea.l	sprite_read_x1, a6
+LoopSprite:
 	lea.l	sprites_shifted, a0
 	movea.l	fb_back, a1
 
@@ -236,7 +237,7 @@ SpriteX1Ok:
 
 	moveq.l	#0, d2
 
-	moveq.l	#19, d7
+	moveq.l	#19, d6
 
 .Loop:
 	movem.l	(a0)+, d3-d4/a2-a5
@@ -254,7 +255,9 @@ SpriteX1Ok:
 	move.l	d4, (a1)+
 
 	lea.l	112(a1), a1
-	dbra	d7, .Loop
+	dbra	d6, .Loop
+
+	dbra	d7, LoopSprite
 
 	rts
 
