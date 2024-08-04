@@ -281,7 +281,8 @@ SpriteX2Ok:
 .Loop:
 	movem.l	(a0)+, d3-d4/a2-a5
 	and.l	d0, (a1)+
-	move.l	d3, (a1)+
+	and.l	d0, (a1)
+	or.l	d3, (a1)+
 	move.l	d2, (a1)+
 	move.l	a2, (a1)+
 	move.l	d2, (a1)+
@@ -291,7 +292,8 @@ SpriteX2Ok:
 	move.l	d2, (a1)+
 	move.l	a5, (a1)+
 	and.l	d1, (a1)+
-	move.l	d4, (a1)+
+	and.l	d1, (a1)
+	or.l	d4, (a1)+
 
 	lea.l	112(a1), a1
 	dbra	d6, .Loop
