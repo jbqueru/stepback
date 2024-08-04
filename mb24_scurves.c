@@ -39,19 +39,37 @@ void main() {
 
 	printf("SpriteX1:\n");
 	for (int t = 0; t < 201; t++) {
-		int x = 239 * 4 * (1 - cos (t * 2 * M_PI / 201)) / 2 + 0.5;
+		int x = 199 * 4 * (1 - cos (t * 2 * M_PI / 201)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
 	printf("SpriteX1End:\n");
 
 	printf("\n");
 
+	printf("SpriteX2:\n");
+	for (int t = 0; t < 51; t++) {
+		int x = 40 * 4 * (1 - cos (t * 2 * M_PI / 51)) / 2 + 0.5;
+		printf("\tdc.w\t%d\n", x);
+	}
+	printf("SpriteX2End:\n");
+
+	printf("\n");
+
 	printf("SpriteY1:\n");
 	for (int t = 0; t < 201; t++) {
-		int x = 180 * 4 * (1 - sin (t * 2 * M_PI / 201)) / 2 + 0.5;
+		int x = 150 * 4 * (1 - sin (t * 2 * M_PI / 201)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
 	printf("SpriteY1End:\n");
+
+	printf("\n");
+
+	printf("SpriteY2:\n");
+	for (int t = 0; t < 53; t++) {
+		int x = 30 * 4 * (1 - sin (t * 2 * M_PI / 53)) / 2 + 0.5;
+		printf("\tdc.w\t%d\n", x);
+	}
+	printf("SpriteY2End:\n");
 
 	printf("\n");
 }

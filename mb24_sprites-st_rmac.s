@@ -66,11 +66,15 @@ SpritesInit:
 	move.l	#SpriteX1, (a0)+
 	move.l	#SpriteX1 + 67 * 2, (a0)+
 	move.l	#SpriteX1 + 134 * 2, (a0)+
-	lea.l	12(a0), a0
+	move.l	#SpriteX2, (a0)+
+	move.l	#SpriteX2 + 12 * 2, (a0)+
+	move.l	#SpriteX2 + 27 * 2, (a0)+
 	move.l	#SpriteY1, (a0)+
 	move.l	#SpriteY1 + 67 * 2, (a0)+
 	move.l	#SpriteY1 + 134 * 2, (a0)+
-	lea.l	12(a0), a0
+	move.l	#SpriteY2, (a0)+
+	move.l	#SpriteY2 + 30 * 2, (a0)+
+	move.l	#SpriteY2 + 39 * 2, (a0)+
 	.rept 3
 	move.l	fb_front, (a0)+
 	.endr
@@ -216,6 +220,15 @@ LoopSprite:
 	lea.l	SpriteY1, a2
 SpriteY1Ok:
 	move.l	a2, 24(a6)
+
+	movea.l	36(a6), a2
+	add.w	(a2)+, d4
+	cmpa.l	#SpriteY2End, a2
+	bne.s	SpriteY2Ok
+	lea.l	SpriteY2, a2
+SpriteY2Ok:
+	move.l	a2, 36(a6)
+
 	lsr.w	#2, d4
 	mulu.w	#160, d4
 	adda.w	d4, a1
@@ -227,6 +240,14 @@ SpriteY1Ok:
 	lea.l	SpriteX1, a2
 SpriteX1Ok:
 	move.l	a2, (a6)
+
+	movea.l	12(a6), a2
+	add.w	(a2)+, d4
+	cmpa.l	#SpriteX2End, a2
+	bne.s	SpriteX2Ok
+	lea.l	SpriteX2, a2
+SpriteX2Ok:
+	move.l	a2, 12(a6)
 
 	lsr.w	#2, d4
 	move.w	d4, d5
