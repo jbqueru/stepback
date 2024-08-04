@@ -168,6 +168,24 @@ SpritesErase:
 ; ##############
 
 SpritesDraw:
+; d0 | left mask
+; d1 | right mask
+; d2 | center mask
+; d3 | temp / sprite data
+; d4 | temp / sprite data
+; d5 | temp
+; d6 | temp
+; d7 | line loop counter
+; a0 | bitmap source
+; a1 | bitmap destination
+; a2 | temp
+; a3 | sprite data
+; a4 | sprite data
+; a5 | sprite data
+; a6 | sprite data
+; a7 | stack
+
+
 
 	lea.l	sprites_shifted, a0
 	movea.l	fb_back, a1
@@ -216,28 +234,24 @@ SpriteX1Ok:
 
 	move.l	a1, sprite_erase_back
 
-	moveq.l	#0, d4
+	moveq.l	#0, d2
 
 	moveq.l	#19, d7
 
 .Loop:
-	movem.l	(a0)+, d2-d3/a3-a6
+	movem.l	(a0)+, d3-d4/a3-a6
 	and.l	d0, (a1)+
-;	and.l	d0, (a1)
-;	or.l	d2, (a1)+
+	move.l	d3, (a1)+
 	move.l	d2, (a1)+
-	move.l	d4, (a1)+
 	move.l	a3, (a1)+
-	move.l	d4, (a1)+
+	move.l	d2, (a1)+
 	move.l	a4, (a1)+
-	move.l	d4, (a1)+
+	move.l	d2, (a1)+
 	move.l	a5, (a1)+
-	move.l	d4, (a1)+
+	move.l	d2, (a1)+
 	move.l	a6, (a1)+
 	and.l	d1, (a1)+
-;	and.l	d1, (a1)
-;	or.l	d3, (a1)+
-	move.l	d3, (a1)+
+	move.l	d4, (a1)+
 
 	lea.l	112(a1), a1
 	dbra	d7, .Loop
@@ -259,17 +273,17 @@ sprites_shifted:
 	ds.l	6 * 20 * 16 * 3
 
 sprite_read_x1:
-	ds.l	1
+	ds.l	3
 sprite_read_x2:
-	ds.l	1
+	ds.l	3
 sprite_read_y1:
-	ds.l	1
+	ds.l	3
 sprite_read_y2:
-	ds.l	1
+	ds.l	3
 sprite_erase_front:
-	ds.l	1
+	ds.l	3
 sprite_erase_back:
-	ds.l	1
+	ds.l	3
 
 ; #########################
 ; #########################
