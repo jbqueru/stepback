@@ -174,15 +174,15 @@ SpritesDraw:
 ; d3 | temp / sprite data
 ; d4 | temp / sprite data
 ; d5 | temp
-; d6 | temp
+; d6 | unused
 ; d7 | line loop counter
 ; a0 | bitmap source
 ; a1 | bitmap destination
-; a2 | temp
+; a2 | temp / sprite data
 ; a3 | sprite data
 ; a4 | sprite data
 ; a5 | sprite data
-; a6 | sprite data
+; a6 | unused
 ; a7 | stack
 
 
@@ -191,15 +191,15 @@ SpritesDraw:
 	movea.l	fb_back, a1
 
 	movea.l	sprite_read_y1, a2
-	move.w	(a2)+, d6
+	move.w	(a2)+, d4
 	cmpa.l	#SpriteY1End, a2
 	bne.s	SpriteY1Ok
 	lea.l	SpriteY1, a2
 SpriteY1Ok:
 	move.l	a2, sprite_read_y1
-	lsr.w	#2, d6
-	mulu.w	#160, d6
-	adda.w	d6, a1
+	lsr.w	#2, d4
+	mulu.w	#160, d4
+	adda.w	d4, a1
 
 	movea.l	sprite_read_x1, a2
 	move.w	(a2)+, d4
@@ -239,17 +239,17 @@ SpriteX1Ok:
 	moveq.l	#19, d7
 
 .Loop:
-	movem.l	(a0)+, d3-d4/a3-a6
+	movem.l	(a0)+, d3-d4/a2-a5
 	and.l	d0, (a1)+
 	move.l	d3, (a1)+
+	move.l	d2, (a1)+
+	move.l	a2, (a1)+
 	move.l	d2, (a1)+
 	move.l	a3, (a1)+
 	move.l	d2, (a1)+
 	move.l	a4, (a1)+
 	move.l	d2, (a1)+
 	move.l	a5, (a1)+
-	move.l	d2, (a1)+
-	move.l	a6, (a1)+
 	and.l	d1, (a1)+
 	move.l	d4, (a1)+
 
