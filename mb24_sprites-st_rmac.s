@@ -152,11 +152,15 @@ SpritesInit:
 ; ###############
 
 SpritesErase:
-	movea.l	sprite_erase_front, a0
+	moveq.l	#2, d7
+	lea.l	sprite_erase_front, a6
+
+.OneSprite:
+	movea.l	(a6), a0
 	lea.l	4(a0), a0
 	moveq.l	#0, d0
 
-	moveq.l	#19, d7
+	moveq.l	#19, d6
 .Loop:
 	move.l	d0, (a0)
 	move.l	d0, 8(a0)
@@ -166,9 +170,10 @@ SpritesErase:
 	move.l	d0, 40(a0)
 
 	lea.l	160(a0), a0
-	dbra	d7, .Loop
+	dbra	d6, .Loop
 
-	move.l	sprite_erase_back, sprite_erase_front
+	move.l	12(a6), (a6)+
+	dbra	d7, .OneSprite
 
 	rts
 
@@ -198,7 +203,7 @@ SpritesDraw:
 ; a6 | sprite variables
 ; a7 | stack
 
-	moveq.l	#0, d7
+	moveq.l	#2, d7
 	lea.l	sprite_read_x1, a6
 LoopSprite:
 	lea.l	sprites_shifted, a0
