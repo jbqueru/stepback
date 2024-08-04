@@ -191,24 +191,24 @@ LoopSprite:
 	lea.l	sprites_shifted, a0
 	movea.l	fb_back, a1
 
-	movea.l	sprite_read_y1, a2
+	movea.l	24(a6), a2
 	move.w	(a2)+, d4
 	cmpa.l	#SpriteY1End, a2
 	bne.s	SpriteY1Ok
 	lea.l	SpriteY1, a2
 SpriteY1Ok:
-	move.l	a2, sprite_read_y1
+	move.l	a2, 24(a6)
 	lsr.w	#2, d4
 	mulu.w	#160, d4
 	adda.w	d4, a1
 
-	movea.l	sprite_read_x1, a2
+	movea.l	(a6), a2
 	move.w	(a2)+, d4
 	cmpa.l	#SpriteX1End, a2
 	bne.s	SpriteX1Ok
 	lea.l	SpriteX1, a2
 SpriteX1Ok:
-	move.l	a2, sprite_read_x1
+	move.l	a2, (a6)
 
 	lsr.w	#2, d4
 	move.w	d4, d5
