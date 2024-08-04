@@ -60,10 +60,19 @@ SpritesInit:
 ; **              **
 ; ******************
 
-	move.l	#SpriteX1, sprite_read_x1
-	move.l	#SpriteY1, sprite_read_y1
-	move.l	fb_back, sprite_erase_back
-	move.l	fb_front, sprite_erase_front
+	lea.l	sprite_read_x1, a0
+	.rept	6
+	move.l	#SpriteX1, (a0)+
+	.endr
+	.rept	6
+	move.l	#SpriteY1, (a0)+
+	.endr
+	.rept 3
+	move.l	fb_front, (a0)+
+	.endr
+	.rept 3
+	move.l	fb_back, (a0)+
+	.endr
 
 ; *******************************
 ; **                           **
