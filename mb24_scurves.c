@@ -38,8 +38,8 @@ void main() {
 	printf(".even\n");
 
 	printf("SpriteX1:\n");
-	for (int t = 0; t < 199; t++) {
-		int x = 239 * 4 * (1 - cos (t * 2 * M_PI / 199)) / 2 + 0.5;
+	for (int t = 0; t < 201; t++) {
+		int x = 239 * 4 * (1 - cos (t * 2 * M_PI / 201)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
 	printf("SpriteX1End:\n");
@@ -47,8 +47,8 @@ void main() {
 	printf("\n");
 
 	printf("SpriteY1:\n");
-	for (int t = 0; t < 199; t++) {
-		int x = 180 * 4 * (1 - sin (t * 2 * M_PI / 199)) / 2 + 0.5;
+	for (int t = 0; t < 201; t++) {
+		int x = 180 * 4 * (1 - sin (t * 2 * M_PI / 201)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
 	printf("SpriteY1End:\n");
