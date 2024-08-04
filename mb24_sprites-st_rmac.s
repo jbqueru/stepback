@@ -60,13 +60,17 @@ SpritesInit:
 ; **              **
 ; ******************
 
+; TODO: find a way to move the 67 constant to the C file
+
 	lea.l	sprite_read_x1, a0
-	.rept	6
 	move.l	#SpriteX1, (a0)+
-	.endr
-	.rept	6
+	move.l	#SpriteX1 + 67 * 2, (a0)+
+	move.l	#SpriteX1 + 134 * 2, (a0)+
+	lea.l	12(a0), a0
 	move.l	#SpriteY1, (a0)+
-	.endr
+	move.l	#SpriteY1 + 67 * 2, (a0)+
+	move.l	#SpriteY1 + 134 * 2, (a0)+
+	lea.l	12(a0), a0
 	.rept 3
 	move.l	fb_front, (a0)+
 	.endr
@@ -242,7 +246,7 @@ SpriteX1Ok:
 	mulu.w	#24 * 20 * 3, d5
 	adda.w	d5, a0
 
-	move.l	a1, sprite_erase_back
+	move.l	a1, 60(a6)
 
 	moveq.l	#0, d2
 
@@ -266,6 +270,7 @@ SpriteX1Ok:
 	lea.l	112(a1), a1
 	dbra	d6, .Loop
 
+	addq.l	#4, a6
 	dbra	d7, LoopSprite
 
 	rts
