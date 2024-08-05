@@ -43,6 +43,8 @@ HorizInit:
 	move.l	#HorizFont, horiz_font_read
 	move.l	#HorizFont + 2, horiz_char_end
 	move.l	#HorizontalCurve, horiz_curve
+	move.l	fb_back, horiz_back
+	move.l	fb_front, horiz_front
 
 	rts
 
@@ -73,6 +75,39 @@ HorizDraw:
 	move.l	a2, horiz_curve
 	mulu.w	#160, d0
 	lea.l	2(a0, d0.w), a0
+
+; TODO: this erase code is ugly, written while a bit drunk.
+; Specifically, top and bottom are reversed, and cen be merged.
+	movea.l	horiz_back, a2
+	cmpa.l	a2, a0
+	bge.s	.EraseTop
+.EraseBottom:
+	lea.l	72 * 160(a0), a2
+	moveq.l	#0, d0
+	moveq.l	#19, d1
+.LoopBottom:
+	move.w	d0, (a2)
+	move.w	d0, 160(a2)
+	move.w	d0, 320(a2)
+	move.w	d0, 480(a2)
+	addq.w	#8, a2
+	dbra	d1, .LoopBottom
+	bra.s	.EraseDone
+.EraseTop:
+	moveq.l	#0, d0
+	moveq.l	#19, d1
+.LoopTop:
+	move.w	d0, (a2)
+	move.w	d0, 160(a2)
+	move.w	d0, 320(a2)
+	move.w	d0, 480(a2)
+	addq.w	#8, a2
+	dbra	d1, .LoopTop
+.EraseDone:
+
+	move.l	horiz_front, horiz_back
+	move.l	a0, horiz_front
+
 	movea.l	horiz_read, a1
 	moveq.l	#8, d0
 Text0:
@@ -192,6 +227,11 @@ horiz_half_advance:
 	ds.w	1
 
 horiz_curve:
+	ds.l	1
+
+horiz_back:
+	ds.l	1
+horiz_front:
 	ds.l	1
 
 horiz_text_read:

@@ -39,7 +39,7 @@ void main() {
 
 	printf("HorizontalCurve:\n");
 	for (double t = 0; t < 320; t++) {
-		int o = (t / 160 - 1) * (t / 160 - 1) * 128;
+		int o = 4 + (t / 160 - 1) * (t / 160 - 1) * 120;
 		printf("\tdc.b\t%d\n", o);
 	}
 	printf("HorizontalCurveEnd:\n");
