@@ -220,6 +220,8 @@ MainLoop:
 	move.w	#$777, d0
 	bsr.s	TimeShow
 
+	move.w	#$777, $ffff8240.w
+
 ; ************************
 ; **                    **
 ; ** Back to loop start **
@@ -247,6 +249,7 @@ MainLoop:
 ; #####################
 
 VBL_Handler:
+	move.w	PaletteData, $ffff8240.w
 	rte
 
 ; #############################################################################
