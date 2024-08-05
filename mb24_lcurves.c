@@ -39,7 +39,7 @@ void main() {
 
 	printf("BigLogoX:\n");
 	for (int t = 0; t < 251; t++) {
-		int x = 207 * (1 - cos (t * 2 * M_PI / 251)) / 2 + 0.5;
+		int x = 8 + 191 * (1 - cos (t * 2 * M_PI / 251)) / 2 + 0.5;
 		printf("\tdc.b\t%d\n", x);
 	}
 	printf("BigLogoXEnd:\n");
