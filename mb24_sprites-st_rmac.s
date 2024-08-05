@@ -81,6 +81,9 @@ SpritesInit:
 	.rept 3
 	move.l	fb_back, (a0)+
 	.endr
+	move.l	#sprites_shifted, (a0)+
+	move.l	#sprites_shifted + 24 * 20, (a0)+
+	move.l	#sprites_shifted + 24 * 20 * 2, (a0)+
 
 ; *******************************
 ; **                           **
@@ -210,7 +213,7 @@ SpritesDraw:
 	moveq.l	#2, d7
 	lea.l	sprite_read_x1, a6
 LoopSprite:
-	lea.l	sprites_shifted, a0
+	movea.l	72(a6), a0
 	movea.l	fb_back, a1
 
 	movea.l	24(a6), a2
@@ -328,6 +331,8 @@ sprite_read_y2:
 sprite_erase_front:
 	ds.l	3
 sprite_erase_back:
+	ds.l	3
+sprite_preshifted:
 	ds.l	3
 
 ; #########################
