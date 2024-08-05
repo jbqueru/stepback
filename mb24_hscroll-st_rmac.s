@@ -62,7 +62,17 @@ HorizInit:
 HorizDraw:
 
 	movea.l	fb_back, a0
-	lea.l	120 * 160 + 2(a0), a0
+
+	movea.l	horiz_curve, a2
+	moveq.l	#0, d0
+	move.b	(a2)+, d0
+	cmp.l	#HorizontalCurveEnd, a2
+	bne.s	.InCurve
+	lea.l	HorizontalCurve, a2
+.InCurve:
+	move.l	a2, horiz_curve
+	mulu.w	#160, d0
+	lea.l	2(a0, d0.w), a0
 	movea.l	horiz_read, a1
 	moveq.l	#8, d0
 Text0:
