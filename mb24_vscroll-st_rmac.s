@@ -42,6 +42,10 @@ VertInit:
 	move.l	#VertFont + 2, vert_char_end
 	move.l	#VertText, vert_text_read
 
+	move.l	#VerticalCurve, vert_curve1
+	move.l	#VerticalCurve + 20, vert_curve2
+	move.l	#VerticalCurve + 40, vert_curve3
+
 	rts
 
 ; ############################
@@ -61,8 +65,40 @@ VertDraw:
 
 	move.l	fb_back, a0
 	move.l	vert_buffer_read, a1
-	lea	100(a1), a2
-	lea	200(a1), a3
+	movea.l	a1, a2
+	movea.l	a1, a3
+
+	moveq.l	#0, d0
+
+	movea.l	vert_curve1, a4
+	move.b	(a4)+, d0
+	cmpa.l	#VerticalCurveEnd, a4
+	bne.s	.InCurve1
+	lea.l	VerticalCurve, a4
+.InCurve1:
+	move.l	a4, vert_curve1
+	adda.w	d0, a1
+
+	movea.l	vert_curve2, a4
+	move.b	(a4)+, d0
+	addi.b	#46, d0
+	cmpa.l	#VerticalCurveEnd, a4
+	bne.s	.InCurve2
+	lea.l	VerticalCurve, a4
+.InCurve2:
+	move.l	a4, vert_curve2
+	adda.w	d0, a2
+
+	movea.l	vert_curve3, a4
+	move.b	(a4)+, d0
+	addi.b	#92, d0
+	cmpa.l	#VerticalCurveEnd, a4
+	bne.s	.InCurve3
+	lea.l	VerticalCurve, a4
+.InCurve3:
+	move.l	a4, vert_curve3
+	adda.w	d0, a3
+
 	moveq.l	#19,d1
 .Draw10Lines:
 	.rept	10
@@ -109,7 +145,7 @@ VertDraw:
 .InChar:
 	move.l	a1, vert_char_read
 	move.w	d0, (a0)
-	move.w	d0, 600(a0)
+	move.w	d0, 652(a0)
 
 ; ***************************
 ; **                       **
@@ -119,7 +155,7 @@ VertDraw:
 
 	move.l	vert_buffer_read, a0
 	addq.w	#2, a0
-	cmp.l	#vert_buffer + 600, a0
+	cmp.l	#vert_buffer + 652, a0
 	bne.s	.BufferOk
 	move.l	#vert_buffer, a0
 .BufferOk:
@@ -139,6 +175,13 @@ VertTextEnd:
 vert_buffer_read:
 	ds.l	1
 
+vert_curve1:
+	ds.l	1
+vert_curve2:
+	ds.l	1
+vert_curve3:
+	ds.l	1
+
 vert_char_read:
 	ds.l	1
 vert_char_end:
@@ -148,6 +191,7 @@ vert_text_read:
 	ds.l	1
 
 vert_buffer:
-	ds.w	2 * 300
+	ds.w	2 * 326
 
 	.include "mb24_vfont-st_rmac.s"
+	.include "tmp/mb24_vcurves-st_rmac.s"

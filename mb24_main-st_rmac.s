@@ -200,7 +200,7 @@ MainLoop:
 	move.w	#$744, d0
 	bsr.s	TimeShow
 
-	bsr.s	VertDraw
+	bsr	VertDraw
 
 	move.w	#$474, d0
 	bsr.s	TimeShow
@@ -220,7 +220,12 @@ MainLoop:
 	move.w	#$777, d0
 	bsr.s	TimeShow
 
+	move.w	#670, d0
+.Wait:
+	dbra	d0, .Wait
+
 	move.w	#$777, $ffff8240.w
+
 
 ; ************************
 ; **                    **
