@@ -24,8 +24,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 mkdir -p tmp
+
 cc mb24_vcurves.c -o tmp/mb24_vcurves -lm
 tmp/mb24_vcurves > tmp/mb24_vcurves-st_rmac.s
+
+cc mb24_hcurves.c -o tmp/mb24_hcurves -lm
+tmp/mb24_hcurves > tmp/mb24_hcurves-st_rmac.s
 
 cc mb24_scurves.c -o tmp/mb24_scurves -lm
 tmp/mb24_scurves > tmp/mb24_scurves-st_rmac.s
@@ -34,4 +38,5 @@ cc mb24_lcurves.c -o tmp/mb24_lcurves -lm
 tmp/mb24_lcurves > tmp/mb24_lcurves-st_rmac.s
 
 mkdir -p out
+
 ~/code/rmac/rmac -s -v -p -4 mb24_main-st_rmac.s -o out/MB24.PRG

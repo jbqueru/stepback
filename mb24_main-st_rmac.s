@@ -276,7 +276,7 @@ VBL_Handler:
 ; ######################
 
 TimeShow:
-;	rts
+	rts
 	move.w	d0, $ffff8240.w
 	moveq.l	#39, d0			; 1 nop
 .Loop:

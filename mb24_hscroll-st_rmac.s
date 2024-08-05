@@ -42,6 +42,7 @@ HorizInit:
 	move.l	#horiz_buffer, horiz_previous_read
 	move.l	#HorizFont, horiz_font_read
 	move.l	#HorizFont + 2, horiz_char_end
+	move.l	#HorizontalCurve, horiz_curve
 
 	rts
 
@@ -60,13 +61,12 @@ HorizInit:
 ; *************************
 HorizDraw:
 
-	move.l	fb_back, a0
-	add.w	#120 * 160 + 2, a0
-	move.l	horiz_read, d0
-	move.l	d0, a1
-	move.w	#8, d0
+	movea.l	fb_back, a0
+	lea.l	120 * 160 + 2(a0), a0
+	movea.l	horiz_read, a1
+	moveq.l	#8, d0
 Text0:
-	move.w	#19, d1
+	moveq.l	#19, d1
 Text1:
 	move.w	(a1)+, d2
 	move.w	d2, (a0)
@@ -80,8 +80,8 @@ Text1:
 
 	addq.w	#8, a0
 	dbra	d1, Text1
-	add.w	#1120, a0
-	add.w	#40, a1
+	lea.l	1120(a0), a0
+	lea.l	40(a1), a1
 	dbra	d0, Text0
 
 ; *********************
@@ -181,6 +181,9 @@ horiz_char_end:
 horiz_half_advance:
 	ds.w	1
 
+horiz_curve:
+	ds.l	1
+
 horiz_text_read:
 	ds.l	1
 
@@ -188,4 +191,5 @@ horiz_buffer:
 	ds.w	20 * 2 * 9 * 4
 
 	.include "mb24_hfont-st_rmac.s"
+	.include "tmp/mb24_hcurves-st_rmac.s"
 
