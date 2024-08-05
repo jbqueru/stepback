@@ -27,14 +27,86 @@
 	.even
 
 SpritesBitmap:
-	.rept 3
 	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
 	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
 	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
-	.rept 14
+	.rept 2
+	dc.l	$a000c000, $00000000, $00000000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c000, $0000f0ff, $00000000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c000, $0000f0f0, $0000f000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c000, $0000f0ff, $00000000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c000, $0000f0f0, $0000f000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c0ff, $000000ff, $00000000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
 	dc.l	$a000c000, $00000000, $00000000, $00000000, $00020001, $80008000
 	.endr
 	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
 	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
 	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
+
+	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
+	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
+	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
+	.rept 2
+	dc.l	$a000c000, $00000000, $00000000, $00000000, $00020001, $80008000
 	.endr
+	.rept 2
+	dc.l	$a000c0f0, $0000f0ff, $00000000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c0ff, $0000f0f0, $0000f000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c0f0, $0000f0ff, $00000000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c0f0, $0000f0f0, $0000f000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c0f0, $0000f0ff, $00000000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c000, $00000000, $00000000, $00000000, $00020001, $80008000
+	.endr
+	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
+	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
+	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
+
+	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
+	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
+	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
+	.rept 2
+	dc.l	$a000c000, $00000000, $00000000, $00000000, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c00f, $0000f0ff, $000000ff, $0000f00f, $0002f001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c0f0, $000000f0, $0000f0f0, $000000f0, $00020001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c0f0, $0000f0ff, $000000ff, $0000f0f0, $0002f001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c0f0, $0000f0f0, $0000f0f0, $000000f0, $0002f001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c00f, $0000f0f0, $0000f0ff, $0000f00f, $0002f001, $80008000
+	.endr
+	.rept 2
+	dc.l	$a000c000, $00000000, $00000000, $00000000, $00020001, $80008000
+	.endr
+	dc.l	$bfffc000, $ffff0000, $ffff0000, $ffff0000, $fffe0001, $80008000
+	dc.l	$8000ffff, $0000ffff, $0000ffff, $0000ffff, $0000ffff, $80008000
+	dc.l	$ffffffff, $ffffffff, $ffffffff, $ffffffff, $ffffffff, $80008000
