@@ -40,6 +40,8 @@
 	.even
 
 VertFont:
+	.incbin	"tmp/mb24_vfont.bin"
+
 	dc.w	%0000000000000000
 	dc.w	%0000000000000000
 	dc.w	%0000000000000000

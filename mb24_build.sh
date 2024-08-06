@@ -37,6 +37,9 @@ tmp/mb24_scurves > tmp/mb24_scurves-st_rmac.s
 cc mb24_lcurves.c -o tmp/mb24_lcurves -lm
 tmp/mb24_lcurves > tmp/mb24_lcurves-st_rmac.s
 
+cc mb24_fconvert.c -o tmp/mb24_fconvert
+tmp/mb24_fconvert
+
 mkdir -p out
 
 ~/code/rmac/rmac -s -v -p -4 mb24_main-st_rmac.s -o out/MB24.PRG
