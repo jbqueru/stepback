@@ -90,6 +90,10 @@ HorizDraw:
 	move.w	d0, 160(a2)
 	move.w	d0, 320(a2)
 	move.w	d0, 480(a2)
+	move.w	d0, 640(a2)
+	move.w	d0, 800(a2)
+	move.w	d0, 960(a2)
+	move.w	d0, 1120(a2)
 	addq.w	#8, a2
 	dbra	d1, .LoopBottom
 	bra.s	.EraseDone
@@ -101,6 +105,10 @@ HorizDraw:
 	move.w	d0, 160(a2)
 	move.w	d0, 320(a2)
 	move.w	d0, 480(a2)
+	move.w	d0, 640(a2)
+	move.w	d0, 800(a2)
+	move.w	d0, 960(a2)
+	move.w	d0, 1120(a2)
 	addq.w	#8, a2
 	dbra	d1, .LoopTop
 .EraseDone:
@@ -202,7 +210,7 @@ HorizBufferOk:
 	.data
 
 HorizText:
-	dc.b	"I'M JBQ (JEAN-BAPTISTE) \"DJAYBEE\", "
+	dc.b	"   I'M JBQ (JEAN-BAPTISTE) \"DJAYBEE\", "
 	dc.b	"FROM THE MEGABUSTERS. REMEMBER US? YOU'D BETTER! "
 	dc.b	"MEGABUSTERS: TOP DEMO CREW IN CHAUFFAYER!!!  "
 	dc.b	"JBQUERU@GMAIL.COM HTTPS://GITHUB.COM/JBQUERU    "

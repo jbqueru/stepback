@@ -38,8 +38,8 @@ void main() {
 	printf(".even\n");
 
 	printf("HorizontalCurve:\n");
-	for (double t = 0; t < 320; t++) {
-		int o = 4 + (t / 160 - 1) * (t / 160 - 1) * 120;
+	for (double t = 0; t < 120; t++) {
+		int o = 8 + (t / 60 - 1) * (t / 60 - 1) * 112;
 		printf("\tdc.b\t%d\n", o);
 	}
 	printf("HorizontalCurveEnd:\n");
