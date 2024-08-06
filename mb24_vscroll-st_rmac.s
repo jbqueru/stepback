@@ -237,5 +237,8 @@ vert_text_read:
 vert_buffer:
 	ds.w	2 * 380
 
-	.include "mb24_vfont-st_rmac.s"
+	.data
+	.even
+VertFont:
+	.incbin	"tmp/mb24_vfont.bin"
 	.include "tmp/mb24_vcurves-st_rmac.s"

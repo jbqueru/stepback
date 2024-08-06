@@ -33,7 +33,7 @@ unsigned char rawpixels[320][200];
 
 char charorder[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:!?()/@- ";
 
-unsigned char bigfont[2 * 18];
+unsigned char bigfont[2 * 18 * 95];
 
 void main() {
 	FILE* inputfile = fopen("mb24_fonts.pi1", "rb");
@@ -56,20 +56,34 @@ void main() {
 		}
 	}
 
-	for (int y = 0; y < 18; y++) {
-		for (int b = 0; b < 2; b++) {
-			unsigned long o = 0;
-			for (int x = 0; x < 8; x++) {
-				o <<= 1;
-				if (rawpixels[b * 8 + x][y] == 7) {
-					o |= 1;
-				}
+	int s = 0;
+	for (char c = ' '; c <= '~'; c++) {
+		int n = -1;
+		for (int i = 0; i < sizeof charorder; i++) {
+			if (charorder[i] == c) {
+				n = i;
+				break;
 			}
-			bigfont[b + y * 2] = o;
 		}
+		if (n < 0) continue;
+		int x0 = (n % 18) * 17;
+		int y0 = (n / 18) * 19;
+		for (int y = 0; y < 18; y++) {
+			for (int b = 0; b < 2; b++) {
+				unsigned long o = 0;
+				for (int x = 0; x < 8; x++) {
+					o <<= 1;
+					if (rawpixels[x0 + b * 8 + x][y0 + y] == 7) {
+						o |= 1;
+					}
+				}
+				bigfont[b + y * 2 + s] = o;
+			}
+		}
+		s += 36;
 	}
 
 	FILE* outputfile1 = fopen("tmp/mb24_vfont.bin", "wb");
-	fwrite(bigfont, 1, 36, outputfile1);
+	fwrite(bigfont, 1, s, outputfile1);
 	fclose(outputfile1);
 }
