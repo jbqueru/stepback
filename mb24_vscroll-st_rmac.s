@@ -168,7 +168,6 @@ VertDraw:
 	move.l	vert_text_read, a2
 	moveq.l	#0, d1
 	move.b	(a2)+, d1
-	sub.b	#32, d1
 	cmp.l	#VertTextEnd, a2
 	bne.s	.InText
 	move.l	#VertText, a2
@@ -176,6 +175,8 @@ VertDraw:
 	move.l	a2, vert_text_read
 
 	move.l	#VertFont, a1
+	lea.l	VertChars, a3
+	move.b	-32(a3, d1.w), d1
 	mulu.w	#36, d1
 	add.w	d1, a1
 	lea.l	36(a1), a2
@@ -204,8 +205,19 @@ VertDraw:
 	.data
 
 VertText:
-	dc.b	' !"#$ ! !   !!! !!! !!!   ! ! !      '
+	dc.b	' MEGABUSTERS              '
+	dc.b	' !(),-./0123456789:?@ABCDEFGHIJKLMNOPQRSTUVWXYZ              '
 VertTextEnd:
+
+VertChars:
+	dc.b	0, 1, 0, 0, 0, 0, 0, 0
+	dc.b	2, 3, 0, 0, 4, 5, 6, 7
+	dc.b	8, 9, 10, 11, 12, 13, 14, 15
+	dc.b	16, 17, 18, 0, 0, 0, 0, 19
+	dc.b	20, 21, 22, 23, 24, 25, 26, 27
+	dc.b	28, 29, 30, 31, 32, 33, 32, 35
+	dc.b	36, 37, 38, 39, 40, 41, 42, 43
+	dc.b	44, 45, 46
 
 	.bss
 	.even
