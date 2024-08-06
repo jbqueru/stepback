@@ -281,9 +281,7 @@ TimeShow:
 	moveq.l	#39, d0			; 1 nop
 .Loop:
 	dbra	d0, .Loop		; 40 * 3 + 1 = 121 nop
-	nop				; 1 nop
-	nop				; 1 nop
-	move.w	#0, $ffff8240.w		; 4 nop
+	move.w	PaletteData, $ffff8240.w ; 6 nop
 	rts
 
 ; #############################################################################
@@ -306,7 +304,7 @@ TimeShow:
 ; *************
 
 PaletteData:
-	dc.w	$000, $732, $463, $573
+	dc.w	$112, $234, $403, $526
 	dc.w	$322, $667, $556, 0
 	dc.w	$533, 0, 0, 0
 	dc.w	$744, 0, 0, $666
