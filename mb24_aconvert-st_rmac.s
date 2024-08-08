@@ -66,13 +66,22 @@ MainSup:
 
 	bsr	Music
 	move.w	#2999, d0
+	lea.l	RegDump, a0
 PlayMusic:
-	move.w	d0, -(sp)
+	movem.l	d0/a0, -(sp)
 	bsr	Music + 8
 ;	move.w	#13000, d0
 ;Wait:
 ;	dbra	d0, Wait
-	move.w	(sp)+, d0
+	movem.l	(sp)+, d0/a0
+
+	lea.l	$ffff8800.w, a1
+	moveq.l	#13, d1
+ReadReg:
+	move.b	d1, (a1)
+	move.b	(a1), (a0)+
+	dbra	d1, ReadReg
+
 	dbra	d0, PlayMusic
 	bsr	Music + 4
         rts
