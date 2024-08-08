@@ -149,6 +149,7 @@ PaletteCopy:
 ; #########################
 ; #########################
 
+	bsr	AudioInit
 	bsr	VertInit
 	bsr	HorizInit
 	bsr	LogoInit
@@ -173,6 +174,14 @@ MainLoop:
 ; *************************
 
 	stop	#$2300
+
+; ****************
+; **            **
+; ** Play Music **
+; **            **
+; ****************
+
+	bsr	AudioPlay
 
 ; ***********************
 ; **                   **
@@ -346,6 +355,7 @@ fb_raw:
 ; #############################################################################
 ; #############################################################################
 
+	.include	"mb24_audio-st_rmac.s"
 	.include	"mb24_vscroll-st_rmac.s"
 	.include	"mb24_hscroll-st_rmac.s"
 	.include	"mb24_logo-st_rmac.s"
