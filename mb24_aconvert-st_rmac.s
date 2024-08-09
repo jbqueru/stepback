@@ -22,6 +22,12 @@
 ;
 ; SPDX-License-Identifier: AGPL-3.0-or-later
 
+; 5 VBL per beat
+; 64 beats per pattern -> 320 VBL per pattern
+; 24 patterns -> 7680 VBL
+; Repeat to pattern 13 -> 4160 VBL
+
+
 	.68000
 	.text
 
@@ -38,7 +44,7 @@
 	move.w	d0, FileHandle
 
 	move.l	#RegDump, -(sp)
-	move.l	#3000 * 14, -(sp)
+	move.l	#7680 * 14, -(sp)
 	move.w	FileHandle, -(sp)
 	move.w	#64, -(sp)
 	trap	#1
@@ -65,7 +71,7 @@ MainSup:
 	move.w	#$2700, sr		; turn all interrupts off in the CPU
 
 	bsr	Music
-	move.w	#2999, d0
+	move.w	#7679, d0
 	lea.l	RegDump, a0
 PlayMusic:
 	movem.l	d0/a0, -(sp)
@@ -97,6 +103,6 @@ FileName:
 FileHandle:
 	ds.w	1
 RegDump:
-	ds.b	3000 * 14
+	ds.b	7680 * 14
 
 	.end
