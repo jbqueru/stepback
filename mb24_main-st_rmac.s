@@ -71,6 +71,10 @@
 	pea.l	MainSup
 	move.w	#38, -(sp)		; SupExec
 	trap	#14			; XBios
+	addq.l	#6, sp
+
+	move.w	#0, -(sp)
+	trap	#1
 
 MainSup:
 
@@ -83,6 +87,29 @@ MainSup:
 ; #########################
 
 	move.w	#$2700, sr		; turn all interrupts off in the CPU
+
+	move.b	$ffff8201.w, save_8201
+	move.b	$ffff8203.w, save_8203
+	move.b	$ffff820a.w, save_820a
+	move.b	$ffff8260.w, save_8260
+	lea.l	$ffff8240.w, a0
+	lea.l	save_palette, a1
+	moveq.l	#15, d7
+.SavePalette:
+	move.w	(a0)+, (a1)+
+	dbra	d7, .SavePalette
+
+	lea.l	save_sound, a0
+	moveq.l	#13, d7
+.SaveSound:
+	move.b	d7, $ffff8800.w
+	move.b	$ffff8800.w, (a0)+
+	dbra	d7, .SaveSound
+
+	move.b	$fffffa07.w, save_fa07
+	move.b	$fffffa09.w, save_fa09
+
+	move.l	$70.w, save_vbl
 
 	move.b	#0, $fffffa07.w		; disable MFP interrupts A
 	move.b	#0, $fffffa09.w		; disable MFP interrupts B
@@ -207,27 +234,27 @@ MainLoop:
 	bsr	SpritesErase
 
 	move.w	#$744, d0
-	bsr.s	TimeShow
+	bsr	TimeShow
 
 	bsr	VertDraw
 
 	move.w	#$474, d0
-	bsr.s	TimeShow
+	bsr	TimeShow
 
 	bsr	HorizDraw
 
 	move.w	#$447, d0
-	bsr.s	TimeShow
+	bsr	TimeShow
 
 	bsr	LogoDraw
 
 	move.w	#$774, d0
-	bsr.s	TimeShow
+	bsr	TimeShow
 
 	bsr	SpritesDraw
 
 	move.w	#$777, d0
-	bsr.s	TimeShow
+	bsr	TimeShow
 
 	move.w	#670, d0
 .Wait:
@@ -235,6 +262,8 @@ MainLoop:
 
 ;	move.w	#$777, $ffff8240.w
 
+	cmp.b	#$39, $fffffc02.w
+	beq.s	Exit
 
 ; ************************
 ; **                    **
@@ -243,6 +272,36 @@ MainLoop:
 ; ************************
 
 	bra	MainLoop
+
+Exit:
+	move.b	save_8201, $ffff8201.w
+	move.b	save_8203, $ffff8203.w
+
+	stop	#$2300
+	move.b	save_820a, $ffff820a.w
+	move.b	save_8260, $ffff8260.w
+	lea.l	save_palette, a0
+	lea.l	$ffff8240.w, a1
+	moveq.l	#15, d7
+.RestorePalette:
+	move.w	(a0)+, (a1)+
+	dbf	d7, .RestorePalette
+
+.RestoreSound:
+	lea.l	save_sound, a0
+	moveq.l	#13, d7
+.SaveSound:
+	move.b	d7, $ffff8800.w
+	move.b	(a0)+, $ffff8802.w
+	dbra	d7, .SaveSound
+
+	move.w	#$2700, sr
+
+	move.b	save_fa07, $fffffa07.w
+	move.b	save_fa09, $fffffa09.w
+	move.l	save_vbl, $70.w
+
+	rts
 
 ; #############################################################################
 ; #############################################################################
@@ -330,6 +389,27 @@ PaletteData:
 
 	.bss
 	.even
+
+save_palette:
+	.ds.w	16
+
+save_vbl:
+	.ds.l	1
+
+save_8201:
+	.ds.b	1
+save_8203:
+	.ds.b	1
+save_820a:
+	.ds.b	1
+save_8260:
+	.ds.b	1
+save_sound:
+	.ds.b	14
+save_fa07:
+	.ds.b	1
+save_fa09:
+	.ds.b	1
 
 ; ******************
 ; **              **
