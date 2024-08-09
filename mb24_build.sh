@@ -37,8 +37,11 @@ tmp/mb24_scurves > tmp/mb24_scurves-st_rmac.s
 cc mb24_lcurves.c -o tmp/mb24_lcurves -lm
 tmp/mb24_lcurves > tmp/mb24_lcurves-st_rmac.s
 
-cc mb24_fconvert.c -o tmp/mb24_fconvert
-tmp/mb24_fconvert
+cc mb24_vconvert.c -o tmp/mb24_vconvert
+tmp/mb24_vconvert
+
+cc mb24_hconvert.c -o tmp/mb24_hconvert
+tmp/mb24_hconvert > tmp/mb24_hfont-st_rmac.s
 
 mkdir -p out
 

@@ -210,12 +210,13 @@ HorizBufferOk:
 	.data
 
 HorizText:
-	dc.b	"   I'M JBQ (JEAN-BAPTISTE) \"DJAYBEE\", "
-	dc.b	"FROM THE MEGABUSTERS. REMEMBER US? YOU'D BETTER! "
-	dc.b	"MEGABUSTERS: TOP DEMO CREW IN CHAUFFAYER!!!  "
+	dc.b	"    ZYXVUTSRQPONMLKJIHGFEDCBA@?:9876543210/.-,)(!   "
+	dc.b	"   I AM JBQ (JEAN-BAPTISTE) (DJAYBEE), "
+	dc.b	"FROM THE MEGABUSTERS. REMEMBER US? YOU SHOULD! "
+	dc.b	"MEGABUSTERS: TOP DEMO CRE? IN CHAUFFAYER!!!  "
 	dc.b	"JBQUERU@GMAIL.COM HTTPS://GITHUB.COM/JBQUERU    "
-	dc.b	"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG       "
-	dc.b	" !\"'(),-./0123456789:?@ABCDEFGHIJKLMNOPQRSTUVWXYZ "
+	dc.b	"THE QUICK BRO?N FOX JUMPS OVER THE LAZY DOG       "
+	dc.b	" !(),-./0123456789:?@ABCDEFGHIJKLMNOPQRSTUV?XYZ "
 EndHorizText:
 
 	.bss
@@ -248,6 +249,19 @@ horiz_text_read:
 horiz_buffer:
 	ds.w	20 * 2 * 9 * 4
 
-	.include "mb24_hfont-st_rmac.s"
+	.data
+	.even
+
+HorizChars:
+	dc.l	Horiz32, Horiz33, Horiz40, Horiz40, Horiz40, Horiz40, Horiz40, Horiz40
+	dc.l	Horiz40, Horiz41, Horiz44, Horiz44, Horiz44, Horiz45, Horiz46, Horiz47
+	dc.l	Horiz48, Horiz49, Horiz50, Horiz51, Horiz52, Horiz53, Horiz54, Horiz55
+	dc.l	Horiz56, Horiz57, Horiz58, Horiz63, Horiz63, Horiz63, Horiz63, Horiz63
+	dc.l	Horiz64, Horiz65, Horiz66, Horiz67, Horiz68, Horiz69, Horiz70, Horiz71
+	dc.l	Horiz72, Horiz73, Horiz74, Horiz75, Horiz76, Horiz77, Horiz78, Horiz79
+	dc.l	Horiz80, Horiz81, Horiz82, Horiz83, Horiz84, Horiz85, Horiz86, Horiz88
+	dc.l	Horiz88, Horiz89, Horiz90, HorizEnd
+
+	.include "tmp/mb24_hfont-st_rmac.s"
 	.include "tmp/mb24_hcurves-st_rmac.s"
 
