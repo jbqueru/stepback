@@ -206,6 +206,7 @@ VertDraw:
 
 VertText:
 	dc.b	'              '
+	dc.b	'              '
 	dc.b	'A BRAND NEW DEMO IN 2024     '
 	dc.b	'BY THE MEGABUSTERS             '
 	dc.b	'GUEST MUSIC BY AD FROM MPS       '
