@@ -73,10 +73,61 @@
 	trap	#14			; XBios
 	addq.l	#6, sp
 
-	move.w	#0, -(sp)
-	trap	#1
+	move.w	#0, -(sp)		; Term0
+	trap	#1			; GemDos
 
 MainSup:
+	move.w	#$2700, sr		; turn all interrupts off in the CPU
+
+; ############################
+; ############################
+; ###                      ###
+; ###  Save machine state  ###
+; ###                      ###
+; ############################
+; ############################
+
+; *************************
+; **                     **
+; ** Save graphics state **
+; **                     **
+; *************************
+
+	move.b	$ffff8201.w, save_8201	; framebuffer address high byte
+	move.b	$ffff8203.w, save_8203	; framebuffer address medium byte
+	move.b	$ffff820a.w, save_820a	; refresh rate
+	move.b	$ffff8260.w, save_8260	; resolution
+
+	lea.l	$ffff8240.w, a0		; palette base address
+	lea.l	save_palette, a1
+	moveq.l	#15, d7
+.SavePalette:
+	move.w	(a0)+, (a1)+
+	dbra	d7, .SavePalette
+
+; **********************
+; **                  **
+; ** Save sound state **
+; **                  **
+; **********************
+
+	lea.l	save_sound, a0
+	moveq.l	#13, d7
+.SaveSound:
+	move.b	d7, $ffff8800.w		; set register to read
+	move.b	$ffff8800.w, (a0)+	; read register
+	dbra	d7, .SaveSound
+
+; **************************
+; **                      **
+; ** Save interrupt state **
+; **                      **
+; **************************
+
+	move.b	$fffffa07.w, save_fa07	; MFP interrupt enable A
+	move.b	$fffffa09.w, save_fa09	; MFP interrupt enable B
+
+	move.l	$70.w, save_vbl		; VBL
 
 ; #########################
 ; #########################
@@ -85,31 +136,6 @@ MainSup:
 ; ###                   ###
 ; #########################
 ; #########################
-
-	move.w	#$2700, sr		; turn all interrupts off in the CPU
-
-	move.b	$ffff8201.w, save_8201
-	move.b	$ffff8203.w, save_8203
-	move.b	$ffff820a.w, save_820a
-	move.b	$ffff8260.w, save_8260
-	lea.l	$ffff8240.w, a0
-	lea.l	save_palette, a1
-	moveq.l	#15, d7
-.SavePalette:
-	move.w	(a0)+, (a1)+
-	dbra	d7, .SavePalette
-
-	lea.l	save_sound, a0
-	moveq.l	#13, d7
-.SaveSound:
-	move.b	d7, $ffff8800.w
-	move.b	$ffff8800.w, (a0)+
-	dbra	d7, .SaveSound
-
-	move.b	$fffffa07.w, save_fa07
-	move.b	$fffffa09.w, save_fa09
-
-	move.l	$70.w, save_vbl
 
 	move.b	#0, $fffffa07.w		; disable MFP interrupts A
 	move.b	#0, $fffffa09.w		; disable MFP interrupts B
