@@ -233,7 +233,7 @@ MainLoop:
 .Wait:
 	dbra	d0, .Wait
 
-	move.w	#$777, $ffff8240.w
+;	move.w	#$777, $ffff8240.w
 
 
 ; ************************
