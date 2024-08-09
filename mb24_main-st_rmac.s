@@ -170,7 +170,28 @@ MainSup:
 
 	stop	#$2300			; wait for a VBL
 
-; TODO: switch to empty framebuffer
+; ***********************************
+; **                               **
+; ** Prepare framebuffer addresses **
+; **                               **
+; ***********************************
+
+	lea.l	fb_raw, a0
+	move.l	a0, d0			; \
+	add.l	#$ff, d0		; | align framebuffer on 256 bytes
+	move.b	#$00, d0		; /
+	movea.l	d0, a0
+
+	move.l	a0, fb_front
+	adda.w	#32000, a0
+	move.l	a0, fb_back
+
+	lsr.l	#8, d0
+	move.b	d0, $ffff8203.w
+	lsr.l	#8, d0
+	move.b	d0, $ffff8201.w
+
+	stop	#$2300
 
 ; ***********************
 ; **                   **
@@ -194,21 +215,7 @@ PaletteCopy:
 	move.w	(a0)+, (a1)+
 	dbra	d0, PaletteCopy
 
-; ***********************************
-; **                               **
-; ** Prepare framebuffer addresses **
-; **                               **
-; ***********************************
 
-	lea.l	fb_raw, a0
-	move.l	a0, d0			; \
-	add.l	#$ff, d0		; | align framebuffer on 256 bytes
-	move.b	#$00, d0		; /
-	movea.l	d0, a0
-
-	move.l	a0, fb_front
-	adda.w	#32000, a0
-	move.l	a0, fb_back
 
 ; #########################
 ; #########################
@@ -274,35 +281,16 @@ MainLoop:
 
 	bsr	LogoErase
 	bsr	SpritesErase
-
-	move.w	#$744, d0
-	bsr	TimeShow
-
 	bsr	VertDraw
-
-	move.w	#$474, d0
-	bsr	TimeShow
-
 	bsr	HorizDraw
-
-	move.w	#$447, d0
-	bsr	TimeShow
-
 	bsr	LogoDraw
-
-	move.w	#$774, d0
-	bsr	TimeShow
-
 	bsr	SpritesDraw
 
-	move.w	#$777, d0
-	bsr	TimeShow
-
-	move.w	#670, d0
-.Wait:
-	dbra	d0, .Wait
-
-;	move.w	#$777, $ffff8240.w
+; ********************
+; **                **
+; ** Check keyboard **
+; **                **
+; ********************
 
 	cmp.b	#$39, $fffffc02.w
 	beq.s	Exit
@@ -364,35 +352,7 @@ Exit:
 ; #####################
 
 VBL_Handler:
-	move.w	PaletteData, $ffff8240.w
 	rte
-
-; #############################################################################
-; #############################################################################
-; ###                                                                       ###
-; ###                                                                       ###
-; ###                           Helper functions                            ###
-; ###                                                                       ###
-; ###                                                                       ###
-; #############################################################################
-; #############################################################################
-
-; ######################
-; ######################
-; ###                ###
-; ###  Time display  ###
-; ###                ###
-; ######################
-; ######################
-
-TimeShow:
-	rts
-	move.w	d0, $ffff8240.w
-	moveq.l	#39, d0			; 1 nop
-.Loop:
-	dbra	d0, .Loop		; 40 * 3 + 1 = 121 nop
-	move.w	PaletteData, $ffff8240.w ; 6 nop
-	rts
 
 ; #############################################################################
 ; #############################################################################
@@ -482,7 +442,6 @@ fb_raw:
 	.include	"mb24_hscroll-st_rmac.s"
 	.include	"mb24_logo-st_rmac.s"
 	.include	"mb24_sprites-st_rmac.s"
-
 
 	.bss
 EndBss:					; End of BSS, clear to here
