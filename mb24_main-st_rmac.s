@@ -168,8 +168,6 @@ MainSup:
 ; #######################
 ; #######################
 
-	stop	#$2300			; wait for a VBL
-
 ; ***********************************
 ; **                               **
 ; ** Prepare framebuffer addresses **
@@ -183,15 +181,15 @@ MainSup:
 	movea.l	d0, a0
 
 	move.l	a0, fb_front
-	adda.w	#32000, a0
+	lea.l	32000(a0), a0
 	move.l	a0, fb_back
 
-	lsr.l	#8, d0
-	move.b	d0, $ffff8203.w
-	lsr.l	#8, d0
-	move.b	d0, $ffff8201.w
+	lsr.l	#8, d0			; \
+	move.b	d0, $ffff8203.w		; | set hardware framebuffer address
+	lsr.l	#8, d0			; | (takes effect after VBL)
+	move.b	d0, $ffff8201.w		; /
 
-	stop	#$2300
+	stop	#$2300			; Wait for VBL
 
 ; ***********************
 ; **                   **
@@ -214,8 +212,6 @@ MainSup:
 PaletteCopy:
 	move.w	(a0)+, (a1)+
 	dbra	d0, PaletteCopy
-
-
 
 ; #########################
 ; #########################
