@@ -58,6 +58,9 @@
 ; #############################################################################
 
 	.68000
+	.bss
+StartBss:				; Start of BSS, clear from here
+
 	.text
 
 ; #####################
@@ -78,6 +81,21 @@
 
 MainSup:
 	move.w	#$2700, sr		; turn all interrupts off in the CPU
+
+; ###################
+; ###################
+; ###             ###
+; ###  Clear BSS  ###
+; ###             ###
+; ###################
+; ###################
+
+	lea.l	StartBss, a0
+	lea.l	EndBss, a1
+.ClearBss:
+	clr.b	(a0)+
+	cmpa.l	a1, a0
+	bne.s	.ClearBss
 
 ; ############################
 ; ############################
@@ -141,8 +159,6 @@ MainSup:
 	move.b	#0, $fffffa09.w		; disable MFP interrupts B
 
 	move.l	#VBL_Handler, $70.w	; install our own VBL handler
-
-; TODO: clear BSS
 
 ; #######################
 ; #######################
@@ -467,4 +483,7 @@ fb_raw:
 	.include	"mb24_logo-st_rmac.s"
 	.include	"mb24_sprites-st_rmac.s"
 
+
+	.bss
+EndBss:					; End of BSS, clear to here
 	.end
