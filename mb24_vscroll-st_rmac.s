@@ -205,8 +205,12 @@ VertDraw:
 	.data
 
 VertText:
-	dc.b	' MEGABUSTERS              '
-	dc.b	' !(),-./0123456789:?@ABCDEFGHIJKLMNOPQRSTUVWXYZ              '
+	dc.b	'              '
+	dc.b	'A BRAND NEW DEMO IN 2024     '
+	dc.b	'BY THE MEGABUSTERS             '
+	dc.b	'GUEST MUSIC BY AD FROM MPS       '
+	dc.b	'GRAPHICS AND FONTS BY PANDAFOX      '
+	dc.b	'CODE BY DJAYBEE WITH HELP FROM TROED AND GWEM              '
 VertTextEnd:
 
 VertChars:
