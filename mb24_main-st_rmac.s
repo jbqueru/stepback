@@ -158,7 +158,7 @@ MainSup:
 	move.b	#0, $fffffa07.w		; disable MFP interrupts A
 	move.b	#0, $fffffa09.w		; disable MFP interrupts B
 
-	move.l	#VBL_Handler, $70.w	; install our own VBL handler
+	move.l	#VBL_Empty, $70.w	; install our own VBL handler
 
 ; #######################
 ; #######################
@@ -222,6 +222,7 @@ PaletteCopy:
 ; #########################
 
 	bsr	AudioInit
+	move.l	#VBL_Music, $70.w
 	bsr	VertInit
 	bsr	HorizInit
 	bsr	LogoInit
@@ -246,14 +247,6 @@ MainLoop:
 ; *************************
 
 	stop	#$2300
-
-; ****************
-; **            **
-; ** Play Music **
-; **            **
-; ****************
-
-	bsr	AudioPlay
 
 ; ***********************
 ; **                   **
@@ -300,6 +293,7 @@ MainLoop:
 	bra	MainLoop
 
 Exit:
+	move.l	#VBL_Empty, $70.w
 	move.b	save_8201, $ffff8201.w
 	move.b	save_8203, $ffff8203.w
 
@@ -347,7 +341,13 @@ Exit:
 ; #####################
 ; #####################
 
-VBL_Handler:
+VBL_Empty:
+	rte
+
+VBL_Music:
+	movem.l	d0/a0-a1, -(sp)
+	bsr.s	AudioPlay
+	movem.l	(sp)+, d0/a0-a1
 	rte
 
 ; #############################################################################
