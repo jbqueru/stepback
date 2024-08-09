@@ -40,7 +40,7 @@ CopyReg:
 
 	cmpa.l	#MusicEnd, a0
 	bne.s	InMusic
-	lea.l	Music, a0
+	lea.l	Music + 4160 * 14, a0
 InMusic:
 	move.l	a0, audio_pointer
 	rts
