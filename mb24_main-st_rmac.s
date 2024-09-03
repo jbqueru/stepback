@@ -59,7 +59,7 @@
 
 	.68000
 	.bss
-StartBss:				; Start of BSS, clear from here
+StartBss:				; start of BSS, so that we can clear it
 
 	.text
 
@@ -93,9 +93,9 @@ MainSup:
 	lea.l	StartBss, a0
 	lea.l	EndBss, a1
 .ClearBss:
-	clr.b	(a0)+
-	cmpa.l	a1, a0
-	bne.s	.ClearBss
+	clr.b	(a0)+			; clear one byte, advance
+	cmpa.l	a1, a0			; reached the end of BSS?
+	bne.s	.ClearBss		; if not, keep going
 
 ; ############################
 ; ############################
@@ -180,9 +180,9 @@ MainSup:
 	move.b	#$00, d0		; /
 	movea.l	d0, a0
 
-	move.l	a0, fb_front
+	move.l	a0, fb_front		; address of one framebuffer
 	lea.l	32000(a0), a0
-	move.l	a0, fb_back
+	move.l	a0, fb_back		; address of other framebuffer
 
 	lsr.l	#8, d0			; \
 	move.b	d0, $ffff8203.w		; | set hardware framebuffer address
@@ -206,12 +206,12 @@ MainSup:
 ; **             **
 ; *****************
 
-	moveq.l	#15, d0
+	moveq.l	#15, d7
 	lea.l	PaletteData, a0
 	lea.l	$ffff8240.w, a1
 PaletteCopy:
 	move.w	(a0)+, (a1)+
-	dbra	d0, PaletteCopy
+	dbra	d7, PaletteCopy
 
 ; #########################
 ; #########################
@@ -450,5 +450,5 @@ fb_raw:
 	.include	"mb24_sprites-st_rmac.s"
 
 	.bss
-EndBss:					; End of BSS, clear to here
+EndBss:					; end of BSS, clear to here
 	.end
