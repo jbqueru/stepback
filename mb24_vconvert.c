@@ -73,7 +73,7 @@ void main() {
 				unsigned long o = 0;
 				for (int x = 0; x < 8; x++) {
 					o <<= 1;
-					if (rawpixels[x0 + b * 8 + x][y0 + y] == 7) {
+					if (rawpixels[x0 + b * 8 + x][y0 + y] == 2) {
 						o |= 1;
 					}
 				}
