@@ -46,6 +46,9 @@ tmp/mb24_hconvert > tmp/mb24_hfont-st_rmac.s
 cc mb24_sconvert.c -o tmp/mb24_sconvert
 tmp/mb24_sconvert
 
+cc mb24_lconvert.c -o tmp/mb24_lconvert
+tmp/mb24_lconvert
+
 
 mkdir -p out
 

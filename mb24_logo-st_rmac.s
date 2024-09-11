@@ -32,7 +32,7 @@ LogoInit:
 	move.l	#BigLogo, a0
 	move.l	#logo_shifted, a1
 
-	move.w	#639, d0
+	move.w	#727, d0		// 7 * 104 - 1
 CopyLogo:
 	movem.w	(a0)+, d4-d7
 	move.w	d4, d3
@@ -49,10 +49,10 @@ CopyLogo:
 	dbra	d0, CopyLogo
 
 	move.l	#logo_shifted, a0
-	move.l	#logo_shifted + 96 * 80, a1
+	move.l	#logo_shifted + 84 * 104, a1
 	moveq.l	#14, d0
 LogoPixel:
-	moveq.l	#79, d1
+	moveq.l	#103, d1
 ShiftLine:
 	moveq.l	#5, d2
 ShiftBitPlane:
@@ -60,7 +60,7 @@ ShiftBitPlane:
 	sge	d3
 	and.w	#16, d3
 	move.w	d3, ccr
-	moveq.l	#7, d3
+	moveq.l	#6, d3
 Shift16pix:
 	move.w	(a0), d4
 	roxr.w	d4
@@ -68,11 +68,11 @@ Shift16pix:
 	adda.w	#12, a0
 	adda.w	#12, a1
 	dbra.w	d3, Shift16pix
-	sub.w	#94, a0
-	sub.w	#94, a1
+	sub.w	#82, a0
+	sub.w	#82, a1
 	dbra	d2, ShiftBitPlane
-	add.w	#84, a0
-	add.w	#84, a1
+	add.w	#72, a0
+	add.w	#72, a1
 	dbra	d1, ShiftLine
 	dbra	d0, LogoPixel
 
@@ -91,12 +91,11 @@ LogoErase:
 	move.l	d4, a3
 	move.l	d4, a4
 	move.l	d4, a5
-	move.l	d4, a6
 
-	moveq.l	#79, d0
+	moveq.l	#103, d0
 EraseLogo:
-	movem.l	d4-d7/a3-a6, (a0)
-	movem.l	d4-d7/a3-a6, 32(a0)
+	movem.l	d4-d7/a3-a5, (a0)
+	movem.l	d4-d7/a3-a5, 28(a0)
 	add	#160, a0
 	dbra d0, EraseLogo
 
@@ -130,7 +129,7 @@ LogoY1Ok:
 LogoY2Ok:
 	move.l	a2, logo_read_y2
 
-	lsr.w	#2, d0
+	lsr.w	#3, d0
 	mulu.w	#160, d0
 	add.w	d0, a0
 
@@ -147,21 +146,21 @@ LogoXOk:
 	lsr.w	d0
 	add.w	d0, a0
 	and.w	#$0f, d1
-	mulu.w	#96 * 80, d1
+	mulu.w	#84 * 104, d1
 	add.l	d1, a1
 
 	move.l	logo_address_back, logo_address_front
 	move.l	a0, logo_address_back
 
-	moveq.l	#79, d0
+	moveq.l	#103, d0
 Lp0:
-	.rept 8
+	.rept 7
 	movem.l	(a1)+, d5-d7
 	and.l	d5, (a0)
 	or.l	d6, (a0)+
 	move.l	d7, (a0)+
 	.endr
-	add.w	#96, a0
+	add.w	#104, a0
 	dbra	d0, Lp0
 
 	rts
@@ -186,7 +185,7 @@ logo_read_y2:
 	ds.l	1
 
 logo_shifted:
-	ds.l	3 * 8 * 80 * 16
+	ds.l	3 * 7 * 104 * 16
 
 	.include "tmp/mb24_lcurves-st_rmac.s"
 	.include "mb24_lbitmap-st_rmac.s"
