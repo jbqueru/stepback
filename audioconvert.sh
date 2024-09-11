@@ -23,5 +23,5 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-mkdir -p out
-~/code/rmac/rmac -s -v -p -4 mb24_aconvert-st_rmac.s -o out/ACONVERT.PRG
+mkdir -p out/tos
+~/code/rmac/rmac -s -v -p -4 audioconvert.s -o out/tos/ACONVERT.PRG
