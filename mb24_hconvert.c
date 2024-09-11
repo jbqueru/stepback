@@ -31,7 +31,7 @@ unsigned char pi1[32034];
 
 unsigned char rawpixels[320][200];
 
-char charorder[] = "ABCDEFGHIJKLMNOPQRSTUVXYZ0123456789.,:!?()/@-";
+char charorder[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:!?()/@-";
 
 int charx[126];
 int chary[126];
