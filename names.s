@@ -343,5 +343,5 @@ sprite_preshifted:
 ; #########################
 ; #########################
 
-	.include	"tmp/names_curves.s"
+	.include	"out/inc/names_curves.s"
 	.include	"names_bitmaps.s"

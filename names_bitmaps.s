@@ -27,4 +27,4 @@
 	.even
 
 SpritesBitmap:
-	incbin	"tmp/names_bitmaps.bin"
+	incbin	"out/inc/names_bitmaps.bin"

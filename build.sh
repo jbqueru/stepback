@@ -23,32 +23,33 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-mkdir -p tmp
+mkdir -p out/bin
+mkdir -p out/inc
+mkdir -p out/tos
 
-cc vertical_scroll_curves.c -o tmp/vertical_scroll_curves -lm
-tmp/vertical_scroll_curves > tmp/vertical_scroll_curves.s
+cc vertical_scroll_curves.c -o out/bin/vertical_scroll_curves -lm
+out/bin/vertical_scroll_curves > out/inc/vertical_scroll_curves.s
 
-cc horizontal_scroll_curves.c -o tmp/horizontal_scroll_curves -lm
-tmp/horizontal_scroll_curves > tmp/horizontal_scroll_curves.s
+cc horizontal_scroll_curves.c -o out/bin/horizontal_scroll_curves -lm
+out/bin/horizontal_scroll_curves > out/inc/horizontal_scroll_curves.s
 
-cc names_curves.c -o tmp/names_curves -lm
-tmp/names_curves > tmp/names_curves.s
+cc names_curves.c -o out/bin/names_curves -lm
+out/bin/names_curves > out/inc/names_curves.s
 
-cc sprite_curves.c -o tmp/sprite_curves -lm
-tmp/sprite_curves > tmp/sprite_curves.s
+cc sprite_curves.c -o out/bin/sprite_curves -lm
+out/bin/sprite_curves > out/inc/sprite_curves.s
 
-cc vertical_font_convert.c -o tmp/vertical_font_convert
-tmp/vertical_font_convert
+cc vertical_font_convert.c -o out/bin/vertical_font_convert
+out/bin/vertical_font_convert
 
-cc horizontal_font_convert.c -o tmp/horizontal_font_convert
-tmp/horizontal_font_convert > tmp/horizontal_scroll_font.s
+cc horizontal_font_convert.c -o out/bin/horizontal_font_convert
+out/bin/horizontal_font_convert > out/inc/horizontal_scroll_font.s
 
-cc names_convert.c -o tmp/names_convert
-tmp/names_convert
+cc names_convert.c -o out/bin/names_convert
+out/bin/names_convert
 
-cc sprite_convert.c -o tmp/sprite_convert
-tmp/sprite_convert
+cc sprite_convert.c -o out/bin/sprite_convert
+out/bin/sprite_convert
 
-mkdir -p out
 
-~/code/rmac/rmac -s -v -p -4 stepback.s -o out/STEPBACK.PRG
+~/code/rmac/rmac -s -v -p -4 stepback.s -o out/tos/STEPBACK.PRG

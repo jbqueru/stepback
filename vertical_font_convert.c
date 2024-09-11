@@ -83,7 +83,7 @@ void main() {
 		s += 36;
 	}
 
-	FILE* outputfile1 = fopen("tmp/vertical_scroll_font.bin", "wb");
+	FILE* outputfile1 = fopen("out/inc/vertical_scroll_font.bin", "wb");
 	fwrite(bigfont, 1, s, outputfile1);
 	fclose(outputfile1);
 }

@@ -27,4 +27,4 @@
 	.even
 
 BigLogo:
-	incbin	"tmp/sprite_bitmap.bin"
+	incbin	"out/inc/sprite_bitmap.bin"

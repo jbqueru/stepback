@@ -79,7 +79,7 @@ void main() {
 	}
 
 
-	FILE* outputfile1 = fopen("tmp/names_bitmaps.bin", "wb");
+	FILE* outputfile1 = fopen("out/inc/names_bitmaps.bin", "wb");
 	fwrite(sprites, 1, 12 * 2 * 60, outputfile1);
 	fclose(outputfile1);
 }

@@ -187,5 +187,5 @@ logo_read_y2:
 logo_shifted:
 	ds.l	3 * 7 * 104 * 16
 
-	.include "tmp/sprite_curves.s"
+	.include "out/inc/sprite_curves.s"
 	.include "sprite_bitmap.s"

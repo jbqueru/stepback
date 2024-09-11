@@ -79,7 +79,7 @@ void main() {
 	}
 
 
-	FILE* outputfile1 = fopen("tmp/sprite_bitmap.bin", "wb");
+	FILE* outputfile1 = fopen("out/inc/sprite_bitmap.bin", "wb");
 	fwrite(logo, 1, 7 * 8 * 104, outputfile1);
 	fclose(outputfile1);
 }
