@@ -36,7 +36,7 @@ char charorder[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:!?()/@- ";
 unsigned char bigfont[2 * 18 * 95];
 
 void main() {
-	FILE* inputfile = fopen("mb24_fonts.pi1", "rb");
+	FILE* inputfile = fopen("mb24_gfx.pi1", "rb");
 	fread(pi1, 1, 32034, inputfile);
 
 	for (int y = 0; y < 200; y++) {
