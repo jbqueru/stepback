@@ -343,5 +343,5 @@ sprite_preshifted:
 ; #########################
 ; #########################
 
-	.include	"tmp/mb24_scurves-st_rmac.s"
-	.include	"mb24_sbitmaps-st_rmac.s"
+	.include	"tmp/names_curves.s"
+	.include	"names_bitmaps.s"

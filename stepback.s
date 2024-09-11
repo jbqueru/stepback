@@ -443,11 +443,11 @@ fb_raw:
 ; #############################################################################
 ; #############################################################################
 
-	.include	"mb24_audio-st_rmac.s"
-	.include	"mb24_vscroll-st_rmac.s"
-	.include	"mb24_hscroll-st_rmac.s"
-	.include	"mb24_logo-st_rmac.s"
-	.include	"mb24_sprites-st_rmac.s"
+	.include	"audio.s"
+	.include	"vertical_scroll.s"
+	.include	"horizontal_scroll.s"
+	.include	"sprite.s"
+	.include	"names.s"
 
 	.bss
 EndBss:					; end of BSS, clear to here

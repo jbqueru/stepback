@@ -36,7 +36,7 @@ unsigned char logo[7 * 8 * 104];
 unsigned char map_colors[] = {0, 2, 1, 4, 8, 12, 5, 3, 6, 7, 9, 10, 11, 13, 14, 15};
 
 void main() {
-	FILE* inputfile = fopen("mb24_gfx.pi1", "rb");
+	FILE* inputfile = fopen("STEPBACK.PI1", "rb");
 	fread(pi1, 1, 32034, inputfile);
 
 	for (int y = 0; y < 200; y++) {
@@ -79,7 +79,7 @@ void main() {
 	}
 
 
-	FILE* outputfile1 = fopen("tmp/mb24_lbitmap.bin", "wb");
+	FILE* outputfile1 = fopen("tmp/sprite_bitmap.bin", "wb");
 	fwrite(logo, 1, 7 * 8 * 104, outputfile1);
 	fclose(outputfile1);
 }

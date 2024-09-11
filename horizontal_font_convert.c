@@ -46,7 +46,7 @@ int haspixels(int x, int y) {
 }
 
 void main() {
-	FILE* inputfile = fopen("mb24_gfx.pi1", "rb");
+	FILE* inputfile = fopen("STEPBACK.PI1", "rb");
 	fread(pi1, 1, 32034, inputfile);
 
 	for (int y = 0; y < 200; y++) {

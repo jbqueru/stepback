@@ -187,5 +187,5 @@ logo_read_y2:
 logo_shifted:
 	ds.l	3 * 7 * 104 * 16
 
-	.include "tmp/mb24_lcurves-st_rmac.s"
-	.include "mb24_lbitmap-st_rmac.s"
+	.include "tmp/sprite_curves.s"
+	.include "sprite_bitmap.s"

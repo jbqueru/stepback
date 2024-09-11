@@ -54,5 +54,5 @@ audio_pointer:
 	.data
 	.even
 Music:
-	.incbin	"mb24_aregisters.bin"
+	.incbin	"AREGDUMP.BIN"
 MusicEnd:

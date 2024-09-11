@@ -36,7 +36,7 @@ char charorder[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:!?()/@- ";
 unsigned char bigfont[2 * 18 * 95];
 
 void main() {
-	FILE* inputfile = fopen("mb24_gfx.pi1", "rb");
+	FILE* inputfile = fopen("STEPBACK.PI1", "rb");
 	fread(pi1, 1, 32034, inputfile);
 
 	for (int y = 0; y < 200; y++) {
@@ -83,7 +83,7 @@ void main() {
 		s += 36;
 	}
 
-	FILE* outputfile1 = fopen("tmp/mb24_vfont.bin", "wb");
+	FILE* outputfile1 = fopen("tmp/vertical_scroll_font.bin", "wb");
 	fwrite(bigfont, 1, s, outputfile1);
 	fclose(outputfile1);
 }

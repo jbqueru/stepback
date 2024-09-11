@@ -257,5 +257,5 @@ vert_buffer:
 	.data
 	.even
 VertFont:
-	.incbin	"tmp/mb24_vfont.bin"
-	.include "tmp/mb24_vcurves-st_rmac.s"
+	.incbin	"tmp/vertical_scroll_font.bin"
+	.include "tmp/vertical_scroll_curves.s"

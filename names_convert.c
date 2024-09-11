@@ -34,7 +34,7 @@ unsigned char rawpixels[320][200];
 unsigned char sprites[12 * 2 * 60];
 
 void main() {
-	FILE* inputfile = fopen("mb24_gfx.pi1", "rb");
+	FILE* inputfile = fopen("STEPBACK.PI1", "rb");
 	fread(pi1, 1, 32034, inputfile);
 
 	for (int y = 0; y < 200; y++) {
@@ -79,7 +79,7 @@ void main() {
 	}
 
 
-	FILE* outputfile1 = fopen("tmp/mb24_sbitmaps.bin", "wb");
+	FILE* outputfile1 = fopen("tmp/names_bitmaps.bin", "wb");
 	fwrite(sprites, 1, 12 * 2 * 60, outputfile1);
 	fclose(outputfile1);
 }

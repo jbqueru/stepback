@@ -283,6 +283,6 @@ HorizChars:
 	dc.l	Horiz80, Horiz81, Horiz82, Horiz83, Horiz84, Horiz85, Horiz86, Horiz87
 	dc.l	Horiz88, Horiz89, Horiz90, HorizEnd
 
-	.include "tmp/mb24_hfont-st_rmac.s"
-	.include "tmp/mb24_hcurves-st_rmac.s"
+	.include "tmp/horizontal_scroll_font.s"
+	.include "tmp/horizontal_scroll_curves.s"
 

@@ -25,31 +25,30 @@
 
 mkdir -p tmp
 
-cc mb24_vcurves.c -o tmp/mb24_vcurves -lm
-tmp/mb24_vcurves > tmp/mb24_vcurves-st_rmac.s
+cc vertical_scroll_curves.c -o tmp/vertical_scroll_curves -lm
+tmp/vertical_scroll_curves > tmp/vertical_scroll_curves.s
 
-cc mb24_hcurves.c -o tmp/mb24_hcurves -lm
-tmp/mb24_hcurves > tmp/mb24_hcurves-st_rmac.s
+cc horizontal_scroll_curves.c -o tmp/horizontal_scroll_curves -lm
+tmp/horizontal_scroll_curves > tmp/horizontal_scroll_curves.s
 
-cc mb24_scurves.c -o tmp/mb24_scurves -lm
-tmp/mb24_scurves > tmp/mb24_scurves-st_rmac.s
+cc names_curves.c -o tmp/names_curves -lm
+tmp/names_curves > tmp/names_curves.s
 
-cc mb24_lcurves.c -o tmp/mb24_lcurves -lm
-tmp/mb24_lcurves > tmp/mb24_lcurves-st_rmac.s
+cc sprite_curves.c -o tmp/sprite_curves -lm
+tmp/sprite_curves > tmp/sprite_curves.s
 
-cc mb24_vconvert.c -o tmp/mb24_vconvert
-tmp/mb24_vconvert
+cc vertical_font_convert.c -o tmp/vertical_font_convert
+tmp/vertical_font_convert
 
-cc mb24_hconvert.c -o tmp/mb24_hconvert
-tmp/mb24_hconvert > tmp/mb24_hfont-st_rmac.s
+cc horizontal_font_convert.c -o tmp/horizontal_font_convert
+tmp/horizontal_font_convert > tmp/horizontal_scroll_font.s
 
-cc mb24_sconvert.c -o tmp/mb24_sconvert
-tmp/mb24_sconvert
+cc names_convert.c -o tmp/names_convert
+tmp/names_convert
 
-cc mb24_lconvert.c -o tmp/mb24_lconvert
-tmp/mb24_lconvert
-
+cc sprite_convert.c -o tmp/sprite_convert
+tmp/sprite_convert
 
 mkdir -p out
 
-~/code/rmac/rmac -s -v -p -4 mb24_main-st_rmac.s -o out/MB24.PRG
+~/code/rmac/rmac -s -v -p -4 stepback.s -o out/STEPBACK.PRG
