@@ -207,11 +207,15 @@ VertDraw:
 VertText:
 	dc.b	'              '
 	dc.b	'              '
-	dc.b	'A BRAND NEW DEMO IN 2024     '
+	dc.b	'THIS DEMO IS CALLED STEPPING BACK     '
+	dc.b	'IT IS A BRAND NEW DEMO IN 2024 '
 	dc.b	'BY THE MEGABUSTERS             '
 	dc.b	'GUEST MUSIC BY AD FROM MPS       '
 	dc.b	'GRAPHICS AND FONTS BY PANDAFOX      '
-	dc.b	'CODE BY DJAYBEE WITH HELP FROM TROED AND GWEM              '
+	dc.b	'CODE BY DJAYBEE WITH HELP FROM TROED AND GWEM      '
+	dc.b	'THIS DEMO IS LICENSED UNDER AGPL V3, '
+	dc.b	'WITH ASSETS OPTIONALLY UNDER CC:BY-SA V4. '
+	dc.b	'MORE DETAILS AT HTTPS://GITHUB.COM/JBQUERU/STEPBACK'
 VertTextEnd:
 
 VertChars:
