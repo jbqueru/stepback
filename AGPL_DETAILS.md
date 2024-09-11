@@ -1,7 +1,7 @@
 # Whose notes are these
 
-I am Jean-Baptiste "JBQ" "Djaybee" Quéru, original author of the
-Vs Hive game, and these are my personal notes about the licensing
+I am Jean-Baptiste "JBQ" "Djaybee" Queru, original coder of the
+StepBack demo, and these are my personal notes about the licensing
 constraints associated with that code.
 These notes might not (and probably do not) reflect the thoughts
 of other people who might have been involved in the code you
@@ -57,7 +57,8 @@ characteristics of both the target and the actual program.
 
 The **source code** in its **preferred form** is specifically expected
 to contain full revision history with meaningful fine-grained change
-messages, typically in git or in something newer with similar capabilities.
+messages, typically in git or in something newer with similar
+capabilities.
 Snapshots (a.k.a. tarballs) might be acceptable when their usage
 is justified (e.g. to provide smaller downloads side-by-side with
 full revision history).
@@ -97,7 +98,9 @@ Additionally, using such a terminal will be considered a
 **Remote Network Interaction**. While I realize that this is quite
 a stretch from the letter of AGPLv3, it's also consistent with the
 spirit of GPL in general where users of software must be allowed to
-maintain it and modify it.
+maintain it and modify it, even in situations where they use
+software that is not distributed to them.
+See `README.md` for more details.
 
 # In practice
 
