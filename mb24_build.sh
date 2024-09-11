@@ -43,6 +43,10 @@ tmp/mb24_vconvert
 cc mb24_hconvert.c -o tmp/mb24_hconvert
 tmp/mb24_hconvert > tmp/mb24_hfont-st_rmac.s
 
+cc mb24_sconvert.c -o tmp/mb24_sconvert
+tmp/mb24_sconvert
+
+
 mkdir -p out
 
 ~/code/rmac/rmac -s -v -p -4 mb24_main-st_rmac.s -o out/MB24.PRG
