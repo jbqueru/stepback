@@ -59,4 +59,4 @@ mkdir -p out/stepback
 cp out/tos/STEPBACK.PRG out/stepback
 cp LICENSE LICENSE_ASSETS AGPL_DETAILS.md README.md out/stepback
 cp blank.msa out/stepback/stepback.msa
-git bundle create -q out/stepback/stepback.gitbundle HEAD main
+git bundle create -q out/stepback/stepback.bundle HEAD main
