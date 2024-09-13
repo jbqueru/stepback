@@ -31,12 +31,14 @@ unsigned char pi1[32034];
 
 unsigned char rawpixels[320][200];
 
-char charorder[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:!?()/@-";
+char charorder[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:!?()/@-\"'";
 
 int charx[126];
 int chary[126];
 
 int haspixels(int x, int y) {
+	if (x == 97 && y == 71) return 1;
+	if (x == 181 && y == 71) return 1;
 	for (int p = 0; p < 9; p++) {
 		if (rawpixels[x][y + p] == 1) {
 			return 1;
@@ -78,9 +80,6 @@ void main() {
 
 			while (haspixels(x, y)) {
 				x++;
-				if ((x == 83) && (y == 71)) {
-					x++;
-				}
 			}
 		}
 	}
@@ -109,8 +108,7 @@ void main() {
 		}
 		if (n < 0) continue;
 		printf("Horiz%d:\n", c);
-		while((charx[n] == 83 && chary[n] == 71)
-				|| haspixels(charx[n], chary[n])) {
+		while(haspixels(charx[n], chary[n])) {
 			printf("\tdc.w\t%%");
 			for (int y = chary[n] + 8; y >= chary[n]; y--) {
 				printf("%d", rawpixels[charx[n]][y]);
