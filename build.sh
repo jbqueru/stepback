@@ -57,5 +57,6 @@ chmod 664 out/tos/STEPBACK.PRG
 rm -rf out/stepback
 mkdir -p out/stepback
 cp out/tos/STEPBACK.PRG out/stepback
-cp LICENSE LICENSE_ASSETS AGPL_DETAILS.md README.md stepback.msa out/stepback
+cp LICENSE LICENSE_ASSETS AGPL_DETAILS.md README.md out/stepback
+cp blank.msa out/stepback/stepback.msa
 git bundle create out/stepback/stepback.gitbundle HEAD main
