@@ -50,7 +50,7 @@ void main() {
 
 	printf("BigLogoY1:\n");
 	for (int t = 0; t < 127; t++) {
-		int x = 48 * 4 * (1 - cos (t * 2 * M_PI / 127)) / 2 + 0.5;
+		int x = 36 * 8 * (1 - cos (t * 2 * M_PI / 127)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
 	printf("BigLogoY1End:\n");
@@ -59,7 +59,7 @@ void main() {
 
 	printf("BigLogoY2:\n");
 	for (int t = 0; t < 601; t++) {
-		int x = 72 * 4 * (1 - cos (t * 2 * M_PI / 601)) / 2 + 0.5;
+		int x = 60 * 8 * (1 - cos (t * 2 * M_PI / 601)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
 	printf("BigLogoY2End:\n");
