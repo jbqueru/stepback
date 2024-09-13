@@ -26,8 +26,6 @@
 mkdir -p out/bin
 mkdir -p out/inc
 mkdir -p out/tos
-rm -rf out/rel
-mkdir -p out/rel
 
 cc vertical_scroll_curves.c -o out/bin/vertical_scroll_curves -lm
 out/bin/vertical_scroll_curves > out/inc/vertical_scroll_curves.s
@@ -54,7 +52,10 @@ cc sprite_convert.c -o out/bin/sprite_convert
 out/bin/sprite_convert
 
 ~/code/rmac/rmac -s -v -p -4 stepback.s -o out/tos/STEPBACK.PRG
+chmod 664 out/tos/STEPBACK.PRG
 
-cp out/tos/STEPBACK.PRG out/rel
-cp LICENSE LICENSE_ASSETS AGPL_DETAILS.md README.md out/rel
-git bundle create out/rel/stepback.gitbundle HEAD main
+rm -rf out/stepback
+mkdir -p out/stepback
+cp out/tos/STEPBACK.PRG out/stepback
+cp LICENSE LICENSE_ASSETS AGPL_DETAILS.md README.md stepback.msa out/stepback
+git bundle create out/stepback/stepback.gitbundle HEAD main
