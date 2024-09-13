@@ -200,18 +200,40 @@ MainSup:
 	move.b	#2, $ffff820a.w		; switch to 50 Hz
 	move.b	#0, $ffff8260.w		; switch to mode 0
 
-; *****************
-; **             **
-; ** Set palette **
-; **             **
-; *****************
+; *************************
+; **                     **
+; ** Set up intro screen **
+; **                     **
+; *************************
 
-	moveq.l	#15, d7
-	lea.l	PaletteData, a0
+	lea.l	IntroScreen + 2, a0
 	lea.l	$ffff8240.w, a1
-PaletteCopy:
+	moveq.l	#15, d7
+IntroPaletteCopy:
 	move.w	(a0)+, (a1)+
-	dbra	d7, PaletteCopy
+	dbra	d7, IntroPaletteCopy
+
+	movea.l	fb_back, a1
+	move.w	#999, d7
+CopyIntroScreen:
+	.rept	8
+	move.l	(a0)+, (a1)+
+	.endr
+	dbra	d7, CopyIntroScreen
+
+; ***********************
+; **                   **
+; ** Swap framebuffers **
+; **                   **
+; ***********************
+
+	move.l	fb_back, d0
+	move.l	fb_front, fb_back
+	move.l	d0, fb_front
+	lsr.l	#8, d0
+	move.b	d0, $ffff8203.w
+	lsr.l	#8, d0
+	move.b	d0, $ffff8201.w
 
 ; #########################
 ; #########################
@@ -227,6 +249,40 @@ PaletteCopy:
 	bsr	HorizInit
 	bsr	LogoInit
 	bsr	SpritesInit
+
+; ****************************
+; **                        **
+; ** Wait for intro timeout **
+; **                        **
+; ****************************
+WaitIntro:
+	cmp.b	#$39, $fffffc02.w
+	beq	Exit
+
+	cmp.l	#336, count_vbl
+	blt.s	WaitIntro
+
+	movea.l	fb_front, a0
+	moveq.l	#0, d0
+	move.w	#999, d7
+ClearIntro:
+	.rept 8
+	move.l	d0, (a0)+
+	.endr
+	dbra	d7, ClearIntro
+
+; *****************
+; **             **
+; ** Set palette **
+; **             **
+; *****************
+
+	moveq.l	#15, d7
+	lea.l	PaletteData, a0
+	lea.l	$ffff8240.w, a1
+PaletteCopy:
+	move.w	(a0)+, (a1)+
+	dbra	d7, PaletteCopy
 
 ; #############################################################################
 ; #############################################################################
@@ -355,6 +411,7 @@ VBL_Empty:
 	rte
 
 VBL_Music:
+	addq.l	#1, count_vbl
 	movem.l	d0/a0-a1, -(sp)
 	bsr.s	AudioPlay
 	movem.l	(sp)+, d0/a0-a1
@@ -397,6 +454,8 @@ PaletteData:
 
 	.bss
 	.even
+count_vbl:
+	.ds.l	1
 
 save_palette:
 	.ds.w	16
@@ -418,6 +477,7 @@ save_fa07:
 	.ds.b	1
 save_fa09:
 	.ds.b	1
+
 
 ; ******************
 ; **              **
@@ -448,6 +508,11 @@ fb_raw:
 	.include	"horizontal_scroll.s"
 	.include	"sprite.s"
 	.include	"names.s"
+
+	.data
+	.even
+IntroScreen:
+	.incbin		"STEPBACK.PI1"
 
 	.bss
 EndBss:					; end of BSS, clear to here
