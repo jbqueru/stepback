@@ -14,7 +14,9 @@ The demo is believed to run on a wide variety of ST hardware,
 from a plain 520 ST all the way to the TT or Falcon. However,
 it ignores any hardware beyond that of a plain ST, such that
 it neither uses those capabilities nor disables them, which
-could cause compatibility issues.
+could cause compatibility issues. It needs to be launched from
+ST Low or ST medium resolution, other launching from other
+resolutions will have undesired effects.
 
 It's been developed and tested under Hatari v2.5.0 with
 EmuTOS 1.3.
