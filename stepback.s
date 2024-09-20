@@ -259,7 +259,7 @@ WaitIntro:
 	cmp.b	#$39, $fffffc02.w
 	beq	Exit
 
-	cmp.l	#336, count_vbl
+	cmp.l	#488, count_vbl
 	blt.s	WaitIntro
 
 	movea.l	fb_front, a0
