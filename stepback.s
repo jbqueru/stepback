@@ -357,26 +357,71 @@ GreenDone:
 	bsr	LogoInit
 	bsr	SpritesInit
 
+	lea.l	intro_data, a0
+	moveq.l	#0, d0
+	moveq.l	#24, d7
+IntroSetupLoopY:
+	moveq.l	#19, d6
+IntroSetupLoopX:
+	move.w	d0, (a0)+
+	addq.w	#1, d0
+	move.w	d0, (a0)+
+	addq.w	#7, d0
+	dbra	d6, IntroSetupLoopX
+	addi.w	#1120, d0
+	dbra.w	d7, IntroSetupLoopY
+
 ; ****************************
 ; **                        **
 ; ** Wait for intro timeout **
 ; **                        **
 ; ****************************
+	move.l	#$cafe, d7
+	move.w	#1000, d6
 WaitIntro:
+	move.l	count_vbl, d0
+WaitIntoVBL:
+	cmp.l	count_vbl, d0
+	beq.s	WaitIntoVBL
+
 	cmp.b	#$39, $fffffc02.w
 	beq	Exit
 
-	cmp.l	#488, count_vbl
+	cmp.l	#438, d0
 	blt.s	WaitIntro
 
-	movea.l	fb_front, a0
+
+	moveq.l	#19, d5
+EraseSquare:
+	lea.l	intro_data, a0
+
+	move.l	d7, d4
+	divu.w	d6, d4
+	swap	d4
+	add.w	d4, d4
+
+	subq.w	#1, d6
+	move.w	d6, d0
+	add.w	d0, d0
+	move.w	(a0, d4.w), d3
+	move.w	(a0, d0.w), (a0, d4.w)
+
+	movea.l	fb_front, a1
+	adda.w	d3, a1
 	moveq.l	#0, d0
-	move.w	#999, d7
-ClearIntro:
-	.rept 8
-	move.l	d0, (a0)+
-	.endr
-	dbra	d7, ClearIntro
+	movep.l	d0, 0(a1)
+	movep.l	d0, 160(a1)
+	movep.l	d0, 320(a1)
+	movep.l	d0, 480(a1)
+	movep.l	d0, 640(a1)
+	movep.l	d0, 800(a1)
+	movep.l	d0, 960(a1)
+	movep.l	d0, 1120(a1)
+	dbra.w	d5, EraseSquare
+
+
+	cmp.l	#488, count_vbl
+	blt.s	WaitIntro
 
 ; *****************
 ; **             **
@@ -585,6 +630,14 @@ save_fa07:
 save_fa09:
 	.ds.b	1
 
+; ****************
+; **            **
+; ** Intro data **
+; **            **
+; ****************
+	.even
+intro_data:
+	.ds.w	1000
 
 ; ******************
 ; **              **
