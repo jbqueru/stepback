@@ -512,7 +512,7 @@ fb_raw:
 	.data
 	.even
 IntroScreen:
-	.incbin		"STEPBACK.PI1"
+	.incbin		"LOGO.PI1"
 
 	.bss
 EndBss:					; end of BSS, clear to here
