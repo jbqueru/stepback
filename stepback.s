@@ -210,9 +210,10 @@ MainSup:
 	lea.l	$ffff8240.w, a1
 	moveq.l	#15, d7
 IntroPaletteCopy:
-	move.w	(a0)+, (a1)+
+	move.w	(a0), (a1)+
 	dbra	d7, IntroPaletteCopy
 
+	lea.l	IntroScreen + 34, a0
 	movea.l	fb_back, a1
 	move.w	#999, d7
 CopyIntroScreen:
@@ -235,6 +236,114 @@ CopyIntroScreen:
 	lsr.l	#8, d0
 	move.b	d0, $ffff8201.w
 
+; ####################
+; ####################
+; ###              ###
+; ###  Init music  ###
+; ###              ###
+; ####################
+; ####################
+
+	bsr	AudioInit
+	move.l	#VBL_Music, $70.w
+
+	move.w	#0, d7
+NextFade:
+	move.l	count_vbl, d0
+WaitFade:
+	cmp.l	count_vbl, d0
+	beq.s	WaitFade
+
+	addq.w	#1, d7
+
+	lea.l	IntroScreen + 2, a0
+	lea.l	2(a0), a1
+	lea.l	$ffff8242.w, a2
+
+	moveq.l	#1, d6
+NextColor:
+
+	cmp.w	#16, d7
+	bge.s	BlueFull
+
+	move.w	(a0), d0
+	move.w	(a1), d1
+	andi.w	#$7, d0
+	andi.w	#$7, d1
+	sub.w	d0, d1
+	muls.w	d7, d1
+	addi.w	#$8, d1
+	asr.w	#4, d1
+	add.w	d0, d1
+	bra.s	BlueDone
+BlueFull:
+	move.w	(a1), d1
+	andi.w	#7, d1
+BlueDone:
+	move.w	d1, d2
+
+	cmp.w	#8, d7
+	ble.s	RedNone
+	cmp.w	#24, d7
+	bge.s	RedFull
+
+	move.w	(a0), d0
+	move.w	(a1), d1
+	andi.w	#$700, d0
+	andi.w	#$700, d1
+	sub.w	d0, d1
+	move.w	d7, d5
+	subq.w	#8, d5
+	muls.w	d5, d1
+	addi.w	#$800, d1
+	asr.w	#4, d1
+	add.w	d0, d1
+	andi.w	#$700, d1
+	bra.s	RedDone
+RedNone:
+	move.w	(a0), d1
+	andi.w	#$700, d1
+	bra.s	RedDone
+RedFull:
+	move.w	(a1), d1
+	andi.w	#$700, d1
+RedDone:
+	add.w	d1, d2
+
+	cmp.w	#16, d7
+	ble.s	GreenNone
+
+	move.w	(a0), d0
+	move.w	(a1), d1
+	andi.w	#$70, d0
+	andi.w	#$70, d1
+	sub.w	d0, d1
+	move.w	d7, d5
+	subi.w	#16, d5
+	muls.w	d5, d1
+	addi.w	#$80, d1
+	asr.w	#4, d1
+	add.w	d0, d1
+	andi.w	#$70, d1
+	bra.s	GreenDone
+GreenNone:
+	move.w	(a0), d1
+	andi.w	#$70, d1
+GreenDone:
+	add.w	d1, d2
+
+	move.w	d2, (a2)+
+
+	addq.w	#2, a1
+
+	addq.w	#1, d6
+	cmp.w	#16, d6
+	bne.w	NextColor
+	cmp.w	#32, d7
+	bne.w	NextFade
+
+
+
 ; #########################
 ; #########################
 ; ###                   ###
@@ -243,8 +352,6 @@ CopyIntroScreen:
 ; #########################
 ; #########################
 
-	bsr	AudioInit
-	move.l	#VBL_Music, $70.w
 	bsr	VertInit
 	bsr	HorizInit
 	bsr	LogoInit
