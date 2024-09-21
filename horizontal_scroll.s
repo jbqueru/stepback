@@ -210,7 +210,6 @@ HorizBufferOk:
 	.data
 
 HorizText:
-	dc.b	'         '
 	dc.b	'I AM DJAYBEE FROM THE MEGABUSTERS, COLLABORATING '
 	dc.b	'WITH AD FROM MPS AND PANDAFOX FROM THE MEGABUSTERS '
 	dc.b	'TO BRING YOU THIS NEW DEMO IN 2024. '
@@ -234,6 +233,7 @@ HorizText:
 	dc.b	'THIS IS THE END OF THIS SCROLLTEXT, THANKS '
 	dc.b	'FOR READING! WE WILL WRAP THIS UP AND GET '
 	dc.b	'STARTED ALL OVER AGAIN! '
+	dc.b	'         '
 	dc.b	'         '
 EndHorizText:
 

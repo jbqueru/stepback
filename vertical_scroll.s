@@ -205,8 +205,6 @@ VertDraw:
 	.data
 
 VertText:
-	dc.b	'              '
-	dc.b	'              '
 	dc.b	'THIS DEMO IS CALLED STEPPING BACK     '
 	dc.b	'IT IS A BRAND NEW DEMO IN 2024 '
 	dc.b	'BY THE MEGABUSTERS             '
@@ -220,6 +218,8 @@ VertText:
 	dc.b	'DJAYBEE USED HATARI EMUTOS RMAC AND GCC.  '
 	dc.b	'PANDAFOX USED ///TBD///.  '
 	dc.b	'AD USED ///TBD///.  '
+	dc.b	'              '
+	dc.b	'              '
 VertTextEnd:
 
 VertChars:
