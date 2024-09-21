@@ -217,7 +217,7 @@ VertText:
 	dc.b	'FOR THE CREATION OF THIS DEMO, '
 	dc.b	'DJAYBEE USED HATARI EMUTOS RMAC AND GCC.  '
 	dc.b	'PANDAFOX USED ST-PAINT.  '
-	dc.b	'AD USED ///TBD///.  '
+	dc.b	'AD USED MAXYMISER.  '
 	dc.b	'              '
 	dc.b	'              '
 VertTextEnd:
