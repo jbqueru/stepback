@@ -162,6 +162,11 @@ VertDraw:
 	move.l	vert_buffer_read, a0
 	move.l	vert_char_read, a1
 	move.w	(a1)+, d0
+	move.w	d0, (a0)
+	move.w	d0, 760(a0)
+	move.w	(a1)+, d0
+	move.w	d0, 2(a0)
+	move.w	d0, 762(a0)
 	cmp.l	vert_char_end, a1
 	bne.s	.InChar
 
@@ -183,8 +188,6 @@ VertDraw:
 	move.l	a2, vert_char_end
 .InChar:
 	move.l	a1, vert_char_read
-	move.w	d0, (a0)
-	move.w	d0, 760(a0)
 
 ; ***************************
 ; **                       **
@@ -193,7 +196,7 @@ VertDraw:
 ; ***************************
 
 	move.l	vert_buffer_read, a0
-	addq.w	#2, a0
+	addq.w	#4, a0
 	cmp.l	#vert_buffer + 760, a0
 	bne.s	.BufferOk
 	move.l	#vert_buffer, a0
