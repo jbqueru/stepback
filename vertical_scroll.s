@@ -216,7 +216,7 @@ VertText:
 	dc.b	'MORE DETAILS AT HTTPS://GITHUB.COM/JBQUERU/STEPBACK         '
 	dc.b	'FOR THE CREATION OF THIS DEMO, '
 	dc.b	'DJAYBEE USED HATARI EMUTOS RMAC AND GCC.  '
-	dc.b	'PANDAFOX USED ///TBD///.  '
+	dc.b	'PANDAFOX USED ST-PAINT.  '
 	dc.b	'AD USED ///TBD///.  '
 	dc.b	'              '
 	dc.b	'              '
