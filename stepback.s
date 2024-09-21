@@ -282,9 +282,9 @@ BlueFull:
 BlueDone:
 	move.w	d1, d2
 
-	cmp.w	#16, d7
+	cmp.w	#24, d7
 	ble.s	RedNone
-	cmp.w	#48, d7
+	cmp.w	#56, d7
 	bge.s	RedFull
 
 	move.w	(a0), d0
@@ -293,7 +293,7 @@ BlueDone:
 	andi.w	#$700, d1
 	sub.w	d0, d1
 	move.w	d7, d5
-	subi.w	#16, d5
+	subi.w	#24, d5
 	muls.w	d5, d1
 	addi.w	#$1000, d1
 	asr.w	#5, d1
@@ -310,7 +310,7 @@ RedFull:
 RedDone:
 	add.w	d1, d2
 
-	cmp.w	#32, d7
+	cmp.w	#48, d7
 	ble.s	GreenNone
 
 	move.w	(a0), d0
@@ -319,7 +319,7 @@ RedDone:
 	andi.w	#$70, d1
 	sub.w	d0, d1
 	move.w	d7, d5
-	subi.w	#32, d5
+	subi.w	#48, d5
 	muls.w	d5, d1
 	addi.w	#$100, d1
 	asr.w	#5, d1
@@ -339,7 +339,7 @@ GreenDone:
 	addq.w	#1, d6
 	cmp.w	#16, d6
 	bne.w	NextColor
-	cmp.w	#64, d7
+	cmp.w	#80, d7
 	bne.w	NextFade
 
 
@@ -378,6 +378,7 @@ IntroSetupLoopX:
 ; ****************************
 	move.l	#$cafe, d7
 	move.w	#1000, d6
+	moveq.l	#11, d5
 WaitIntro:
 	move.l	count_vbl, d0
 WaitIntoVBL:
@@ -387,11 +388,11 @@ WaitIntoVBL:
 	cmp.b	#$39, $fffffc02.w
 	beq	Exit
 
-	cmp.l	#438, d0
+	cmp.l	#560, d0
 	blt.s	WaitIntro
 
 
-	moveq.l	#19, d5
+	move.l	d5, d2
 EraseSquare:
 	lea.l	intro_data, a0
 
@@ -421,11 +422,12 @@ EraseSquare:
 	ror.w	#5, d7
 	addi.w	#$50da, d7
 
-	dbra.w	d5, EraseSquare
+	dbra.w	d2, EraseSquare
+	eori.w	#7, d5
 
 
-	cmp.l	#488, count_vbl
-	blt.s	WaitIntro
+	cmp.l	#640, count_vbl
+	blt.w	WaitIntro
 
 ; *****************
 ; **             **
