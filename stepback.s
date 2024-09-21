@@ -417,6 +417,10 @@ EraseSquare:
 	movep.l	d0, 800(a1)
 	movep.l	d0, 960(a1)
 	movep.l	d0, 1120(a1)
+
+	ror.w	#5, d7
+	addi.w	#$50da, d7
+
 	dbra.w	d5, EraseSquare
 
 
