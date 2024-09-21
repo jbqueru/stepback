@@ -39,7 +39,7 @@
 VertInit:
 	move.l	#vert_buffer, vert_buffer_read
 	move.l	#VertFont, vert_char_read
-	move.l	#VertFont + 2, vert_char_end
+	move.l	#VertFont + 36, vert_char_end
 	move.l	#VertText, vert_text_read
 
 	move.l	#VerticalCurve + 75, vert_curve1
