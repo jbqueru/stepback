@@ -42,11 +42,11 @@ VertInit:
 	move.l	#VertFont + 36, vert_char_end
 	move.l	#VertText, vert_text_read
 
-	move.l	#VerticalCurve + 75, vert_curve1
-	move.l	#VerticalCurve + 60, vert_curve2
-	move.l	#VerticalCurve + 45, vert_curve3
-	move.l	#VerticalCurve + 30, vert_curve4
-	move.l	#VerticalCurve + 15, vert_curve5
+	move.l	#VerticalCurve + 50, vert_curve1
+	move.l	#VerticalCurve + 40, vert_curve2
+	move.l	#VerticalCurve + 30, vert_curve3
+	move.l	#VerticalCurve + 20, vert_curve4
+	move.l	#VerticalCurve + 10, vert_curve5
 	move.l	#VerticalCurve + 00, vert_curve6
 
 	rts
