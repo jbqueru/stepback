@@ -201,6 +201,23 @@ SpritesInit:
 	dbra	d6, .Line
 	dbra	d7, .Pixel
 
+	lea.l	sprite_corners, a0
+	move.l	#$e0000000, d0
+	move.l	#$80000000, d1
+	move.l	#$0003ffff, d2
+	move.l	#$0000ffff, d3
+	moveq.l	#15, d7
+.ShiftCorners:
+	move.l	d0, (a0)+
+	move.l	d1, (a0)+
+	move.l	d2, (a0)+
+	move.l	d3, (a0)+
+	asr.l	#1, d0
+	asr.l	#1, d1
+	asr.l	#1, d2
+	asr.l	#1, d3
+	dbra.w	d7, .ShiftCorners
+
 	rts
 
 ; ###############
@@ -308,6 +325,7 @@ SpriteX2Ok:
 	lsr.w	#2, d4
 	move.w	d4, d5
 	and.w	#$f, d5
+	move.w	d5, d6
 	sub.w	d5, d4
 	lsr.w	d4
 	adda.w	d4, a1
@@ -329,6 +347,66 @@ SpriteX2Ok:
 	adda.w	d5, a0
 
 	move.l	a1, 60(a6)
+
+	lea.l	sprite_corners, a2
+	lsl.w	#4, d6
+	adda.w	d6, a2
+	move.w	(a2), d3
+	swap	d3
+	move.w	(a2)+, d3
+	and.l	d3, (a1)
+	and.l	d3, 4(a1)
+	and.l	d3, 3040(a1)
+	and.l	d3, 3044(a1)
+	move.w	(a2), d3
+	swap	d3
+	move.w	(a2)+, d3
+	and.l	d3, 8(a1)
+	and.l	d3, 12(a1)
+	and.l	d3, 3048(a1)
+	and.l	d3, 3052(a1)
+	move.w	(a2), d3
+	swap	d3
+	move.w	(a2)+, d3
+	and.l	d3, 160(a1)
+	and.l	d3, 164(a1)
+	and.l	d3, 2880(a1)
+	and.l	d3, 2884(a1)
+	move.w	(a2), d3
+	swap	d3
+	move.w	(a2)+, d3
+	and.l	d3, 168(a1)
+	and.l	d3, 172(a1)
+	and.l	d3, 2888(a1)
+	and.l	d3, 2892(a1)
+	move.w	(a2), d3
+	swap	d3
+	move.w	(a2)+, d3
+	and.l	d3, 32(a1)
+	and.l	d3, 36(a1)
+	and.l	d3, 3072(a1)
+	and.l	d3, 3076(a1)
+	move.w	(a2), d3
+	swap	d3
+	move.w	(a2)+, d3
+	and.l	d3, 40(a1)
+	and.l	d3, 44(a1)
+	and.l	d3, 3080(a1)
+	and.l	d3, 3084(a1)
+	move.w	(a2), d3
+	swap	d3
+	move.w	(a2)+, d3
+	and.l	d3, 192(a1)
+	and.l	d3, 196(a1)
+	and.l	d3, 2912(a1)
+	and.l	d3, 2916(a1)
+	move.w	(a2), d3
+	swap	d3
+	move.w	(a2)+, d3
+	and.l	d3, 200(a1)
+	and.l	d3, 204(a1)
+	and.l	d3, 2920(a1)
+	and.l	d3, 2924(a1)
 
 	moveq.l	#0, d2
 
@@ -438,6 +516,9 @@ sprite_erase_back:
 	ds.l	3
 sprite_preshifted:
 	ds.l	3
+
+sprite_corners:
+	ds.l	64
 
 ; #########################
 ; #########################
