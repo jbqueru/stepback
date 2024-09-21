@@ -263,7 +263,7 @@ WaitFade:
 	moveq.l	#1, d6
 NextColor:
 
-	cmp.w	#16, d7
+	cmp.w	#32, d7
 	bge.s	BlueFull
 
 	move.w	(a0), d0
@@ -272,19 +272,19 @@ NextColor:
 	andi.w	#$7, d1
 	sub.w	d0, d1
 	muls.w	d7, d1
-	addi.w	#$8, d1
-	asr.w	#4, d1
+	addi.w	#$10, d1
+	asr.w	#5, d1
 	add.w	d0, d1
 	bra.s	BlueDone
 BlueFull:
 	move.w	(a1), d1
-	andi.w	#7, d1
+	andi.w	#$7, d1
 BlueDone:
 	move.w	d1, d2
 
-	cmp.w	#8, d7
+	cmp.w	#16, d7
 	ble.s	RedNone
-	cmp.w	#24, d7
+	cmp.w	#48, d7
 	bge.s	RedFull
 
 	move.w	(a0), d0
@@ -293,10 +293,10 @@ BlueDone:
 	andi.w	#$700, d1
 	sub.w	d0, d1
 	move.w	d7, d5
-	subq.w	#8, d5
+	subi.w	#16, d5
 	muls.w	d5, d1
-	addi.w	#$800, d1
-	asr.w	#4, d1
+	addi.w	#$1000, d1
+	asr.w	#5, d1
 	add.w	d0, d1
 	andi.w	#$700, d1
 	bra.s	RedDone
@@ -310,7 +310,7 @@ RedFull:
 RedDone:
 	add.w	d1, d2
 
-	cmp.w	#16, d7
+	cmp.w	#32, d7
 	ble.s	GreenNone
 
 	move.w	(a0), d0
@@ -319,10 +319,10 @@ RedDone:
 	andi.w	#$70, d1
 	sub.w	d0, d1
 	move.w	d7, d5
-	subi.w	#16, d5
+	subi.w	#32, d5
 	muls.w	d5, d1
-	addi.w	#$80, d1
-	asr.w	#4, d1
+	addi.w	#$100, d1
+	asr.w	#5, d1
 	add.w	d0, d1
 	andi.w	#$70, d1
 	bra.s	GreenDone
@@ -339,7 +339,7 @@ GreenDone:
 	addq.w	#1, d6
 	cmp.w	#16, d6
 	bne.w	NextColor
-	cmp.w	#32, d7
+	cmp.w	#64, d7
 	bne.w	NextFade
 
 
