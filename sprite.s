@@ -152,7 +152,7 @@ LogoXOk:
 	move.l	logo_address_back, logo_address_front
 	move.l	a0, logo_address_back
 
-	moveq.l	#103, d0
+	moveq.l	#15, d0
 Lp0:
 	.rept 7
 	movem.l	(a1)+, d5-d7
@@ -162,6 +162,39 @@ Lp0:
 	.endr
 	add.w	#104, a0
 	dbra	d0, Lp0
+
+	moveq.l	#71, d0
+Lp1:
+	.rept 2
+	movem.l	(a1)+, d5-d7
+	and.l	d5, (a0)
+	or.l	d6, (a0)+
+	move.l	d7, (a0)+
+	.endr
+	.rept 3
+	movem.l	(a1)+, d5-d7
+	move.l	d6, (a0)+
+	move.l	d7, (a0)+
+	.endr
+	.rept 2
+	movem.l	(a1)+, d5-d7
+	and.l	d5, (a0)
+	or.l	d6, (a0)+
+	move.l	d7, (a0)+
+	.endr
+	add.w	#104, a0
+	dbra	d0, Lp1
+
+	moveq.l	#15, d0
+Lp2:
+	.rept 7
+	movem.l	(a1)+, d5-d7
+	and.l	d5, (a0)
+	or.l	d6, (a0)+
+	move.l	d7, (a0)+
+	.endr
+	add.w	#104, a0
+	dbra	d0, Lp2
 
 	rts
 
