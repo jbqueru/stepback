@@ -96,12 +96,28 @@ SpritesInit:
 
 	moveq.l	#59, d7
 .Copy:
+	move.l	d7, d6
+	divu	#20, d6
+	swap	d6
+	cmp.w	#1, d6
+	ble.s	.CopyTopBottom
+	cmp.w	#18, d6
+	bge.s	.CopyTopBottom
 	move.l	(a0)+, (a1)
 	move.l	(a0)+, 8(a1)
 	move.l	(a0)+, 12(a1)
 	move.l	(a0)+, 16(a1)
 	move.l	(a0)+, 20(a1)
 	move.l	(a0)+, 4(a1)
+	bra.s	.CopyLineDone
+.CopyTopBottom:
+	move.l	(a0)+, (a1)
+	move.l	(a0)+, 4(a1)
+	move.l	(a0)+, 8(a1)
+	move.l	(a0)+, 20(a1)
+	move.l	(a0)+, 12(a1)
+	move.l	(a0)+, 16(a1)
+.CopyLineDone:
 	adda.w	#24, a1
 	dbra	d7, .Copy
 
@@ -118,6 +134,14 @@ SpritesInit:
 .Pixel:
 	moveq.l	#59, d6
 .Line:
+	move.l	d6, d5
+	divu.w	#20, d5
+	swap	d5
+	cmp.w	#1, d5
+	ble.s	.ShiftTopBottom
+	cmp.w	#18, d5
+	bge.s	.ShiftTopBottom
+
 	moveq.l	#1, d5
 .Plane:
 	move.w	(a0), d0
@@ -142,6 +166,35 @@ SpritesInit:
 	addq.l	#2, a1
 
 	dbra	d5, .Plane
+	bra.s	.ShiftLineDone
+
+.ShiftTopBottom:
+
+	moveq.l	#1, d5
+.PlaneTopBottom:
+	move.w	(a0), d0
+	lsr.w	d0
+	move.w	d0, (a1)
+	move.w	4(a0), d0
+	roxr.w	d0
+	move.w	d0, 4(a1)
+	move.w	8(a0), d0
+	roxr.w	d0
+	move.w	d0, 8(a1)
+	move.w	20(a0), d0
+	roxr.w	d0
+	move.w	d0, 20(a1)
+	move.w	12(a0), d0
+	roxr.w	d0
+	move.w	d0, 12(a1)
+	move.w	16(a0), d0
+	roxr.w	d0
+	move.w	d0, 16(a1)
+	addq.l	#2, a0
+	addq.l	#2, a1
+
+	dbra	d5, .PlaneTopBottom
+.ShiftLineDone:
 
 	lea.l	20(a0), a0
 	lea.l	20(a1), a1
@@ -279,9 +332,34 @@ SpriteX2Ok:
 
 	moveq.l	#0, d2
 
-	moveq.l	#19, d6
+	moveq.l	#1, d6
+.LoopTop:
+	movem.l	(a0)+, d3-d4/a2
+;	and.l	d0, (a1)+
+;	and.l	d0, (a1)
+	addq.w	#4, a1
+	or.l	d3, (a1)+
+;	move.l	d2, (a1)+
+	addq.w	#4, a1
+	or.l	d4, (a1)+
+	move.l	d2, (a1)+
+	move.l	a2, (a1)+
+	movem.l	(a0)+, d3-d4/a2
+	move.l	d2, (a1)+
+	move.l	a2, (a1)+
+;	move.l	d2, (a1)+
+	addq.w	#4, a1
+	or.l	d3, (a1)+
+;	and.l	d1, (a1)+
+;	and.l	d1, (a1)
+	addq.w	#4, a1
+	or.l	d4, (a1)+
 
-.Loop:
+	lea.l	112(a1), a1
+	dbra	d6, .LoopTop
+
+	moveq.l	#15, d6
+.LoopMiddle:
 	movem.l	(a0)+, d3-d4/a2-a5
 	and.l	d0, (a1)+
 	and.l	d0, (a1)
@@ -299,7 +377,33 @@ SpriteX2Ok:
 	or.l	d4, (a1)+
 
 	lea.l	112(a1), a1
-	dbra	d6, .Loop
+	dbra	d6, .LoopMiddle
+
+	moveq.l	#1, d6
+.LoopBottom:
+	movem.l	(a0)+, d3-d4/a2
+;	and.l	d0, (a1)+
+;	and.l	d0, (a1)
+	addq.w	#4, a1
+	or.l	d3, (a1)+
+;	move.l	d2, (a1)+
+	addq.w	#4, a1
+	or.l	d4, (a1)+
+	move.l	d2, (a1)+
+	move.l	a2, (a1)+
+	movem.l	(a0)+, d3-d4/a2
+	move.l	d2, (a1)+
+	move.l	a2, (a1)+
+;	move.l	d2, (a1)+
+	addq.w	#4, a1
+	or.l	d3, (a1)+
+;	and.l	d1, (a1)+
+;	and.l	d1, (a1)
+	addq.w	#4, a1
+	or.l	d4, (a1)+
+
+	lea.l	112(a1), a1
+	dbra	d6, .LoopBottom
 
 	addq.l	#4, a6
 	dbra	d7, LoopSprite
