@@ -388,7 +388,7 @@ WaitIntoVBL:
 	cmp.b	#$39, $fffffc02.w
 	beq	Exit
 
-	cmp.l	#560, d0
+	cmp.l	#613 - 80, d0
 	blt.s	WaitIntro
 
 
@@ -426,7 +426,7 @@ EraseSquare:
 	eori.w	#7, d5
 
 
-	cmp.l	#640, count_vbl
+	cmp.l	#613, count_vbl
 	blt.w	WaitIntro
 
 ; *****************
