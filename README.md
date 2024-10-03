@@ -21,6 +21,61 @@ resolutions will have undesired effects.
 It's been developed and tested under Hatari v2.5.0 with
 EmuTOS 1.3.
 
+# What's in the package
+
+The distribution package contains this `README.md` file, the main
+`LICENSE` file for the final, an alternative `LICENSE_ASSETS`
+if you extract non-code assets from the demo or its source tree,
+and an `AGPL_DETAILS.md` file to explain the original author's
+intentions for compliance with the AGPL license.
+
+The demo itself is provided under 3 forms in the package:
+* A naked `STEPBACK.PRG` file meant to be executed e.g. from with
+an emulator with GEMDOS hard drive emulation.
+* A `stepback.msa` floppy image.
+* A copy of the source tree `src.zip` that was used to compile
+the demo.
+* The full source history as a git bundle `stepback.bundle` which
+can be cloned with `git clone stepback.bundle`.
+
+# Building
+
+The build process expects to have rmac, cc, git and zip in the path.
+Rmac can be found on [the official rmac web site](https://rmac.is-slick.com/).
+
+A basic build can be done in a single script `build.sh` which is
+useful during most incremental development. However, a full
+build from start to finish requires some manual steps:
+
+## Converting the music
+
+The music in its original form is delivered as an SNDH file, which
+combines player code and music data. While the music data was created
+specifically for this demo, the player code has restrictions that
+make it unsuitable for integration into Open Source binaries, and
+especially copyleft ones.
+
+To avoid those restrictions, the music data is extracted as a raw
+dump of the YM2149F registers, which is a pure derivative of the
+music data and contains no trace of the player itself. That dump
+is generated from within an emulated ST.
+
+The end-to-end process involved running `audioconvert.sh` to build
+the dumping program `ACONVERT.PRG`, which needs to be run from within
+an Atari emulator (or on real hardware for the more adventurous),
+where it generates the file `AREGDUMP.BIN` that can be copied back
+into the source tree. `AREGDUMP.BIN` is provided in the source
+tree already such that it's possible to modify the demo without
+having to build and execute `ACONVERT.PRG`
+
+## Packaging the floppy image
+
+The final package contains a floppy image, which gets created
+from within an Atari ST emulator. After running `build.sh`, run
+an emulator with `out/tos/stepback.msa` mounted as a floppy and
+`out/tos/STEPBACK.PRG` available on an emulated hard disk, and
+copy that file onto the floppy. Once that's done, run `makedist.sh`.
+
 # (Un)important things
 
 ## Licensing
