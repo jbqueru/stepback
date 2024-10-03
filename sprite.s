@@ -24,7 +24,7 @@
 
 	.text
 
-LogoInit:
+SpriteInit:
 	move.l	#BigLogoX, logo_read_x
 	move.l	#BigLogoY1, logo_read_y1
 	move.l	#BigLogoY2, logo_read_y2
@@ -81,7 +81,7 @@ Shift16pix:
 
 	rts
 
-LogoErase:
+SpriteErase:
 	move.l	logo_address_front, a0
 
 	moveq.l	#0, d4
@@ -101,14 +101,14 @@ EraseLogo:
 
 	rts
 
-; ##################
-; ##################
-; ###            ###
-; ###  Big Logo  ###
-; ###            ###
-; ##################
-; ##################
-LogoDraw:
+; ####################
+; ####################
+; ###              ###
+; ###  Big Sprite  ###
+; ###              ###
+; ####################
+; ####################
+SpriteDraw:
 
 	move.l	fb_back, a0
 	move.l	#logo_shifted, a1

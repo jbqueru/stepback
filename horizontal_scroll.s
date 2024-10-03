@@ -26,16 +26,21 @@
 ; #############################################################################
 ; ###                                                                       ###
 ; ###                                                                       ###
-; ###                  Horizontal scrolltext for MB24 demo                  ###
+; ###             Horizontal scrolltext for Stepping Back demo              ###
 ; ###                                                                       ###
 ; ###                                                                       ###
 ; #############################################################################
 ; #############################################################################
 
-; SEE mb24_main file for full explanation
+; SEE stepback.s file for full explanation
 
 	.text
 
+; ********************
+; **                **
+; ** Initialization **
+; **                **
+; ********************
 HorizInit:
 	move.l	#HorizText, horiz_text_read
 	move.l	#horiz_buffer, horiz_read
@@ -47,14 +52,6 @@ HorizInit:
 	move.l	fb_front, horiz_front
 
 	rts
-
-; #############################
-; #############################
-; ###                       ###
-; ###  Horizontal scroller  ###
-; ###                       ###
-; #############################
-; #############################
 
 ; *************************
 ; **                     **
@@ -76,8 +73,6 @@ HorizDraw:
 	mulu.w	#160, d0
 	lea.l	2(a0, d0.w), a0
 
-; TODO: this erase code is ugly, written while a bit drunk.
-; Specifically, top and bottom are reversed, and cen be merged.
 	movea.l	horiz_back, a2
 	cmpa.l	a2, a0
 	bge.s	.EraseTop
@@ -271,7 +266,7 @@ horiz_buffer:
 	.even
 
 HorizChars:
-	dc.l	Horiz32, Horiz33, Horiz34, Horiz39, Horiz40, Horiz40, Horiz40, Horiz39
+	dc.l	Horiz32, Horiz33, Horiz34, Horiz39, Horiz39, Horiz39, Horiz39, Horiz39
 	dc.l	Horiz40, Horiz41, Horiz44, Horiz44, Horiz44, Horiz45, Horiz46, Horiz47
 	dc.l	Horiz48, Horiz49, Horiz50, Horiz51, Horiz52, Horiz53, Horiz54, Horiz55
 	dc.l	Horiz56, Horiz57, Horiz58, Horiz63, Horiz63, Horiz63, Horiz63, Horiz63

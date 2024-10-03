@@ -26,23 +26,28 @@
 ; #############################################################################
 ; ###                                                                       ###
 ; ###                                                                       ###
-; ###                   Vertical scrolltext for MB24 demo                   ###
+; ###              Vertical scrolltext for Stepping Back demo               ###
 ; ###                                                                       ###
 ; ###                                                                       ###
 ; #############################################################################
 ; #############################################################################
 
-; SEE mb24_main file for full explanation
+; SEE stepback.s file for full explanation
 
 	.text
 
+; ********************
+; **                **
+; ** Initialization **
+; **                **
+; ********************
 VertInit:
-	move.l	#vert_buffer, vert_buffer_read
-	move.l	#VertFont, vert_char_read
-	move.l	#VertFont + 36, vert_char_end
-	move.l	#VertText, vert_text_read
+	move.l	#vert_buffer, vert_buffer_read		; base read location for graphics in the buffer
+	move.l	#VertFont, vert_char_read		; read location to copy from font to buffer
+	move.l	#VertFont + 36, vert_char_end		; end of current character being read
+	move.l	#VertText, vert_text_read		; read location for the text itself
 
-	move.l	#VerticalCurve + 50, vert_curve1
+	move.l	#VerticalCurve + 50, vert_curve1	; read locations for the individual curves
 	move.l	#VerticalCurve + 40, vert_curve2
 	move.l	#VerticalCurve + 30, vert_curve3
 	move.l	#VerticalCurve + 20, vert_curve4
@@ -50,14 +55,6 @@ VertInit:
 	move.l	#VerticalCurve + 00, vert_curve6
 
 	rts
-
-; ############################
-; ############################
-; ###                      ###
-; ###  Vertical scrollers  ###
-; ###                      ###
-; ############################
-; ############################
 
 ; *************************
 ; **                     **
@@ -140,7 +137,7 @@ VertDraw:
 
 	movea.l	fb_back, a0
 	lea.l	16(a0), a0
-	moveq.l	#19,d1
+	moveq.l	#19, d1
 .Draw10Lines:
 	.rept	10
 	move.w	(a1)+, (a0)
@@ -218,7 +215,7 @@ VertText:
 	dc.b	'WITH ASSETS OPTIONALLY UNDER CC:BY-SA V4.  '
 	dc.b	'MORE DETAILS AT HTTPS://GITHUB.COM/JBQUERU/STEPBACK         '
 	dc.b	'FOR THE CREATION OF THIS DEMO, '
-	dc.b	'DJAYBEE USED HATARI EMUTOS RMAC AND GCC.  '
+	dc.b	'DJAYBEE USED HATARI EMUTOS RMAC AND GCC PLUS GIT AND ZIP.  '
 	dc.b	'PANDAFOX USED ST-PAINT.  '
 	dc.b	'AD USED MAXYMISER.  '
 	dc.b	'              '

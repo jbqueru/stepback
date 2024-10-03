@@ -354,8 +354,8 @@ GreenDone:
 
 	bsr	VertInit
 	bsr	HorizInit
-	bsr	LogoInit
-	bsr	SpritesInit
+	bsr	SpriteInit
+	bsr	NamesInit
 
 	lea.l	intro_data, a0
 	moveq.l	#0, d0
@@ -482,12 +482,12 @@ MainLoop:
 ; **                   **
 ; ***********************
 
-	bsr	LogoErase
-	bsr	SpritesErase
+	bsr	SpriteErase
+	bsr	NamesErase
 	bsr	VertDraw
 	bsr	HorizDraw
-	bsr	LogoDraw
-	bsr	SpritesDraw
+	bsr	SpriteDraw
+	bsr	NamesDraw
 
 ; ********************
 ; **                **

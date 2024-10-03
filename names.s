@@ -26,13 +26,13 @@
 ; #############################################################################
 ; ###                                                                       ###
 ; ###                                                                       ###
-; ###                         Sprites for MB24 demo                         ###
+; ###                  Name sprites for Stepping Back demo                  ###
 ; ###                                                                       ###
 ; ###                                                                       ###
 ; #############################################################################
 ; #############################################################################
 
-; See mb24_main-st_rmac.s file for overall explanation
+; See stepback.s file for overall explanation
 
 ; Note that the shifted sprite is sorted out of order.
 ; This comes from a combination of 2 factors:
@@ -52,7 +52,7 @@
 ; ##############
 ; ##############
 
-SpritesInit:
+NamesInit:
 
 ; ******************
 ; **              **
@@ -60,7 +60,7 @@ SpritesInit:
 ; **              **
 ; ******************
 
-; TODO: find a way to move the 67 constant to the C file
+; TODO: find a way to move the constants to the C file
 
 	lea.l	sprite_read_x1, a0
 	move.l	#SpriteX1, (a0)+
@@ -228,7 +228,7 @@ SpritesInit:
 ; ###############
 ; ###############
 
-SpritesErase:
+NamesErase:
 	moveq.l	#2, d7
 	lea.l	sprite_erase_front, a6
 
@@ -262,7 +262,7 @@ SpritesErase:
 ; ##############
 ; ##############
 
-SpritesDraw:
+NamesDraw:
 ; d0 | left mask
 ; d1 | right mask
 ; d2 | center mask
@@ -413,11 +413,8 @@ SpriteX2Ok:
 	moveq.l	#1, d6
 .LoopTop:
 	movem.l	(a0)+, d3-d4/a2
-;	and.l	d0, (a1)+
-;	and.l	d0, (a1)
 	addq.w	#4, a1
 	or.l	d3, (a1)+
-;	move.l	d2, (a1)+
 	addq.w	#4, a1
 	or.l	d4, (a1)+
 	move.l	d2, (a1)+
@@ -425,11 +422,8 @@ SpriteX2Ok:
 	movem.l	(a0)+, d3-d4/a2
 	move.l	d2, (a1)+
 	move.l	a2, (a1)+
-;	move.l	d2, (a1)+
 	addq.w	#4, a1
 	or.l	d3, (a1)+
-;	and.l	d1, (a1)+
-;	and.l	d1, (a1)
 	addq.w	#4, a1
 	or.l	d4, (a1)+
 
@@ -460,11 +454,8 @@ SpriteX2Ok:
 	moveq.l	#1, d6
 .LoopBottom:
 	movem.l	(a0)+, d3-d4/a2
-;	and.l	d0, (a1)+
-;	and.l	d0, (a1)
 	addq.w	#4, a1
 	or.l	d3, (a1)+
-;	move.l	d2, (a1)+
 	addq.w	#4, a1
 	or.l	d4, (a1)+
 	move.l	d2, (a1)+
@@ -472,11 +463,8 @@ SpriteX2Ok:
 	movem.l	(a0)+, d3-d4/a2
 	move.l	d2, (a1)+
 	move.l	a2, (a1)+
-;	move.l	d2, (a1)+
 	addq.w	#4, a1
 	or.l	d3, (a1)+
-;	and.l	d1, (a1)+
-;	and.l	d1, (a1)
 	addq.w	#4, a1
 	or.l	d4, (a1)+
 
