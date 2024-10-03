@@ -25,4 +25,4 @@
 
 rm -rf out/dist
 mkdir -p out/dist
-(cd out && zip -9 dist/stepback.zip stepback/*)
+(cd out && zip -9 -q dist/stepback.zip stepback/*)

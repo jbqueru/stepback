@@ -51,7 +51,7 @@ out/bin/names_convert
 cc sprite_convert.c -o out/bin/sprite_convert
 out/bin/sprite_convert
 
-~/code/rmac/rmac -s -p -4 stepback.s -o out/tos/STEPBACK.PRG
+rmac -s -p -4 stepback.s -o out/tos/STEPBACK.PRG
 chmod 664 out/tos/STEPBACK.PRG
 
 rm -rf out/stepback
@@ -60,3 +60,8 @@ cp out/tos/STEPBACK.PRG out/stepback
 cp LICENSE LICENSE_ASSETS AGPL_DETAILS.md README.md out/stepback
 cp blank.msa out/stepback/stepback.msa
 git bundle create -q out/stepback/stepback.bundle HEAD main
+
+rm -rf out/src
+mkdir -p out/src
+cp $(ls -1 | grep -v ^out\$) out/src
+(cd out && zip -9 -q stepback/src.zip src/*)
