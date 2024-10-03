@@ -37,31 +37,31 @@ void main() {
 	printf("\t.data\n");
 	printf("\n");
 
-	printf("BigLogoX:\n");
+	printf("SpriteX:\n");
 	for (int t = 0; t < 251; t++) {
 		int x = 4 + 215 * (1 - cos (t * 2 * M_PI / 251)) / 2 + 0.5;
 		printf("\tdc.b\t%d\n", x);
 	}
-	printf("BigLogoXEnd:\n");
+	printf("SpriteXEnd:\n");
 
 	printf("\n");
 	printf("\t.even\n");
 	printf("\n");
 
-	printf("BigLogoY1:\n");
+	printf("SpriteY1:\n");
 	for (int t = 0; t < 127; t++) {
 		int x = 36 * 8 * (1 - cos (t * 2 * M_PI / 127)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
-	printf("BigLogoY1End:\n");
+	printf("SpriteY1End:\n");
 
 	printf("\n");
 
-	printf("BigLogoY2:\n");
+	printf("SpriteY2:\n");
 	for (int t = 0; t < 601; t++) {
 		int x = 60 * 8 * (1 - cos (t * 2 * M_PI / 601)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
-	printf("BigLogoY2End:\n");
+	printf("SpriteY2End:\n");
 
 }

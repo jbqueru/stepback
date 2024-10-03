@@ -62,28 +62,28 @@ NamesInit:
 
 ; TODO: find a way to move the constants to the C file
 
-	lea.l	sprite_read_x1, a0
-	move.l	#SpriteX1, (a0)+
-	move.l	#SpriteX1 + 67 * 2, (a0)+
-	move.l	#SpriteX1 + 134 * 2, (a0)+
-	move.l	#SpriteX2, (a0)+
-	move.l	#SpriteX2 + 12 * 2, (a0)+
-	move.l	#SpriteX2 + 27 * 2, (a0)+
-	move.l	#SpriteY1, (a0)+
-	move.l	#SpriteY1 + 67 * 2, (a0)+
-	move.l	#SpriteY1 + 134 * 2, (a0)+
-	move.l	#SpriteY2, (a0)+
-	move.l	#SpriteY2 + 30 * 2, (a0)+
-	move.l	#SpriteY2 + 39 * 2, (a0)+
+	lea.l	name_read_x1, a0
+	move.l	#NameX1, (a0)+
+	move.l	#NameX1 + 67 * 2, (a0)+
+	move.l	#NameX1 + 134 * 2, (a0)+
+	move.l	#NameX2, (a0)+
+	move.l	#NameX2 + 12 * 2, (a0)+
+	move.l	#NameX2 + 27 * 2, (a0)+
+	move.l	#NameY1, (a0)+
+	move.l	#NameY1 + 67 * 2, (a0)+
+	move.l	#NameY1 + 134 * 2, (a0)+
+	move.l	#NameY2, (a0)+
+	move.l	#NameY2 + 30 * 2, (a0)+
+	move.l	#NameY2 + 39 * 2, (a0)+
 	.rept 3
 	move.l	fb_front, (a0)+
 	.endr
 	.rept 3
 	move.l	fb_back, (a0)+
 	.endr
-	move.l	#sprites_shifted, (a0)+
-	move.l	#sprites_shifted + 24 * 20, (a0)+
-	move.l	#sprites_shifted + 24 * 20 * 2, (a0)+
+	move.l	#names_shifted, (a0)+
+	move.l	#names_shifted + 24 * 20, (a0)+
+	move.l	#names_shifted + 24 * 20 * 2, (a0)+
 
 ; *******************************
 ; **                           **
@@ -92,7 +92,7 @@ NamesInit:
 ; *******************************
 
 	lea.l	SpritesBitmap, a0
-	lea.l	sprites_shifted, a1
+	lea.l	names_shifted, a1
 
 	moveq.l	#59, d7
 .Copy:
@@ -127,8 +127,8 @@ NamesInit:
 ; **                                                **
 ; ****************************************************
 
-	lea.l	sprites_shifted, a0
-	lea.l	sprites_shifted + 24 * 20 * 3, a1
+	lea.l	names_shifted, a0
+	lea.l	names_shifted + 24 * 20 * 3, a1
 
 	moveq.l	#14, d7
 .Pixel:
@@ -201,7 +201,7 @@ NamesInit:
 	dbra	d6, .Line
 	dbra	d7, .Pixel
 
-	lea.l	sprite_corners, a0
+	lea.l	name_corners, a0
 	move.l	#$e0000000, d0
 	move.l	#$80000000, d1
 	move.l	#$0003ffff, d2
@@ -230,7 +230,7 @@ NamesInit:
 
 NamesErase:
 	moveq.l	#2, d7
-	lea.l	sprite_erase_front, a6
+	lea.l	name_erase_front, a6
 
 .OneSprite:
 	movea.l	(a6), a0
@@ -281,24 +281,24 @@ NamesDraw:
 ; a7 | stack
 
 	moveq.l	#2, d7
-	lea.l	sprite_read_x1, a6
+	lea.l	name_read_x1, a6
 LoopSprite:
 	movea.l	72(a6), a0
 	movea.l	fb_back, a1
 
 	movea.l	24(a6), a2
 	move.w	(a2)+, d4
-	cmpa.l	#SpriteY1End, a2
+	cmpa.l	#NameY1End, a2
 	bne.s	SpriteY1Ok
-	lea.l	SpriteY1, a2
+	lea.l	NameY1, a2
 SpriteY1Ok:
 	move.l	a2, 24(a6)
 
 	movea.l	36(a6), a2
 	add.w	(a2)+, d4
-	cmpa.l	#SpriteY2End, a2
+	cmpa.l	#NameY2End, a2
 	bne.s	SpriteY2Ok
-	lea.l	SpriteY2, a2
+	lea.l	NameY2, a2
 SpriteY2Ok:
 	move.l	a2, 36(a6)
 
@@ -308,17 +308,17 @@ SpriteY2Ok:
 
 	movea.l	(a6), a2
 	move.w	(a2)+, d4
-	cmpa.l	#SpriteX1End, a2
+	cmpa.l	#NameX1End, a2
 	bne.s	SpriteX1Ok
-	lea.l	SpriteX1, a2
+	lea.l	NameX1, a2
 SpriteX1Ok:
 	move.l	a2, (a6)
 
 	movea.l	12(a6), a2
 	add.w	(a2)+, d4
-	cmpa.l	#SpriteX2End, a2
+	cmpa.l	#NameX2End, a2
 	bne.s	SpriteX2Ok
-	lea.l	SpriteX2, a2
+	lea.l	NameX2, a2
 SpriteX2Ok:
 	move.l	a2, 12(a6)
 
@@ -348,7 +348,7 @@ SpriteX2Ok:
 
 	move.l	a1, 60(a6)
 
-	lea.l	sprite_corners, a2
+	lea.l	name_corners, a2
 	lsl.w	#4, d6
 	adda.w	d6, a2
 	move.w	(a2), d3
@@ -487,25 +487,25 @@ SpriteX2Ok:
 	.bss
 
 	.even
-sprites_shifted:
+names_shifted:
 	ds.l	6 * 20 * 16 * 3
 
-sprite_read_x1:
+name_read_x1:
 	ds.l	3
-sprite_read_x2:
+name_read_x2:
 	ds.l	3
-sprite_read_y1:
+name_read_y1:
 	ds.l	3
-sprite_read_y2:
+name_read_y2:
 	ds.l	3
-sprite_erase_front:
+name_erase_front:
 	ds.l	3
-sprite_erase_back:
+name_erase_back:
 	ds.l	3
-sprite_preshifted:
+name_preshifted:
 	ds.l	3
 
-sprite_corners:
+name_corners:
 	ds.l	64
 
 ; #########################

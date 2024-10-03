@@ -37,39 +37,39 @@ void main() {
 	printf(".data\n");
 	printf(".even\n");
 
-	printf("SpriteX1:\n");
+	printf("NameX1:\n");
 	for (int t = 0; t < 201; t++) {
 		int x = 199 * 4 * (1 - cos (t * 2 * M_PI / 201)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
-	printf("SpriteX1End:\n");
+	printf("NameX1End:\n");
 
 	printf("\n");
 
-	printf("SpriteX2:\n");
+	printf("NameX2:\n");
 	for (int t = 0; t < 51; t++) {
 		int x = 40 * 4 * (1 - cos (t * 2 * M_PI / 51)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
-	printf("SpriteX2End:\n");
+	printf("NameX2End:\n");
 
 	printf("\n");
 
-	printf("SpriteY1:\n");
+	printf("NameY1:\n");
 	for (int t = 0; t < 201; t++) {
 		int x = 150 * 4 * (1 - sin (t * 2 * M_PI / 201)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
-	printf("SpriteY1End:\n");
+	printf("NameY1End:\n");
 
 	printf("\n");
 
-	printf("SpriteY2:\n");
+	printf("NameY2:\n");
 	for (int t = 0; t < 53; t++) {
 		int x = 30 * 4 * (1 - sin (t * 2 * M_PI / 53)) / 2 + 0.5;
 		printf("\tdc.w\t%d\n", x);
 	}
-	printf("SpriteY2End:\n");
+	printf("NameY2End:\n");
 
 	printf("\n");
 }
