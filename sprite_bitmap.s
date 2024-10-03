@@ -26,5 +26,5 @@
 
 	.even
 
-BigLogo:
+BigSprite:
 	incbin	"out/inc/sprite_bitmap.bin"

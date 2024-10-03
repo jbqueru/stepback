@@ -26,5 +26,5 @@
 
 	.even
 
-SpritesBitmap:
+NamesBitmap:
 	incbin	"out/inc/names_bitmaps.bin"

@@ -29,7 +29,7 @@ SpriteInit:
 	move.l	#SpriteY1, sprite_read_y1
 	move.l	#SpriteY2, sprite_read_y2
 
-	move.l	#BigLogo, a0
+	move.l	#BigSprite, a0
 	move.l	#sprite_shifted, a1
 
 	move.w	#727, d0		// 7 * 104 - 1

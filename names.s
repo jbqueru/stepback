@@ -91,7 +91,7 @@ NamesInit:
 ; **                           **
 ; *******************************
 
-	lea.l	SpritesBitmap, a0
+	lea.l	NamesBitmap, a0
 	lea.l	names_shifted, a1
 
 	moveq.l	#59, d7
@@ -232,7 +232,7 @@ NamesErase:
 	moveq.l	#2, d7
 	lea.l	name_erase_front, a6
 
-.OneSprite:
+.One:
 	movea.l	(a6), a0
 	lea.l	4(a0), a0
 	moveq.l	#0, d0
@@ -250,7 +250,7 @@ NamesErase:
 	dbra	d6, .Loop
 
 	move.l	12(a6), (a6)+
-	dbra	d7, .OneSprite
+	dbra	d7, .One
 
 	rts
 
@@ -282,24 +282,24 @@ NamesDraw:
 
 	moveq.l	#2, d7
 	lea.l	name_read_x1, a6
-LoopSprite:
+.Loop:
 	movea.l	72(a6), a0
 	movea.l	fb_back, a1
 
 	movea.l	24(a6), a2
 	move.w	(a2)+, d4
 	cmpa.l	#NameY1End, a2
-	bne.s	SpriteY1Ok
+	bne.s	.Y1Ok
 	lea.l	NameY1, a2
-SpriteY1Ok:
+.Y1Ok:
 	move.l	a2, 24(a6)
 
 	movea.l	36(a6), a2
 	add.w	(a2)+, d4
 	cmpa.l	#NameY2End, a2
-	bne.s	SpriteY2Ok
+	bne.s	.Y2Ok
 	lea.l	NameY2, a2
-SpriteY2Ok:
+.Y2Ok:
 	move.l	a2, 36(a6)
 
 	lsr.w	#2, d4
@@ -309,17 +309,17 @@ SpriteY2Ok:
 	movea.l	(a6), a2
 	move.w	(a2)+, d4
 	cmpa.l	#NameX1End, a2
-	bne.s	SpriteX1Ok
+	bne.s	.X1Ok
 	lea.l	NameX1, a2
-SpriteX1Ok:
+.X1Ok:
 	move.l	a2, (a6)
 
 	movea.l	12(a6), a2
 	add.w	(a2)+, d4
 	cmpa.l	#NameX2End, a2
-	bne.s	SpriteX2Ok
+	bne.s	.X2Ok
 	lea.l	NameX2, a2
-SpriteX2Ok:
+.X2Ok:
 	move.l	a2, 12(a6)
 
 	lsr.w	#2, d4
@@ -472,7 +472,7 @@ SpriteX2Ok:
 	dbra	d6, .LoopBottom
 
 	addq.l	#4, a6
-	dbra	d7, LoopSprite
+	dbra	d7, .Loop
 
 	rts
 
