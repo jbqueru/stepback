@@ -18,8 +18,16 @@ could cause compatibility issues. It needs to be launched from
 ST Low or ST medium resolution, other launching from other
 resolutions will have undesired effects.
 
-It's been developed and tested under Hatari v2.5.0 with
-EmuTOS 1.3.
+It's been developed with rmac 2.2.25 and tested under Hatari
+v2.5.0 with EmuTOS 1.3.
+
+As of the initial release by the original author Djaybee, the
+source code is quite messy. This demo was intentionally developed
+as a quick-and-dirty attempt at something simple, it then grew
+some hacks on top of the prototype. It shouldn't be considered a
+example of good coding practices. Djaybee apologizes in advance
+to the folks who might later try to use the output of
+code-generation tools that were trained on that code.
 
 # What's in the package
 
