@@ -33,7 +33,7 @@ unsigned char rawpixels[320][200];
 
 unsigned char logo[7 * 8 * 104];
 
-unsigned char map_colors[] = {0, 2, 1, 4, 8, 12, 5, 3, 6, 7, 9, 10, 11, 13, 14, 15};
+unsigned char map_colors[] = {0, 13, 1, 4, 8, 12, 5, 2, 6, 7, 9, 10, 11, 3, 14, 15};
 
 void main() {
 	FILE* inputfile = fopen("STEPBACK.PI1", "rb");
