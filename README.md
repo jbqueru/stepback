@@ -119,7 +119,7 @@ _Let's be honest, if using a demo on such an old computer,
 even emulated, causes significant privacy concerns or in
 fact any privacy concerns, the world is coming to an end._
 
-### Specifically for GDPR (EU 2016/679)
+### Specific privacy aspects for GDPR (EU 2016/679)
 
 None of the code in this project processes any personal data
 in any way. It does not collect, record, organize, structure,
@@ -142,7 +142,7 @@ interests, reliability, behavior, location, and movements.
 _Don't use this code where GDPR might come into scope.
 Seriously. Don't. Just don't.
 
-## Security (including CRA and NIS2)
+## Security
 
 Generally speaking, the code in this project is inappropriate
 for any application where security is a concern of any kind.
@@ -162,7 +162,7 @@ access to hardware registers._
 _Finally, the code is developed in assembly language, which
 lacks the modern language features that help security._
 
-### Specifically for CRA (EU 2022/454)
+### Specific security aspects for CRA (EU 2022/454)
 
 None of the code in this project involves any direct or indirect
 logical or physical data connection to a device or network.
@@ -182,7 +182,7 @@ _This code is intended to be used in isolated environments.
 If you build a connected product from this code, the security
 implications are on you. You've been warned._
 
-### Specifically for NIS2 (EU 2022/2555)
+### Specific security aspects for NIS2 (EU 2022/2555)
 
 This project has been developed without any attention to the
 practices mandated by NIS2. It is not appropriate as-is for
