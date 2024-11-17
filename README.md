@@ -184,12 +184,14 @@ implications are on you. You've been warned._
 
 ### Specific security aspects for NIS2 (EU 2022/2555)
 
+The intended use for this code is not a critical application.
 This project has been developed without any attention to the
-practices mandated by NIS2. It is not appropriate as-is for
-any critical application, and, by its very nature, no amount
-of paying and auditing will ever make it reach a point where
-it is appropriate. The author will immediately dismiss any
-request to reach the standards set by NIS2.
+practices mandated by NIS2 for critical applications.
+It is not appropriate as-is for any critical application, and,
+by its very nature, no amount of paying and auditing will
+ever make it reach a point where it is appropriate.
+The author will immediately dismiss any request to reach the
+standards set by NIS2.
 
 _Don't even think about it. Seriously. I'm not kidding. If you
 are even considering using this code or any similar code for any
