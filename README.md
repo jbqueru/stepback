@@ -80,7 +80,7 @@ having to build and execute `ACONVERT.PRG`
 
 The final package contains a floppy image, which gets created
 from within an Atari ST emulator. After running `build.sh`, run
-an emulator with `out/tos/stepback.msa` mounted as a floppy and
+an emulator with `out/stepback/stepback.msa` mounted as a floppy and
 `out/tos/STEPBACK.PRG` available on an emulated hard disk, and
 copy that file onto the floppy. Once that's done, run `makedist.sh`.
 
