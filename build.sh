@@ -53,6 +53,7 @@ out/bin/sprite_convert
 
 rmac -s -p -4 stepback.s -o out/tos/STEPBACK.PRG
 chmod 664 out/tos/STEPBACK.PRG
+upx -9 -q out/tos/STEPBACK.PRG
 
 rm -rf out/stepback
 mkdir -p out/stepback
