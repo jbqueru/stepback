@@ -15,7 +15,7 @@ from a plain 520 ST all the way to the TT or Falcon. However,
 it ignores any hardware beyond that of a plain ST, such that
 it neither uses those capabilities nor disables them, which
 could cause compatibility issues. It needs to be launched from
-ST Low or ST medium resolution, other launching from other
+ST Low or ST medium resolution, and launching from other
 resolutions will have undesired effects.
 
 It's been developed with rmac 2.2.25 and tested under Hatari
@@ -37,7 +37,7 @@ if you extract non-code assets from the demo or its source tree,
 and an `AGPL_DETAILS.md` file to explain the original author's
 intentions for compliance with the AGPL license.
 
-The demo itself is provided under 3 forms in the package:
+The demo itself is provided under 4 forms in the package:
 * A naked `STEPBACK.PRG` file meant to be executed e.g. from with
 an emulator with GEMDOS hard drive emulation.
 * A `stepback.msa` floppy image.
@@ -59,8 +59,8 @@ build from start to finish requires some manual steps:
 
 The music in its original form is delivered as an SNDH file, which
 combines player code and music data. While the music data was created
-specifically for this demo, the player code has restrictions that
-make it unsuitable for integration into Open Source binaries, and
+specifically for this demo, the player code has licensing restrictions
+that make it unsuitable for integration into Open Source binaries, and
 especially copyleft ones.
 
 To avoid those restrictions, the music data is extracted as a raw
@@ -195,6 +195,6 @@ standards set by NIS2.
 
 _Don't even think about it. Seriously. I'm not kidding. If you
 are even considering using this code or any similar code for any
-critical project, you should be immediately fired for cause.
+critical project, you should expect to get fired.
 I cannot understate how grossly inappropriate this code is for
 anything that might actually matter._
