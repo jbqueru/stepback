@@ -189,6 +189,7 @@ MainSup:
 	lsr.l	#8, d0			; | (takes effect after VBL)
 	move.b	d0, $ffff8201.w		; /
 
+	stop	#$2300			; Wait for VBL (might be a suprious queued one)
 	stop	#$2300			; Wait for VBL
 
 ; ***********************
