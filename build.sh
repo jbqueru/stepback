@@ -72,3 +72,7 @@ rm -rf out/src
 mkdir -p out/src
 cp $(ls -1 | grep -v ^out\$) out/src
 (cd out && zip -9 -q stepback/src.zip src/*)
+
+rm -rf out/dist
+mkdir -p out/dist
+(cd out && zip -9 -q dist/stepback.zip stepback/*)
