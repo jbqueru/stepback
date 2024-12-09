@@ -62,7 +62,7 @@ cp LICENSE LICENSE_ASSETS AGPL_DETAILS.md README.md out/stepback
 cp blank.msa out/stepback/stepback.msa
 if [ -d .git ]
 then
-  git bundle create -q out/stepback/stepback.bundle HEAD main
+  git bundle create -q out/stepback/stepback.bundle --branches --tags HEAD
 fi
 
 rm -rf out/src
