@@ -59,7 +59,10 @@ rm -rf out/stepback
 mkdir -p out/stepback
 cp out/tos/STEPBACK.PRG out/stepback
 cp LICENSE LICENSE_ASSETS AGPL_DETAILS.md README.md out/stepback
-cp blank.msa out/stepback/stepback.msa
+hmsa out/stepback/stepback.st SS
+mcopy -i out/stepback/stepback.st out/tos/STEPBACK.PRG ::/
+hmsa out/stepback/stepback.st
+
 if [ -d .git ]
 then
   git bundle create -q out/stepback/stepback.bundle --branches --tags HEAD
